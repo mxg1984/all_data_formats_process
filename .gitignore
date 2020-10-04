@@ -1,0 +1,5 @@
+Debug/
+*.swp
+*.swo
+.vs/
+*.user

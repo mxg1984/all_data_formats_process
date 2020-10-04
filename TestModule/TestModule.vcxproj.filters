@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TestModule.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TestModuleDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\julian_date.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataCC.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataCDSC.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\radarbasedataCIMISS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\radarbasedatacimisscls.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataCommonPPI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataFormat98D.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataFormatCB.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataFormatCC.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataFormatCDSC.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataFormatCIMISS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataFormatSA.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataFormatSC.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataFormatSC2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataFormatTypeDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataInputCls.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataInputDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataMomentTypeDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataWsr98D.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\RadarBaseDataWSR98DCls.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarbaseData\stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CommFunctions.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalParams.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WriteLogFile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LogFile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SysIntialize.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDaraQCCls.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PolarToGridCls.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GridMosaicCls.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdDateTime.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UserTask.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TestModule.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestModuleDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RadarbaseData\RadarBaseDataCC.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RadarbaseData\RadarBaseDataCDSC.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RadarbaseData\RadarBaseDataCIMISS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RadarbaseData\RadarBaseDataCommonPPI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RadarbaseData\RadarBaseDataFormat98D.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RadarbaseData\RadarBaseDataFormatSC2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RadarbaseData\RadarBaseDataInputCls.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RadarbaseData\RadarBaseDataInputDef.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RadarbaseData\RadarBaseDataWsr98D.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommFunctions.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalParams.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WriteLogFile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LogFile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SysIntialize.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDaraQCCls.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PolarToGridCls.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GridMosaicCls.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdDateTime.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UserTask.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TestModule.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\TestModule.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\TestModule.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
