@@ -197,12 +197,9 @@ void CTestModuleDlg::OnClickedButtonPolartogrid()
 	bool bFlag = true;
 }
 
-
 void CTestModuleDlg::OnDropdownButtonReaddata(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMBCDROPDOWN pDropDown = reinterpret_cast<LPNMBCDROPDOWN>(pNMHDR);
 	// TODO: 在此添加控件通知处理程序代码
 	*pResult = 0;
-
-		
 }

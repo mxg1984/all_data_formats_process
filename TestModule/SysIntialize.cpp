@@ -28,7 +28,7 @@ int32_t MainFunc(void)//int32_t argc, const char *argv[])
 	
 	//清理临时数据空间
 	char szTempDataFolder[FILENAME_MAX] = "";
-	sprintf_s(szTempDataFolder, FILENAME_MAX, "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
+	sprintf(szTempDataFolder,  "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
 	ClearDirectory(szTempDataFolder);
 
 	//检查配置的各数据目录是否存在, 不存在的创建
@@ -722,7 +722,7 @@ void CheckDirectory()
 	if (GetCurrentDirectory(PATH_LEN, wszChar) != 0) //g_strAppTmpFolder)!=0)
 	{
 		//Create folder for log files
-		sprintf_s(strPath, "%s%s%s", g_strAppTmpFolder, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), LOGS_FOLDER);
+		sprintf(strPath, "%s%s%s", g_strAppTmpFolder, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), LOGS_FOLDER);
 		CreateDir(strPath);
 	}
 
@@ -731,19 +731,19 @@ void CheckDirectory()
 	
 	//创建临时数据子目录
 	if(g_DataDir.strTemDataDir[strlen(g_DataDir.strTemDataDir)-1]=='\\' || g_DataDir.strTemDataDir[strlen(g_DataDir.strTemDataDir) - 1] == '/')
-		sprintf_s(strBackPath, "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
+		sprintf(strBackPath, "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
 	else
-		sprintf_s(strBackPath, "%s%s%s", g_DataDir.strTemDataDir, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(),
+		sprintf(strBackPath, "%s%s%s", g_DataDir.strTemDataDir, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(),
 			TEMP_FOLDER);
 	CreateDir(strBackPath);
 
 	//创建临时保存单站统一格式基数据的目录
-	sprintf_s(strPath, "%s%s%s", strBackPath, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), UNIFORM_POLAR_FOLDER);
+	sprintf(strPath, "%s%s%s", strBackPath, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), UNIFORM_POLAR_FOLDER);
 	DeleteDirectory(strPath,0);
 	CreateDir(strPath);
 
 	//创建临时保存单站笛卡儿坐标反射率因子数据的目录
-	sprintf_s(strPath, "%s%s%s", strBackPath, 
+	sprintf(strPath, "%s%s%s", strBackPath, 
 		std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), SGL_MSC_FOLDER);
 	if (g_iSaveSingleCAPPI == 0) DeleteDirectory(strPath, 0); //删除旧的单站数据
 	CreateDir(strPath);
@@ -751,14 +751,14 @@ void CheckDirectory()
 	//创建临时保存单站笛卡儿坐标径向速度数据的目录
 	if(g_iOptionsGridData==GRIDDATA_OPTION_VEL || g_iOptionsGridData==GRIDDATA_OPTION_ALL)//(g_iGridVelocity==1)
 	{
-		sprintf_s(strPath, "%s%s%s", strBackPath, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), SGL_MSCV_FOLDER);
+		sprintf(strPath, "%s%s%s", strBackPath, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), SGL_MSCV_FOLDER);
 		DeleteDirectory(strPath,0); //删除旧的单站数据
 		CreateDir(strPath);
 	}
 
 	//清理临时数据空间
 	char szTempDataFolder[FILENAME_MAX] = "";
-	sprintf_s(szTempDataFolder, "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
+	sprintf(szTempDataFolder, "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
 	ClearDirectory(szTempDataFolder);
 }
 

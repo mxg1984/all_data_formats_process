@@ -777,9 +777,9 @@ bool CPolarToGridOfRefCls::SaveGridData()
 
 	char szCode[6] = "";
 	if (m_ParamSiteInfo.SiteID < 1000)
-		sprintf_s(szCode, "%d", m_ParamSiteInfo.SiteID + 9000);
+		sprintf(szCode, "%d", m_ParamSiteInfo.SiteID + 9000);
 	else
-		sprintf_s(szCode, "%s", m_ParamSiteInfo.SiteID);
+		sprintf(szCode, "%s", m_ParamSiteInfo.SiteID);
 
 	//Set file name
 	//char strYear[6]="",strMonth[4]="",strDay[4]="",strHour[4]="",strMinute[4]="";
@@ -986,9 +986,9 @@ bool CPolarToGridOfDopplerCls::SaveGridData()
 
 	char szCode[6] = "";
 	if (m_ParamSiteInfo.SiteID < 1000)
-		sprintf_s(szCode, "%d", m_ParamSiteInfo.SiteID + 9000);
+		sprintf(szCode, "%d", m_ParamSiteInfo.SiteID + 9000);
 	else
-		sprintf_s(szCode, "%s", m_ParamSiteInfo.SiteID);
+		sprintf(szCode, "%s", m_ParamSiteInfo.SiteID);
 
 	//Set file name
 	std::string strYear = std::to_string(m_year);

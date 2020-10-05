@@ -34,21 +34,21 @@ void GetSystemTimeString(char *strTime)
 	GetLocalTime(&s_time);
 	//Convert digital to string
 	if(s_time.wHour>=10)
-		sprintf_s(strHor, "%2d", s_time.wHour);
+		sprintf(strHor, "%2d", s_time.wHour);
 	else
-		sprintf_s(strHor, "0%d", s_time.wHour);
+		sprintf(strHor, "0%d", s_time.wHour);
 	
 	if(s_time.wMinute>=10)
-		sprintf_s(strMin, "%2d", s_time.wMinute);
+		sprintf(strMin, "%2d", s_time.wMinute);
 	else
-		sprintf_s(strMin, "0%d", s_time.wMinute);
+		sprintf(strMin, "0%d", s_time.wMinute);
 	
 	if(s_time.wSecond>=10)
-		sprintf_s(strSec, "%2d", s_time.wSecond);
+		sprintf(strSec, "%2d", s_time.wSecond);
 	else
-		sprintf_s(strSec, "0%d", s_time.wSecond);
+		sprintf(strSec, "0%d", s_time.wSecond);
 
-	sprintf_s(strTime,9,"%2s:%2s:%2s",strHor, strMin, strSec);
+	sprintf(strTime,"%2s:%2s:%2s",strHor, strMin, strSec);
 }
 
 
@@ -162,7 +162,7 @@ void Zip2Prod(char *src)  //压缩函数
 	//str += s1;
 	//str += " ";
 	//str += s2;
-	sprintf_s(str2,"%s %s",str1,src);
+	sprintf(str2,"%s %s",str1,src);
 	TCHAR wszChar[PATH_LEN] = _TEXT("");
 	CharToTchar(str2, wszChar);
 	bool   res   =   CreateProcess(NULL,   
@@ -240,7 +240,7 @@ bool CreateDir(const char *strPath, bool bCreate)
 					if(errno==ENOENT)
 					{
 						char strMsg[LEN_MSG]="";
-						sprintf_s(strMsg,"Fail creating directory(%s), path not found.",strPath);
+						sprintf(strMsg,"Fail creating directory(%s), path not found.",strPath);
 						ReportLog_Error(strMsg);
 						return false;
 					}
@@ -249,7 +249,7 @@ bool CreateDir(const char *strPath, bool bCreate)
 			else
 			{//只是检查目录是否存在，若不存在，报告错误
 				char strMsg[LEN_MSG]="";
-				sprintf_s(strMsg,"Path(%s) not found.",strPath);
+				sprintf(strMsg,"Path(%s) not found.",strPath);
 				ReportLog_Error(strMsg);
 				return false;
 			}
@@ -473,9 +473,9 @@ void DeleteDirectory(char strDir[], int32_t iRemainDays, uint32_t iRemainHours,u
 	TCHAR wFileFilter[PATH_LEN] = TEXT("");
 
 	if(strDir[strlen(strDir)-1]!='\\')
-		sprintf_s(FileFilter, "%s\\%s", strDir, "*.*");
+		sprintf(FileFilter, "%s\\%s", strDir, "*.*");
 	else
-		sprintf_s(FileFilter, "%s%s", strDir, "*.*");
+		sprintf(FileFilter, "%s%s", strDir, "*.*");
 	CharToTchar(FileFilter, wFileFilter);
 
 	bool bFound = ff.FindFile(wFileFilter, 0);
@@ -493,7 +493,7 @@ void DeleteDirectory(char strDir[], int32_t iRemainDays, uint32_t iRemainHours,u
 			char szChar[PATH_LEN] = "";
 			TcharToChar(ff.GetFilePath().GetBuffer(), szChar);
 			ff.GetFilePath().ReleaseBuffer();
-			sprintf_s(subDir,strlen(szChar)+1, "%s", szChar);
+			sprintf(subDir, "%s", szChar);
 			// 递归, 遍历子文件夹
 			DeleteDirectory(subDir, iRemainDays);
 		}

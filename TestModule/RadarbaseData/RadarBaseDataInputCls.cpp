@@ -300,9 +300,9 @@ void CRadarDataInputCls::DetermineRadarType(const char* szDataFileName, RADARSIT
 			format_98d::stdRadialHeader98D header;
 			fread(&header, sizeof(header), 1, fp);
 			if(header.RadarStatus==1)  //CD2 SC2
-				sprintf_s(szType, strlen(FM_RD_CD2) + 1, "%s", FM_RD_CD2);
+				sprintf(szType,  "%s", FM_RD_CD2);
 			else
-				sprintf_s(szType, strlen(FM_RD_CD) + 1, "%s", FM_RD_CD);
+				sprintf(szType, "%s", FM_RD_CD);
 			fclose(fp);
 		}		
 	}
@@ -315,9 +315,9 @@ void CRadarDataInputCls::DetermineRadarType(const char* szDataFileName, RADARSIT
 			format_98d::stdRadialHeader98D header;
 			fread(&header, sizeof(header), 1, fp);
 			if (header.RadarStatus == 1)  //CD2 SC2
-				sprintf_s(szType, strlen(FM_RD_SC2) + 1, "%s", FM_RD_SC2);
+				sprintf(szType, "%s", FM_RD_SC2);
 			else
-				sprintf_s(szType, strlen(FM_RD_SC) + 1, "%s", FM_RD_SC);
+				sprintf(szType, "%s", FM_RD_SC);
 			fclose(fp);
 		}
 	}
@@ -332,9 +332,9 @@ void CRadarDataInputCls::DetermineRadarType(const char* szDataFileName, RADARSIT
 			fread(&cFileType, sizeof(char)*16, 1, fp);
 			strFileType.assign(cFileType);
 			if (strFileType.find("CINRAD")!=std::string::npos)  //CD2 SC2
-				sprintf_s(szType, strlen(FM_RD_CC) + 1, "%s", FM_RD_CC);
+				sprintf(szType, "%s", FM_RD_CC);
 			else
-				sprintf_s(szType, strlen(FM_RD_CC2) + 1, "%s", FM_RD_CC2);
+				sprintf(szType, "%s", FM_RD_CC2);
 			fclose(fp);
 		}
 	}
@@ -348,22 +348,22 @@ void CRadarDataInputCls::AddSiteInfoInData(stdUniformScanData *pvsScan, RADARSIT
 	pvsScan->header.radlon = siteInfo.SiteLon;
 	pvsScan->header.radlat = siteInfo.SiteLat;
 	pvsScan->header.radhgt = siteInfo.SiteHgt;
-	sprintf_s(pvsScan->header.radar_name, strlen(siteInfo.SiteName) + 1, siteInfo.SiteName);
-	sprintf_s(pvsScan->header.radar_type, strlen(siteInfo.SiteType) + 1, siteInfo.SiteType);
-	sprintf_s(pvsScan->header.obsv_type, 4, "VCP");
+	sprintf(pvsScan->header.radar_name, "%s", siteInfo.SiteName);
+	sprintf(pvsScan->header.radar_type, "%s", siteInfo.SiteType);
+	sprintf(pvsScan->header.obsv_type, "%s", "VCP");
 	code = siteInfo.SiteID;
 	if (code < 1000)
 		code += 9000;
 	_itoa_s(siteInfo.SiteID, szcode, SITE_CODE_LEN, 10);
-	sprintf_s(pvsScan->header.radar_code, strlen(szcode) + 1, szcode);
+	sprintf(pvsScan->header.radar_code, "%s", szcode);
 
 	for (size_t i = 0; i < pvsScan->CutsData.size(); i++)
 	{
 		if (strlen(pvsScan->CutsData[i].header.radar_name)>1)
 			continue;
 
-		sprintf_s(pvsScan->CutsData[i].header.radar_name, strlen(siteInfo.SiteName) + 1, siteInfo.SiteName);
-		sprintf_s(pvsScan->CutsData[i].header.radar_type, strlen(siteInfo.SiteType) + 1, siteInfo.SiteType);
+		sprintf(pvsScan->CutsData[i].header.radar_name, "%s", siteInfo.SiteName);
+		sprintf(pvsScan->CutsData[i].header.radar_type, "%s", siteInfo.SiteType);
 		pvsScan->CutsData[i].header.radlon = siteInfo.SiteLon;
 		pvsScan->CutsData[i].header.radlat = siteInfo.SiteLat;
 		pvsScan->CutsData[i].header.radhgt = siteInfo.SiteHgt;
