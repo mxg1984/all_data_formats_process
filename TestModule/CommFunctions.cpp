@@ -10,16 +10,6 @@
 #include "CommFunctions.h"
 //#include "GlobalParams.h"
 
-//#include "ThreadRunRealTime.h"
-//#include "ThreadRunPlayback.h"
-//#include "ThreadLog.h"
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
 //----------------------------------------------------------------------
 //记录内存使用情况的函数
 #include <iostream>
@@ -30,35 +20,10 @@ static char THIS_FILE[] = __FILE__;
 using namespace std;
 void showMemoryInfo2(char *module)
 {
-#ifdef _DEBUG
-	char strMsg[LEN_MSG]="";	
-    HANDLE handle=GetCurrentProcess();
-    PROCESS_MEMORY_COUNTERS pmc;
-    GetProcessMemoryInfo(handle,&pmc,sizeof(pmc));
-	if(module==0)
-		sprintf_s(strMsg,"内存使用:%dBytes, 峰值内存:%dBytes",pmc.WorkingSetSize,pmc.PeakWorkingSetSize);
-	else
-		sprintf_s(strMsg,"Module:%s, 使用内存:%dBytes, 峰值内存:%dKB",module,pmc.WorkingSetSize,pmc.PeakWorkingSetSize);
-    ReportLog_Status(strMsg);
-#endif
 }
 
 void showMemoryInfo(char *module)
 {
-#ifdef _DEBUG
-	char strMsg[LEN_MSG]="";	
-    HANDLE handle=GetCurrentProcess();
-    PROCESS_MEMORY_COUNTERS pmc;
-    GetProcessMemoryInfo(handle,&pmc,sizeof(pmc));
-	if(module==0)
-		sprintf_s(strMsg,"Memory used,%d,Bytes, peak memory used,%d,Bytes",pmc.WorkingSetSize,pmc.PeakWorkingSetSize);
-	else
-		sprintf_s(strMsg,"Module-%s, Memory used,%d,Bytes, peak memory used,%d,Bytes",module,pmc.WorkingSetSize,pmc.PeakWorkingSetSize);
-
-	//TRACE("%s\n",strMsg);//return;
-
-    ReportLog_Status(strMsg);
-#endif
 }
 
 ///beginning of message

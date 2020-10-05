@@ -16,13 +16,6 @@
 #include <direct.h>
 #include "CommVar.h"
 
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
 /////////////////////////////////////////////////////////////////////////
 
 //执行程序需带一个参数, 如果程序参数是-r,执行实时运行, 否则,执行非实时运行

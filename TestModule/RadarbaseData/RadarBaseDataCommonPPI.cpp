@@ -4,13 +4,6 @@
 #include <math.h>
 using namespace std;
 
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
 //*
 ///-------------------------------------------------------------------
 //以下为一个cut扫描单要素的数据体(如 PPI\RHI、SECTOR)

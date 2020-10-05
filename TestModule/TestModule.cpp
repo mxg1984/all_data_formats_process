@@ -8,11 +8,6 @@
 #include "CommFunctions.h"
 #include "SysIntialize.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
-
 // CTestModuleApp
 
 BEGIN_MESSAGE_MAP(CTestModuleApp, CWinApp)

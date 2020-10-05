@@ -8,12 +8,6 @@
 #include "RadarBaseDataWsr98D.h"
 #include "RadarBaseDataFormatSC2.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
 using namespace std;
 CRadarBaseDataWsr98D::CRadarBaseDataWsr98D()
 {}
