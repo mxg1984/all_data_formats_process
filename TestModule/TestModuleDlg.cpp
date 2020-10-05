@@ -193,45 +193,6 @@ void CTestModuleDlg::OnClickedButtonPolartogrid()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	return;
-	/*int32_t scode = 10;
-	string m_strRefGridFileName = "";
-	string m_strVelGridFileName = "";
-	string szUniformFile = "D:\\data\\20200706-huabei\\prod\\TempData\\UNIFORMBD\\北京\\202007060005.Z.bin";
-
-	if (!FilePathExists(szUniformFile.c_str()))
-		return;
-
-	int i = 0;
-	do
-	{
-		if (g_iOptionsGridData == GRIDDATA_OPTION_ALL || g_iOptionsGridData == GRIDDATA_OPTION_REF)
-		{
-			CPolarToGridOfRefCls *polarToGrid = new CPolarToGridOfRefCls(scode, (char*)(szUniformFile.c_str()));
-			if (polarToGrid != 0x0)
-			{
-				polarToGrid->Run1();
-				//strcpy_s(szGridFile,polarToGrid->GetProdFileName());
-				m_strRefGridFileName.assign(polarToGrid->GetProdFileName());
-
-				delete polarToGrid;
-				polarToGrid = 0x0;
-			}
-		}
-		if (g_iOptionsGridData == GRIDDATA_OPTION_ALL || g_iOptionsGridData == GRIDDATA_OPTION_VEL)
-		{
-			CPolarToGridOfDopplerCls *polarToGrid = new CPolarToGridOfDopplerCls(scode, (char*)(szUniformFile.c_str()));
-			if (polarToGrid != 0x0)
-			{
-				polarToGrid->Run1();
-				//strcpy_s(szGridFile,polarToGrid->GetProdFileName());
-				m_strVelGridFileName.assign(polarToGrid->GetProdFileName());
-
-				delete polarToGrid;
-				polarToGrid = 0x0;
-			}
-		}
-		i++;
-	}while (i < 1);*/
 
 	bool bFlag = true;
 }

@@ -262,19 +262,19 @@ void CCIMISSRadarDataCls::SetRadarParamInUniformData(map_GeneralScanDatas &genSc
 		//additional parameters of this scan
 
 		strTemp = strDataNme.substr(0, min(strDataNme.length(), DATA_TYPE_LEN - 1));
-		strcpy_s(itm->second.header.data_name, min(DATA_TYPE_LEN, strlen(M_Z) + 1), M_Z);
+		strncpy(itm->second.header.data_name, M_Z, min(DATA_TYPE_LEN, strlen(M_Z) + 1));
 
 		strTemp = m_bdRadarInfo.strScanType.substr(0, min(m_bdRadarInfo.strScanType.length(), SCAN_TYPE_LEN - 1));
-		strcpy_s(itm->second.header.obsv_type, strTemp.length() + 1, strTemp.c_str());
+		strncpy(itm->second.header.obsv_type, strTemp.c_str(), strTemp.length() + 1);
 
 		strTemp = m_bdRadarInfo.strRadarName.substr(0, min(m_bdRadarInfo.strRadarName.length(), SITE_NAME_LEN - 1));
-		strcpy_s(itm->second.header.radar_name, strTemp.length() + 1, strTemp.c_str());
+		strncpy(itm->second.header.radar_name, strTemp.c_str(), strTemp.length() + 1);
 
 		strTemp = m_bdRadarInfo.strRadarCode.substr(0, min(m_bdRadarInfo.strRadarCode.length(), SITE_CODE_LEN - 1));
-		strcpy_s(itm->second.header.radar_code, strTemp.length() + 1, strTemp.c_str());
+		strncpy(itm->second.header.radar_code, strTemp.c_str(), strTemp.length() + 1);
 
 		strTemp = m_bdRadarInfo.strRadarType.substr(0, min(m_bdRadarInfo.strRadarType.length(), SITE_TYPE_LEN - 1));
-		strcpy_s(itm->second.header.radar_type, strTemp.length() + 1, strTemp.c_str());
+		strncpy(itm->second.header.radar_type, strTemp.c_str(), strTemp.length() + 1);
 
 		itm->second.header.radlon = uint32_t(m_bdRadarInfo.fRadarLon * 1000);
 		itm->second.header.radlat = uint32_t(m_bdRadarInfo.fRadarLat * 1000);
@@ -288,19 +288,19 @@ void CCIMISSRadarDataCls::SetRadarParamInUniformData(map_GeneralScanDatas &genSc
 		for (int n = 0; n < nCuts; n++)
 		{
 			strTemp = strDataNme.substr(0, min(strDataNme.length(), DATA_TYPE_LEN - 1));
-			strcpy_s(itm->second.CutsData[n].header.data_name, strTemp.length() + 1, strTemp.c_str());
+			strncpy(itm->second.CutsData[n].header.data_name, strTemp.c_str(), strTemp.length() + 1);
 
 			strTemp = m_bdRadarInfo.strScanType.substr(0,min(m_bdRadarInfo.strScanType.length(), SCAN_TYPE_LEN-1));
-			strcpy_s(itm->second.CutsData[n].header.obsv_type, strTemp.length()+1, strTemp.c_str());
+			strncpy(itm->second.CutsData[n].header.obsv_type, strTemp.c_str(), strTemp.length() + 1);
 
 			strTemp = m_bdRadarInfo.strRadarName.substr(0, min(m_bdRadarInfo.strRadarName.length(), SITE_NAME_LEN - 1));
-			strcpy_s(itm->second.CutsData[n].header.radar_name, strTemp.length() + 1, strTemp.c_str());
+			strncpy(itm->second.CutsData[n].header.radar_name, strTemp.c_str(), strTemp.length() + 1);
 
 			strTemp = m_bdRadarInfo.strRadarCode.substr(0, min(m_bdRadarInfo.strRadarCode.length(), SITE_CODE_LEN - 1));
-			strcpy_s(itm->second.CutsData[n].header.radar_code, strTemp.length() + 1, strTemp.c_str());
+			strncpy(itm->second.CutsData[n].header.radar_code, strTemp.c_str(), strTemp.length() + 1);
 
 			strTemp = m_bdRadarInfo.strRadarType.substr(0, min(m_bdRadarInfo.strRadarType.length(), SITE_TYPE_LEN - 1));
-			strcpy_s(itm->second.CutsData[n].header.radar_type, strTemp.length() + 1, strTemp.c_str());
+			strncpy(itm->second.CutsData[n].header.radar_type, strTemp.c_str(), strTemp.length() + 1);
 
 			itm->second.CutsData[n].header.num_beam = uint16_t(itm->second.CutsData[n].azim.size());//
 			if (itm->second.CutsData[n].field.size()>0)

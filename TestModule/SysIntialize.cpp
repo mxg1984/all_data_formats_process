@@ -46,26 +46,26 @@ BOOL InitializeConf(BOOL isReset)
 
 	///////////////////////////////////////////////////////////////////////////////////////
 	//区域名
-	strcpy_s(g_strZoneName , "ZoneName");
+	strcpy(g_strZoneName , "ZoneName");
 	//雷达站数
 	g_iSitesInZone = 0;
 	for(i=0; i<TOTAL_SITES; i++)
 	{
 		//每个雷达站参数
-		strcpy_s(g_cRadarSiteInfo[i].SiteName , "SiteName");
-		strcpy_s(g_cRadarSiteInfo[i].SiteType , INVALID_STRING);
+		strcpy(g_cRadarSiteInfo[i].SiteName , "SiteName");
+		strcpy(g_cRadarSiteInfo[i].SiteType , INVALID_STRING);
 		g_cRadarSiteInfo[i].SiteID = 0;
 		g_cRadarSiteInfo[i].SiteLon = 0;
 		g_cRadarSiteInfo[i].SiteLat = 0;
 		g_cRadarSiteInfo[i].SiteHgt = 0;
 		g_cRadarSiteInfo[i].ObsRange = 0;
 		//每个雷达站基数据位置
-		strcpy_s(g_strRadarDataPath[i],"");
+		strcpy(g_strRadarDataPath[i],"");
 	}
 	//数据路径
-	strcpy_s(g_DataDir.strTemDataDir,"");
-	strcpy_s(g_DataDir.strProdDataDir,"");
-	strcpy_s(g_DataDir.strRainGageDir,"");
+	strcpy(g_DataDir.strTemDataDir,"");
+	strcpy(g_DataDir.strProdDataDir,"");
+	strcpy(g_DataDir.strRainGageDir,"");
 	//分辨率
 	g_HorizRes.fLatRes = 0.01;
 	g_HorizRes.fLonRes = 0.01;
@@ -563,7 +563,7 @@ BOOL ConfigureFileOfVelGridIO(BOOL bRead)
 
 	/////////////////////////////////////////////////////////////
 	//Name of the site information file
-	strcpy_s(strFullName,SETTINGVELGRIDFILE);	
+	strcpy(strFullName,SETTINGVELGRIDFILE);	
 	
 	if(bRead)
 	{//读操作
@@ -699,8 +699,8 @@ void ClearConfig()
 	/////////////////////////////////////////////////////////////
 
 	//Name of the site information file
-	strcpy_s(strFullName,SETTINGFILE);
-	strcpy_s(strFullNameOld,SETTINGFILEOLD);
+	strcpy(strFullName,SETTINGFILE);
+	strcpy(strFullNameOld,SETTINGFILEOLD);
 
 	//清除配置文件
 	remove(strFullName);
@@ -797,7 +797,6 @@ BOOL ClearDirectory(char chrDirName[])
                 CString strA = strDirName+'\\'+ fData.cFileName;
 
 				TcharToChar(strA.GetBuffer(), chA);
-                //strcpy_s(chA, strA.GetLength() + 1, (char const*)(strA.GetBuffer()));
 				strA.ReleaseBuffer();
                 ClearDirectory(chA);
             }
@@ -805,7 +804,6 @@ BOOL ClearDirectory(char chrDirName[])
 				char chB[FILENAME_MAX]="";
                 CString strB = strDirName + fData.cFileName;
 				TcharToChar(strB.GetBuffer(), chB);
-               // strcpy_s(chB, strB.GetLength() + 1, (char const*)strB.GetBuffer());
 				strB.ReleaseBuffer();
                 ClearDirectory(chB);
             }

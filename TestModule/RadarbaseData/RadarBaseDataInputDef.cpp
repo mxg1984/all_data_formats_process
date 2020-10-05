@@ -73,43 +73,43 @@ char* CommonMomentIdToType(uint16_t id, char *szType)
 	switch (id)
 	{
 	case M_Z_ID:
-		strcpy_s(szType, strlen(M_Z) + 1, M_Z);
+		strcpy(szType, M_Z);
 		break;
 	case M_V_ID:
-		strcpy_s(szType, strlen(M_V) + 1, M_V);
+		strcpy(szType, M_V);
 		break;
 	case M_W_ID:
-		strcpy_s(szType, strlen(M_W) + 1, M_W);
+		strcpy(szType, M_W);
 		break;
 	case M_ZDR_ID:
-		strcpy_s(szType, strlen(M_ZDR) + 1, M_ZDR);
+		strcpy(szType, M_ZDR);
 		break;
 	case M_PDP_ID:
-		strcpy_s(szType, strlen(M_PDP) + 1, M_PDP);
+		strcpy(szType, M_PDP);
 		break;
 	case M_KDP_ID:
-		strcpy_s(szType, strlen(M_KDP) + 1, M_KDP);
+		strcpy(szType, M_KDP);
 		break;
 	case M_LDR_ID:
-		strcpy_s(szType, strlen(M_LDR) + 1, M_LDR);
+		strcpy(szType, M_LDR);
 		break;
 	case M_RHV_ID:
-		strcpy_s(szType, strlen(M_RHV) + 1, M_RHV);
+		strcpy(szType, M_RHV);
 		break;
 	case M_Zc_ID:
-		strcpy_s(szType, strlen(M_Zc) + 1, M_Zc);
+		strcpy(szType, M_Zc);
 		break;
 	case M_Vc_ID:
-		strcpy_s(szType, strlen(M_Vc) + 1, M_Vc);
+		strcpy(szType, M_Vc);
 		break;
 	case M_Wc_ID:
-		strcpy_s(szType, strlen(M_Wc) + 1, M_Wc);
+		strcpy(szType, M_Wc);
 		break;
 	case M_ZDRc_ID:
-		strcpy_s(szType, strlen(M_ZDRc) + 1, M_ZDRc);
+		strcpy(szType, M_ZDRc);
 		break;
 	default:
-		strcpy_s(szType, 2, "");
+		strcpy(szType, "");
 		break;
 	}
 

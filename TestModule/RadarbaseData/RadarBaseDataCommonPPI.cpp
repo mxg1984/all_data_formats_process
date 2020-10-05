@@ -91,11 +91,11 @@ void stdUniformCutData::ReleaseBuf()
 //以下为一次扫描单要素数据体
 stdUniformScanHeader::stdUniformScanHeader()
 {
-	strcpy_s(radar_name, 2, "");// [SITE_NAME_LEN];
-	strcpy_s(radar_type, 2, "");//[SITE_TYPE_LEN];
-	strcpy_s(data_name, 2, "");//[DATA_TYPE_LEN];
-	strcpy_s(radar_code,2, "");
-	strcpy_s(obsv_type, 2,"");
+	strcpy(radar_name, "");// [SITE_NAME_LEN];
+	strcpy(radar_type, "");//[SITE_TYPE_LEN];
+	strcpy(data_name, "");//[DATA_TYPE_LEN];
+	strcpy(radar_code,"");
+	strcpy(obsv_type, "");
 	radlat = 0;		//*1000
 	radlon = 0;		//*1000
 	radhgt = 0;		//*meters	

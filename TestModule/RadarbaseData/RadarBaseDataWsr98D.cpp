@@ -196,7 +196,7 @@ bool CRadarBaseDataWsr98DS::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 
 			if (bZ)
 			{
-				strcpy_s(newCut.header.data_name, strlen(M_Z) + 1, M_Z);
+				strncpy(newCut.header.data_name, M_Z, strlen(M_Z) + 1);
 				newCut.header.gateWidth = metRadial.GateSizeOfReflectivity;
 				newCut.header.num_gate = metRadial.GatesNumberOfReflectivity;
 				mid = M_Z_ID;
@@ -206,7 +206,7 @@ bool CRadarBaseDataWsr98DS::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 
 				if (IsScanStart(metRadial.RadialStatus))
 				{
-					strcpy_s(genScanData[mid].header.data_name, strlen(M_Z) + 1, M_Z);
+					strncpy(genScanData[mid].header.data_name, M_Z, strlen(M_Z) + 1);
 					genScanData[mid].header.factor = m_outputScale;
 					genScanData[mid].header.offset = m_outputOffset;
 					genScanData[mid].header.ndata = VALUE_INVALID;
@@ -214,7 +214,7 @@ bool CRadarBaseDataWsr98DS::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 			}
 			if (bV)
 			{
-				strcpy_s(newCut.header.data_name, strlen(M_V) + 1, M_V);
+				strncpy(newCut.header.data_name, M_V, strlen(M_V) + 1);
 				newCut.header.gateWidth = metRadial.GateSizeOfDoppler;
 				newCut.header.num_gate = metRadial.GatesNumberOfDoppler;
 				newCut.header.nyq_vel = metRadial.Nyquist;
@@ -225,7 +225,7 @@ bool CRadarBaseDataWsr98DS::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 
 				if (IsScanStart(metRadial.RadialStatus))
 				{
-					strcpy_s(genScanData[mid].header.data_name, strlen(M_Z) + 1, M_Z);
+					strncpy(genScanData[mid].header.data_name, M_Z, strlen(M_Z) + 1);
 					genScanData[mid].header.factor = m_outputScale;
 					genScanData[mid].header.offset = m_outputOffset;
 					genScanData[mid].header.ndata = VALUE_INVALID;
@@ -233,7 +233,7 @@ bool CRadarBaseDataWsr98DS::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 			}
 			if (bW)
 			{
-				strcpy_s(newCut.header.data_name, strlen(M_W) + 1, M_W);
+				strncpy(newCut.header.data_name, M_W, strlen(M_W) + 1);
 				newCut.header.gateWidth = metRadial.GateSizeOfDoppler;
 				newCut.header.num_gate = metRadial.GatesNumberOfDoppler;
 				newCut.header.nyq_vel = metRadial.Nyquist;
@@ -244,7 +244,7 @@ bool CRadarBaseDataWsr98DS::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 
 				if (IsScanStart(metRadial.RadialStatus))
 				{
-					strcpy_s(genScanData[mid].header.data_name, strlen(M_Z) + 1, M_Z);
+					strncpy(genScanData[mid].header.data_name, M_Z, strlen(M_Z) + 1);
 					genScanData[mid].header.factor = m_outputScale;
 					genScanData[mid].header.offset = m_outputOffset;
 					genScanData[mid].header.ndata = VALUE_INVALID;
@@ -521,7 +521,7 @@ bool CRadarBaseDataWsr98DC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 
 			if (bZ)
 			{
-				strcpy_s(newCut.header.data_name, strlen(M_Z) + 1, M_Z);
+				strncpy(newCut.header.data_name, M_Z, strlen(M_Z) + 1);
 				newCut.header.gateWidth = metRadial.GateSizeOfReflectivity;
 				newCut.header.num_gate = metRadial.GatesNumberOfReflectivity;
 				mid = M_Z_ID;
@@ -531,7 +531,7 @@ bool CRadarBaseDataWsr98DC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 
 				if (IsScanStart(metRadial.RadialStatus))
 				{
-					strcpy_s(genScanData[mid].header.data_name, strlen(M_Z) + 1, M_Z);
+					strncpy(genScanData[mid].header.data_name, M_Z, strlen(M_Z) + 1);
 					genScanData[mid].header.factor = m_outputScale;
 					genScanData[mid].header.offset = m_outputOffset;
 					genScanData[mid].header.ndata = VALUE_INVALID;
@@ -539,7 +539,7 @@ bool CRadarBaseDataWsr98DC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 			}
 			if (bV)
 			{
-				strcpy_s(newCut.header.data_name, strlen(M_V) + 1, M_V);
+				strncpy(newCut.header.data_name, M_V, strlen(M_V) + 1);
 				newCut.header.gateWidth = metRadial.GateSizeOfDoppler;
 				newCut.header.num_gate = metRadial.GatesNumberOfDoppler;
 				mid = M_V_ID;
@@ -549,7 +549,7 @@ bool CRadarBaseDataWsr98DC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 
 				if (IsScanStart(metRadial.RadialStatus))
 				{
-					strcpy_s(genScanData[mid].header.data_name, strlen(M_Z) + 1, M_Z);
+					strncpy(genScanData[mid].header.data_name, M_Z, strlen(M_Z) + 1);
 					genScanData[mid].header.factor = m_outputScale;
 					genScanData[mid].header.offset = m_outputOffset;
 					genScanData[mid].header.ndata = VALUE_INVALID;
@@ -557,7 +557,7 @@ bool CRadarBaseDataWsr98DC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 			}
 			if (bW)
 			{
-				strcpy_s(newCut.header.data_name, strlen(M_W) + 1, M_W);
+				strncpy(newCut.header.data_name, M_W, strlen(M_W) + 1);
 				newCut.header.gateWidth = metRadial.GateSizeOfDoppler;
 				newCut.header.num_gate = metRadial.GatesNumberOfDoppler;
 				mid = M_W_ID;
@@ -567,7 +567,7 @@ bool CRadarBaseDataWsr98DC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 
 				if (IsScanStart(metRadial.RadialStatus))
 				{
-					strcpy_s(genScanData[mid].header.data_name, strlen(M_Z) + 1, M_Z);
+					strncpy(genScanData[mid].header.data_name, M_Z, strlen(M_Z) + 1);
 					genScanData[mid].header.factor = m_outputScale;
 					genScanData[mid].header.offset = m_outputOffset;
 					genScanData[mid].header.ndata = VALUE_INVALID;
@@ -844,7 +844,7 @@ bool CRadarBaseDataCDSC2::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 
 			if (bZ)
 			{
-				strcpy_s(newCut.header.data_name, strlen(M_Z) + 1, M_Z);
+				strncpy(newCut.header.data_name, M_Z, strlen(M_Z) + 1);
 				newCut.header.gateWidth = metRadial.GateSizeOfReflectivity;
 				newCut.header.num_gate = metRadial.GatesNumberOfReflectivity;
 				mid = M_Z_ID;
@@ -854,7 +854,7 @@ bool CRadarBaseDataCDSC2::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 
 				if (IsScanStart(metRadial.RadialStatus))
 				{
-					strcpy_s(genScanData[mid].header.data_name, strlen(M_Z) + 1, M_Z);
+					strncpy(genScanData[mid].header.data_name, M_Z, strlen(M_Z) + 1);
 					genScanData[mid].header.factor = m_outputScale;
 					genScanData[mid].header.offset = m_outputOffset;
 					genScanData[mid].header.ndata = VALUE_INVALID;
@@ -862,7 +862,7 @@ bool CRadarBaseDataCDSC2::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 			}
 			if (bV)
 			{
-				strcpy_s(newCut.header.data_name, strlen(M_V) + 1, M_V);
+				strncpy(newCut.header.data_name, M_V, strlen(M_V) + 1);
 				newCut.header.gateWidth = metRadial.GateSizeOfDoppler;
 				newCut.header.num_gate = metRadial.GatesNumberOfDoppler;
 				mid = M_V_ID;
@@ -872,7 +872,7 @@ bool CRadarBaseDataCDSC2::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 
 				if (IsScanStart(metRadial.RadialStatus))
 				{
-					strcpy_s(genScanData[mid].header.data_name, strlen(M_Z) + 1, M_Z);
+					strncpy(genScanData[mid].header.data_name, M_Z, strlen(M_Z) + 1);
 					genScanData[mid].header.factor = m_outputScale;
 					genScanData[mid].header.offset = m_outputOffset;
 					genScanData[mid].header.ndata = VALUE_INVALID;
@@ -880,7 +880,7 @@ bool CRadarBaseDataCDSC2::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 			}
 			if (bW)
 			{
-				strcpy_s(newCut.header.data_name, strlen(M_W) + 1, M_W);
+				strncpy(newCut.header.data_name, M_W, strlen(M_W) + 1);
 				newCut.header.gateWidth = metRadial.GateSizeOfDoppler;
 				newCut.header.num_gate = metRadial.GatesNumberOfDoppler;
 				mid = M_W_ID;
@@ -890,7 +890,7 @@ bool CRadarBaseDataCDSC2::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 
 				if (IsScanStart(metRadial.RadialStatus))
 				{
-					strcpy_s(genScanData[mid].header.data_name, strlen(M_Z) + 1, M_Z);
+					strncpy(genScanData[mid].header.data_name, M_Z, strlen(M_Z) + 1);
 					genScanData[mid].header.factor = m_outputScale;
 					genScanData[mid].header.offset = m_outputOffset;
 					genScanData[mid].header.ndata = VALUE_INVALID;

@@ -88,11 +88,11 @@ bool CRadarBaseDataCC1::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas
 	{
 		mid = M_Z_ID;
 		genScanData[mid].Available = true;
-		strcpy_s(genScanData[mid].header.data_name, min(DATA_TYPE_LEN, strlen(M_Z) + 1), M_Z);
-		strcpy_s(genScanData[mid].header.obsv_type, min(SCAN_TYPE_LEN, scanModeName.length() + 1), scanModeName.c_str());
-		strcpy_s(genScanData[mid].header.radar_name, min(SITE_NAME_LEN, radName.length() + 1), radName.c_str());
-		strcpy_s(genScanData[mid].header.radar_code, min(SITE_CODE_LEN, radCode.length() + 1), radCode.c_str());// ->radartype);
-		strcpy_s(genScanData[mid].header.radar_type, min(SITE_TYPE_LEN, radType.length() + 1), radType.c_str());// ->radartype);
+		strncpy(genScanData[mid].header.data_name, M_Z, min(DATA_TYPE_LEN, strlen(M_Z)+1));
+		strncpy(genScanData[mid].header.obsv_type, scanModeName.c_str(), min(SCAN_TYPE_LEN, scanModeName.length() + 1));
+		strncpy(genScanData[mid].header.radar_name, radName.c_str(), min(SITE_NAME_LEN, radName.length() + 1));
+		strncpy(genScanData[mid].header.radar_code, radCode.c_str(), min(SITE_CODE_LEN, radCode.length() + 1));// ->radartype);
+		strncpy(genScanData[mid].header.radar_type, radType.c_str(), min(SITE_TYPE_LEN, radType.length() + 1));// ->radartype);
 		genScanData[mid].header.radlon = uint32_t(radlon * 1000);
 		genScanData[mid].header.radlat = uint32_t(radlat * 1000);
 		genScanData[mid].header.radhgt = uint16_t(radht);
@@ -106,11 +106,11 @@ bool CRadarBaseDataCC1::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas
 	{
 		mid = M_V_ID;
 		genScanData[mid].Available = true;
-		strcpy_s(genScanData[mid].header.data_name, min(DATA_TYPE_LEN, strlen(M_V) + 1), M_V);
-		strcpy_s(genScanData[mid].header.obsv_type, min(SCAN_TYPE_LEN, scanModeName.length() + 1), scanModeName.c_str());
-		strcpy_s(genScanData[mid].header.radar_name, min(SITE_NAME_LEN, radName.length() + 1), radName.c_str());
-		strcpy_s(genScanData[mid].header.radar_code, min(SITE_CODE_LEN, radCode.length() + 1), radCode.c_str());// ->radartype);
-		strcpy_s(genScanData[mid].header.radar_type, min(SITE_TYPE_LEN, radType.length() + 1), radType.c_str());// ->radartype);
+		strncpy(genScanData[mid].header.data_name, M_V, min(DATA_TYPE_LEN, strlen(M_V) + 1));
+		strncpy(genScanData[mid].header.obsv_type, scanModeName.c_str(), min(SCAN_TYPE_LEN, scanModeName.length() + 1));
+		strncpy(genScanData[mid].header.radar_name, radName.c_str(), min(SITE_NAME_LEN, radName.length() + 1));
+		strncpy(genScanData[mid].header.radar_code, radCode.c_str(), min(SITE_CODE_LEN, radCode.length() + 1));// ->radartype);
+		strncpy(genScanData[mid].header.radar_type, radType.c_str(), min(SITE_TYPE_LEN, radType.length() + 1));// ->radartype);
 		genScanData[mid].header.radlon = uint32_t(radlon * 1000);
 		genScanData[mid].header.radlat = uint32_t(radlat * 1000);
 		genScanData[mid].header.radhgt = uint16_t(radht);
@@ -124,11 +124,11 @@ bool CRadarBaseDataCC1::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas
 	{
 		mid = M_W_ID;
 		genScanData[mid].Available = true;
-		strcpy_s(genScanData[mid].header.data_name, min(DATA_TYPE_LEN, strlen(M_W) + 1), M_W);
-		strcpy_s(genScanData[mid].header.obsv_type, min(SCAN_TYPE_LEN, scanModeName.length() + 1), scanModeName.c_str());
-		strcpy_s(genScanData[mid].header.radar_name, min(SITE_NAME_LEN, radName.length() + 1), radName.c_str());
-		strcpy_s(genScanData[mid].header.radar_code, min(SITE_CODE_LEN, radCode.length() + 1), radCode.c_str());// ->radartype);
-		strcpy_s(genScanData[mid].header.radar_type, min(SITE_TYPE_LEN, radType.length() + 1), radType.c_str());// ->radartype);
+		strncpy(genScanData[mid].header.data_name, M_W, min(DATA_TYPE_LEN, strlen(M_W) + 1));
+		strncpy(genScanData[mid].header.obsv_type, scanModeName.c_str(), min(SCAN_TYPE_LEN, scanModeName.length() + 1));
+		strncpy(genScanData[mid].header.radar_name, radName.c_str(), min(SITE_NAME_LEN, radName.length() + 1));
+		strncpy(genScanData[mid].header.radar_code, radCode.c_str(), min(SITE_CODE_LEN, radCode.length() + 1));// ->radartype);
+		strncpy(genScanData[mid].header.radar_type, radType.c_str(), min(SITE_TYPE_LEN, radType.length() + 1));// ->radartype);
 		genScanData[mid].header.radlon = uint32_t(radlon * 1000);
 		genScanData[mid].header.radlat = uint32_t(radlat * 1000);
 		genScanData[mid].header.radhgt = uint16_t(radht);
@@ -150,10 +150,10 @@ bool CRadarBaseDataCC1::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas
 			newCut.header.year, newCut.header.month, newCut.header.day,
 			newCut.header.hour, newCut.header.minute, newCut.header.second);
 
-		strcpy_s(newCut.header.obsv_type, min(SCAN_TYPE_LEN, scanModeName.length() + 1), scanModeName.c_str());
-		strcpy_s(newCut.header.radar_name, min(SITE_NAME_LEN, radName.length() + 1), radName.c_str());
-		strcpy_s(newCut.header.radar_code, min(SITE_CODE_LEN, radCode.length() + 1), radCode.c_str());// ->radartype);
-		strcpy_s(newCut.header.radar_type, min(SITE_TYPE_LEN, radType.length() + 1), radType.c_str());// ->radartype);
+		strncpy(newCut.header.obsv_type, scanModeName.c_str(), min(SCAN_TYPE_LEN, scanModeName.length() + 1));
+		strncpy(newCut.header.radar_name, radName.c_str(), min(SITE_NAME_LEN, radName.length() + 1));
+		strncpy(newCut.header.radar_code, radCode.c_str(), min(SITE_CODE_LEN, radCode.length() + 1));// ->radartype);
+		strncpy(newCut.header.radar_type, radType.c_str(), min(SITE_TYPE_LEN, radType.length() + 1));// ->radartype);
 		newCut.header.radlon = uint32_t(radlon * 1000);
 		newCut.header.radlat = uint32_t(radlat * 1000);
 		newCut.header.radhgt = uint16_t(radht);
@@ -168,19 +168,19 @@ bool CRadarBaseDataCC1::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas
 		if (bZ)
 		{
 			mid = M_Z_ID;	
-			strcpy_s(newCut.header.data_name, strlen(M_Z) + 1, M_Z);
+			strncpy(newCut.header.data_name, M_Z, strlen(M_Z) + 1);
 			genScanData[mid].CutsData.push_back(newCut);						
 		}
 		if (bV)
 		{
 			mid = M_V_ID;
-			strcpy_s(newCut.header.data_name, strlen(M_V) + 1, M_V);
+			strncpy(newCut.header.data_name, M_V, strlen(M_V) + 1);
 			genScanData[mid].CutsData.push_back(newCut);
 		}
 		if (bW)
 		{
 			mid = M_W_ID;
-			strcpy_s(newCut.header.data_name, strlen(M_W) + 1, M_W);
+			strncpy(newCut.header.data_name, M_W, strlen(M_W) + 1);
 			genScanData[mid].CutsData.push_back(newCut);
 		}
 		

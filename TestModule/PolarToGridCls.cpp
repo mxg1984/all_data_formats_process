@@ -19,8 +19,6 @@ CPolarToGridCls::CPolarToGridCls()
 	m_pPPIs=0;
 	m_GridData=0;
 
-	//strcpy_s(m_velGridFileName,"");
-
 	memset(&( m_ParamSiteInfo),0x0, sizeof(RADARSITEINFO));
 	m_paramNumX=0;
 	m_paramNumY=0;
@@ -737,9 +735,9 @@ bool CPolarToGridOfRefCls::SaveGridData()
 	MOSAICDATAHEADER DataHeader;
 	ZeroMemory(&DataHeader, sizeof(DataHeader));
 	DataHeader.iVersion = 1;
-	strcpy_s(DataHeader.strZoneName, m_ParamSiteInfo.SiteName);
+	strcpy(DataHeader.strZoneName, m_ParamSiteInfo.SiteName);
 	DataHeader.iNumRadars = 1;
-	strcpy_s(DataHeader.strDataType,"Z");
+	strcpy(DataHeader.strDataType,"Z");
 	DataHeader.iStYear = m_year;
 	DataHeader.iStMonth= m_month;
 	DataHeader.iStDay  = m_day; 
@@ -946,9 +944,9 @@ bool CPolarToGridOfDopplerCls::SaveGridData()
 	MOSAICDATAHEADER DataHeader;
 	ZeroMemory(&DataHeader, sizeof(DataHeader));
 	DataHeader.iVersion = 1;
-	strcpy_s(DataHeader.strZoneName, m_ParamSiteInfo.SiteName);
+	strcpy(DataHeader.strZoneName, m_ParamSiteInfo.SiteName);
 	DataHeader.iNumRadars = 1;
-	strcpy_s(DataHeader.strDataType,"V");
+	strcpy(DataHeader.strDataType,"V");
 	DataHeader.iStYear = m_year;
 	DataHeader.iStMonth= m_month;
 	DataHeader.iStDay  = m_day; 

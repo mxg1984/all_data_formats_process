@@ -27,8 +27,6 @@ CGridMosaicCls::CGridMosaicCls(int16_t numFile, std::vector<std::string>  &dataF
 	m_paramGridLenY = 0.;
 	m_paramNumZ = 0;
 	m_pHeights = 0x0; //m	
-	//strcpy_s(m_paramProdDir, 2, "");
-	//strcpy_s(m_mosGridFileName, 2, "");  //结果文件
 
 	m_paramAlgThrRng = 100;//km
 }
@@ -248,7 +246,7 @@ int16_t CGridMosaicCls::LoadSiteGridFileAndHeader(int16_t numFile, std::vector<s
 	{
 		BaseDataInfo bBaseData;
 		//	char tempFile[PATH_LEN]="";
-		strcpy_s(bBaseData.strFilePath, pFilesNameList[i].length() + 1, pFilesNameList[i].c_str());
+		strncpy(bBaseData.strFilePath, pFilesNameList[i].c_str(), pFilesNameList[i].length() + 1);
 		if (_access(bBaseData.strFilePath, 4) == -1)
 			continue;
 
@@ -451,10 +449,10 @@ bool CGridMosaicCls::SaveGridData()
 	MOSAICDATAHEADER DataHeader;
 	ZeroMemory(&DataHeader, sizeof(DataHeader));
 	DataHeader.iVersion = 1;
-	strcpy_s(DataHeader.strZoneName, g_strZoneName);//, strlen(g_strZoneName)+1);
+	strcpy(DataHeader.strZoneName, g_strZoneName);//, strlen(g_strZoneName)+1);
 	//strcpy(DataHeader.strZoneName, m_ParamSiteInfo.SiteName);
 	DataHeader.iNumRadars = m_numValidSite;
-	strcpy_s(DataHeader.strDataType, "Z");
+	strcpy(DataHeader.strDataType, "Z");
 	DataHeader.iStYear = m_mosaicDateTime.year;
 	DataHeader.iStMonth = m_mosaicDateTime.mon;
 	DataHeader.iStDay = m_mosaicDateTime.day;

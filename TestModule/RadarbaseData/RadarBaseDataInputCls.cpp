@@ -283,7 +283,7 @@ std::string CRadarDataInputCls::GetMomentScanFile(uint16_t nMomentTypeId)//, std
 void CRadarDataInputCls::DetermineRadarType(const char* szDataFileName, RADARSITEINFO siteInfo, char *szType)
 {
 	//m_siteInfo
-	strcpy_s(szType, strlen(siteInfo.SiteType)+1,siteInfo.SiteType);
+	strncpy(szType,siteInfo.SiteType, strlen(siteInfo.SiteType) + 1);
 
 	std::string strFileName = "";
 	strFileName.assign(szDataFileName);
