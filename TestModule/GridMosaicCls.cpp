@@ -493,17 +493,11 @@ bool CGridMosaicCls::SaveGridData()
 	DataHeader.dwObvDataOffset = DataHeader.dwLevHgtOffset + sizeof(uint16_t)*DataHeader.iLevels;
 
 	//Set file name
-	//char strYear[6] = "", strMonth[4] = "", strDay[4] = "", strHour[4] = "", strMinute[4] = "";
 	std::string strYear = std::to_string(DataHeader.iStYear);
 	std::string strMonth = std::to_string(DataHeader.iStMonth + 100);
 	std::string strDay = std::to_string(DataHeader.iStDay + 100);
 	std::string strHour = std::to_string(DataHeader.iStHour + 100);
 	std::string strMinute = std::to_string(DataHeader.iStMinute + 100);
-	//_itoa_s(DataHeader.iStYear, strYear, 10);
-	//_itoa_s(DataHeader.iStMonth + 100, strMonth, 10);
-	//_itoa_s(DataHeader.iStDay + 100, strDay, 10);
-	//_itoa_s(DataHeader.iStHour + 100, strHour, 10);
-	//_itoa_s(DataHeader.iStMinute + 100, strMinute, 10);
 
 	m_mosGridFileName = m_paramProdDir;
 	m_mosGridFileName += std::experimental::filesystem::path::preferred_separator;
@@ -512,15 +506,9 @@ bool CGridMosaicCls::SaveGridData()
 	m_mosGridFileName.append(strDay.data() + 1);
 	m_mosGridFileName.append(strHour.data() + 1);
 	m_mosGridFileName.append(strMinute.data() + 1);
-
-	//strcat_s(m_mosGridFileName, strMonth + 1);
-	//strcat_s(m_mosGridFileName, strDay + 1);
-	//strcat_s(m_mosGridFileName, strHour + 1);
-	//strcat_s(m_mosGridFileName, strMinute + 1);
-	//strcat(m_mosGridFileName,".");
-	//strcat(m_mosGridFileName,DataHeader.strDataType);	
+	m_mosGridFileName.append(".");
+	m_mosGridFileName.append(DataHeader.strDataType);
 	m_mosGridFileName.append(MOSAIC_EXT_FILE);
-	//strcat_s(m_mosGridFileName, MOSAIC_EXT_FILE);
 
 	FILE *fp = 0;
 	errno_t err = fopen_s(&fp, m_mosGridFileName.c_str(), "wb");
@@ -574,15 +562,6 @@ bool CGridMosaicCls::SaveGridData()
 	chNetCdfFileName += ".";
 	chNetCdfFileName.append(DataHeader.strDataType);
 	chNetCdfFileName.append(NETCDF_EXT_FILE);
-
-	//strcat_s(chNetCdfFileName, strYear);
-	//strcat_s(chNetCdfFileName, strMonth + 1);
-	//strcat_s(chNetCdfFileName, strDay + 1);
-	//strcat_s(chNetCdfFileName, strHour + 1);
-	//strcat_s(m_mosGridFileName, strMinute + 1);
-	//strcat_s(chNetCdfFileName, ".");
-	//strcat_s(chNetCdfFileName, DataHeader.strDataType);
-	//strcat_s(chNetCdfFileName, NETCDF_EXT_FILE);
 
 	//MyNetCDF LocalMyNetCdf(m_mosGridFileName, chNetCdfFileName);
 	//LocalMyNetCdf.ConvertToNcfile();

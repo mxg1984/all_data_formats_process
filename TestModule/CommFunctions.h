@@ -5,7 +5,7 @@
 #include <afx.h>
 
 void Zip2Prod(char *src);
-void UnZip(char *src, char *dst);
+void UnZip(const char *src, char *dst);
 bool FilePathExists(const char* szFilePathName);
 bool CreateDir(const char *strPath, bool bCreate=true);
 bool CreateDir(TCHAR *strPath, bool bCreate = true);

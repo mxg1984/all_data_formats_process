@@ -30,8 +30,8 @@ public:
 	int32_t m_numRadials;
 	int32_t m_numGates;	
 private:
-	int32_t findStr(char *str, char *substr);
-	bool PrepareObsvDataFileForReading(const char* szSrcFileName, char* szDstFileName);
+	bool PrepareObsvDataFileForReading(const std::string& szSrcFileName,
+		std::string* const szDstFileName);
 	void LoadParameter();
-	bool FileIsZipped(const char *srcFileName, char *dstFileName);
+	bool FileIsZipped(const std::string& strSrcName, std::string *const strDstName);
 };

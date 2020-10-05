@@ -23,7 +23,7 @@ public:
 	//virtual void VolumnScanTo3DGrid(struct PPISTRUCT* strct_Data, int16_t nCuts, uint8_t***  &outData,
 	//				  int16_t x_Num, float x_Dlt, int16_t y_Num, float y_Dlt, int16_t z_Num, uint16_t* Height, 
 	//				  float radLon, float radLat, uint16_t radHgt){};
-	virtual void LoadParameters();// {};
+	virtual bool LoadParameters();// {};
 	virtual bool SaveGridData(){return false;};//(char *prodType, char *prodDir);
 	void ObsvDateTime();
 	void ObsvDateTime(stdUniformCutData firstCut);
@@ -78,7 +78,7 @@ public:
 
 	//virtual	int32_t Run();
 	virtual	int32_t Run1();
-	virtual void LoadParameters();// {};
+	virtual bool LoadParameters() override;
 	///virtual void VolumnScanTo3DGrid(struct PPISTRUCT* strct_Data, int16_t nCuts, uint8_t***  &outData,
 	//				  int16_t x_Num, double x_Dlt, int16_t y_Num, double y_Dlt, int16_t z_Num, uint16_t* Height,
 	//	double radLon, double radLat, uint16_t radHgt);
@@ -100,7 +100,7 @@ public:
 	//virtual	int32_t Run();
 	virtual	int32_t Run1();// (stdCommScan vsScan);
 	
-	virtual void LoadParameters();// {};
+	virtual bool LoadParameters() override;
 	//virtual void VolumnScanTo3DGrid(struct PPISTRUCT* strct_Data, int16_t nCuts, uint8_t***  &outData,
 	//				  int16_t x_Num, double x_Dlt, int16_t y_Num, double y_Dlt, int16_t z_Num, uint16_t* Height,
 	//	double radLon, double radLat, uint16_t radHgt);

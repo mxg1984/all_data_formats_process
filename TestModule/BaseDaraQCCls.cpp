@@ -1,6 +1,8 @@
 #include "BaseDaraQCCls.h"
 
+#include <experimental/filesystem>
 #include <memory>
+#include <thread>
 
 #include "CommFunctions.h"
 #include "GlobalParams.h"
@@ -13,56 +15,19 @@ CBaseDataIOandQCCls::CBaseDataIOandQCCls(int32_t sitecode, const std::string& sr
 
 CBaseDataIOandQCCls::~CBaseDataIOandQCCls()
 {	
-
 }
-
 
 int32_t CBaseDataIOandQCCls::Run()
 {
-	int32_t i;
-	char unQcFileName[PATH_LEN] = "";//unZipFileName[PATH_LEN];
-	char QcFileName[PATH_LEN] = "";
-	FILE *fuzp = NULL;
-	char strYear[5] = "    ";
-	char strMonth[4] = "   ";
-	char strDay[4] = "   ";
-	char strHour[4] = "   ";
-	char strMinute[4] = "   ";
-	int32_t  nCuts;		//Number of elevation cuts
-	int32_t  nData = 3;			//Tyoe of data : REF, VEL, SPW
-	char szRadarType[SITE_TYPE_LEN] = "";
-	//----------------------------------------------------------------
+	std::string unQcFileName("");
 
 	//firstly, load global parameter
 	LoadParameter();
 	
-	//进行原始体扫数据读取和质量控制选择
-	nCuts = 0;
 	//为QC准备待处理的数据文件
-	if (!PrepareObsvDataFileForReading(m_srcBaseDataFileName.c_str(), unQcFileName))
+	if (!PrepareObsvDataFileForReading(m_srcBaseDataFileName, &unQcFileName))
 		return -1;
 
-	//读数据 QC
-	//*
-	if (g_iQualityControl == 1) //采用有质量控制的模块
-	{
-		if (g_iSaveQcData == 1)
-		{
-			//是否保存质量控制基数据
-			for (i = strlen(unQcFileName); i > 0; i--)
-			{
-				if (unQcFileName[i] == '\\')break;
-			}
-			CreateDir(g_strQcDataPath[m_siteIndex]);
-			sprintf_s(QcFileName, PATH_LEN,"%s%s", g_strQcDataPath[m_siteIndex], &unQcFileName[i + 1]);
-		}
-		;//	PREPROCBASEDATAQC(m_siteInfo, m_pRefPPI, m_pVelPPI, m_pSpwPPI, &nCuts, unQcFileName, PATH_LEN, QcFileName, PATH_LEN);	
-	}
-	else//采用没有质量控制的模块
-		;//	PREPROCBASEDATANOQC(m_siteInfo, m_pRefPPI, m_pVelPPI, m_pSpwPPI, &nCuts, unQcFileName, PATH_LEN);	
-	//*/
-	//RADARSITEINFO * sT = new RADARSITEINFO;
-	//delete sT;
 	std::unique_ptr<CRadarDataInputCls> pBaseData(new CRadarDataInputCls(m_siteCode, unQcFileName));// , szRadarType);
 	if (pBaseData == nullptr) {
 		return -1;
@@ -71,23 +36,18 @@ int32_t CBaseDataIOandQCCls::Run()
 	pBaseData->LoadScanData();
 
 	//删除临时体扫文件
-	TCHAR wszChar[PATH_LEN * 2] = _TEXT("");
-	CharToTchar(unQcFileName, wszChar);
-	//DeleteFile(wszChar); //MxG
+	std::experimental::filesystem::remove(unQcFileName);
 
 	if (m_paramSaveRef)
 	{
 		m_strRefDataName = pBaseData->GetMomentScanFile(M_Z);
 		if (m_strRefDataName.empty())
 		{
-			char strMsg[LEN_MSG] = "";
-			sprintf_s(strMsg, "Error in QC function, number of el. cuts <9. File: %s", unQcFileName);
-			ReportLog_Error(strMsg);
+			//char strMsg[LEN_MSG] = "";
+			//sprintf_s(strMsg, "Error in QC function, number of el. cuts <9. File: %s", unQcFileName);
+			//ReportLog_Error(strMsg);
 
 			m_numCuts = 0;
-
-			//delete pBaseData;
-			//pBaseData = 0;
 
 			return -1;
 		}
@@ -97,21 +57,15 @@ int32_t CBaseDataIOandQCCls::Run()
 		m_strVelDataName = pBaseData->GetMomentScanFile(M_V);
 		if (m_strVelDataName.empty())
 		{
-			char strMsg[LEN_MSG] = "";
-			sprintf_s(strMsg, "Error in QC function, number of el. cuts <9. File: %s", unQcFileName);
-			ReportLog_Error(strMsg);
+			//char strMsg[LEN_MSG] = "";
+			//sprintf_s(strMsg, "Error in QC function, number of el. cuts <9. File: %s", unQcFileName);
+			//ReportLog_Error(strMsg);
 
 			m_numCuts = 0;
-
-			//delete pBaseData;
-			//pBaseData = 0;
 
 			return -1;
 		}
 	}
-
-	//delete pBaseData;
-	//pBaseData = 0;
 
 	return 1;
 }
@@ -140,8 +94,6 @@ void CBaseDataIOandQCCls::LoadParameter()
 		m_paramSaveRef=true;
 	else if(g_iOptionsGridData==GRIDDATA_OPTION_VEL)
 		m_paramSaveVel=true;
-	else
-		;
 }
 
 const char* CBaseDataIOandQCCls::GetRefFileName()
@@ -160,111 +112,51 @@ const char* CBaseDataIOandQCCls::GetVelFileName()
 	return (m_strVelDataName.c_str());
 }
 
-bool CBaseDataIOandQCCls::FileIsZipped(const char *srcFileName, char *dstFileName)
+bool CBaseDataIOandQCCls::FileIsZipped(const std::string& strSrcName, std::string *const strDstName)
 {
-	std::string strSrcName = "", strDstName = "";
-	strSrcName.assign(srcFileName);
-
-	int bn = strSrcName.find(".bz2");//findStr((char*)srcFileName, ".bz2");
-	if (bn==std::string::npos)
-		bn = strSrcName.find(".BZ2");//findStr((char*)srcFileName, ".BZ2");
-	
-	if (bn == std::string::npos)
+	auto extension = std::experimental::filesystem::path(strSrcName).extension().string();
+	if((extension == ".bz2") || (extension == ".BZ2"))
 	{
-		sprintf_s(dstFileName, strlen(srcFileName) + 1, "%s", srcFileName);
-		return false;
-	}
-	else
-	{		
-		strDstName = strSrcName.substr(0, bn);
-		sprintf_s(dstFileName, strDstName.length()+1 , "%s", strDstName.c_str());
+		*strDstName = std::experimental::filesystem::path(strSrcName).replace_extension("").string();
 		return true;
 	}
-	
-	return false;
+
+    return false;
 }
 
-bool CBaseDataIOandQCCls::PrepareObsvDataFileForReading(const char* szSrcFileName, char* szDstFileName)
+bool CBaseDataIOandQCCls::PrepareObsvDataFileForReading(const std::string& szSrcFileName, 
+	std::string* const szDstFileName)
 {
-	int32_t bn=-1,bn1=-1;
-	char szCopyFileName[PATH_LEN]=""; //拷贝到本地的临时压缩文件
-	char szUnzipFileName[PATH_LEN]="";
-	TCHAR wszUnzipFileName[PATH_LEN] = _TEXT("");
-	TCHAR wszSrcFileName[PATH_LEN] = _TEXT("");
-	TCHAR wszCopyFileName[PATH_LEN] = _TEXT("");//拷贝到本地的临时压缩文件
-												//初始化
-	strcpy_s(szDstFileName, 2, "");
-
-	CharToTchar(szSrcFileName, wszSrcFileName);
+	std::string szCopyFileName=""; //拷贝到本地的临时压缩文件
+	std::string szUnzipFileName="";
 
 	//拷贝数据到本地临时数据目录
-	sprintf_s(szCopyFileName, "%s%s\\", g_DataDir.strTemDataDir,TEMP_FOLDER);			
-	if(!CreateDir(szCopyFileName))
-		return false;//Create directory\int32_t i
-	int32_t i = 0;
-	for( i=strlen(szSrcFileName); i>0; i--)
-	{
-		if(szSrcFileName[i]=='\\' || szSrcFileName[i] == '/')
-			break;
+	szCopyFileName = g_DataDir.strTemDataDir ;
+	szCopyFileName += TEMP_FOLDER;
+	szCopyFileName += std::experimental::filesystem::path::preferred_separator;
+
+	if (!std::experimental::filesystem::exists(szCopyFileName) && 
+		!std::experimental::filesystem::create_directories(szCopyFileName)) {
+		return false;
 	}
-	strcat_s(szCopyFileName,&szSrcFileName[i+1]);
-	CharToTchar(szCopyFileName, wszCopyFileName);
-	::CopyFile(wszSrcFileName, wszCopyFileName,TRUE);		
-	TcharToChar(wszCopyFileName, szCopyFileName);
+
+	std::string filename = std::experimental::filesystem::path(szSrcFileName).filename().string();
+	szCopyFileName += filename;
+	std::experimental::filesystem::copy_file(szSrcFileName, szCopyFileName);
+
 	if(FileIsZipped(szCopyFileName, szDstFileName))
 	{//是压缩文件(只针对bz2文件)，启动解压缩功能
-		UnZip(szCopyFileName,NULL);	
-		//bn1=findStr(szCopyFileName,".bz2");
-		//::StrCpyN(wszUnzipFileName,wszCopyFileName,bn1+1);	
+		UnZip(szCopyFileName.c_str(),NULL);	
 		
-		Sleep(5);
-		if(!FilePathExists(szDstFileName))
+		std::this_thread::sleep_for(std::chrono::seconds(5));
+		if(!std::experimental::filesystem::exists(*szDstFileName))
 		{
 			//解压不成功
-			char strMsg[LEN_MSG]="";
-			sprintf_s(strMsg,"Faile to unzip base data file %s", szCopyFileName);
-			ReportLog_Error(strMsg);
-
 			return false;
 		}
 		
-		DeleteFile(wszCopyFileName); //删除临时压缩文件,只保留解压后的文件
+		std::experimental::filesystem::remove(szCopyFileName); //删除临时压缩文件,只保留解压后的文件
 	}
 	
 	return true;
-}
-
-//在str字符串中查找子字符串substr,若找到，返回子串的开始位置,否则,返回-1
-int32_t CBaseDataIOandQCCls::findStr(char *str, char *substr)
-{
-	int32_t n;
-	int32_t m,l; //开始匹配的位置   H:\Data1\ShenZhenAvg\Z_RADR_I_Z9010_20100610064800_O_DOR_SA_CAP.bin
-	char *p,*r;
-	n=0;
-	m=0;
-	l=-1;
-	while(*str)
-	{
-		p=str;
-		r=substr;
-		while(*r)
-			if(*r==*p)
-			{
-				r++;p++;
-				if(l==-1) 
-					l=m;
-			}			
-			else
-			{
-				if(l!=-1 && n==0) 
-					l=-1;
-				break;
-			}
-			if(*r=='\0')
-				n++;
-			str++;
-			m++;
-	}
-//	return n;
-	return l;
 }

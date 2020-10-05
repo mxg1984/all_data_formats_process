@@ -16,7 +16,7 @@
 class CRadarDataInputCls
 {
 public:
-	CRadarDataInputCls(uint32_t scode, const char* szFileName);// (const char* szFileName, const char* szVersionFlag);
+	CRadarDataInputCls(uint32_t scode, const std::string& szFileName);// (const char* szFileName, const char* szVersionFlag);
 	~CRadarDataInputCls() = default;
 
 	void AddNeededMoment(const char* szMomentType, bool bQc=false);

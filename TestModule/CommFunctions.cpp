@@ -100,7 +100,7 @@ void ReportLog_Error(char *str)
 //解压缩bz2文件。
 //src:压缩文件完整的文件路径
 //dst:暂时不用
-void UnZip(char *src, char *dst)  //解压缩函数
+void UnZip(const char *src, char *dst)  //解压缩函数
 {
 	std::string str;
 	std::string s1,s2;

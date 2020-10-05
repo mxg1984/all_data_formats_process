@@ -7,9 +7,9 @@
 
 ////////////////////////////////////////////////////////////////////////////
 //Class CRadarDataInputCls
-CRadarDataInputCls::CRadarDataInputCls(uint32_t scode, const char* szFileName)
+CRadarDataInputCls::CRadarDataInputCls(uint32_t scode, const std::string& szFileName)
+	:m_strInFileName(szFileName)
 {
-	m_strInFileName.assign(szFileName);
 	m_siteCode = scode;
 	m_strFormatV.assign("");
 	m_uniformOffset=0;
@@ -67,8 +67,8 @@ void CRadarDataInputCls::LoadParameter()
 		//CreateDir(m_paramOutputPath.c_str());////
 
 		m_paramOutputPath += std::experimental::filesystem::path::preferred_separator;
-		//m_paramOutputPath.append(SZ_SLASH);
-		m_paramOutputPath.append(m_ParamSiteInfo.SiteName);		
+		m_paramOutputPath.append(m_ParamSiteInfo.SiteName);	
+		//std::experimental::filesystem::create_directories(m_paramOutputPath);
 	}
 }
 
@@ -194,33 +194,7 @@ void CRadarDataInputCls:: LoadScanData()
 	else if (m_strFormatV.find(FM_RD_CC2) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_CC2))
 	{
 		;
-	}/*
-	else if (m_strFormatV.find(FM_RD_CC) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_CC))
-	{
-		m_pLoacalCC1RadarData = new CRadarBaseDataCC1(m_strInFileName, m_uniformOffset, m_uniformFactor);//SA SB
-		if (m_pLoacalCC1RadarData)
-			m_pLoacalCC1RadarData->GetObsvData(m_paranmNeededFlag, m_genScanDatas);
-
-		if (m_pLoacalCC1RadarData)
-		{
-			delete m_pLoacalCC1RadarData;
-			m_pLoacalCC1RadarData = 0x0;  
-		}
 	}
-	else if (m_strFormatV.find(FM_RD_CIMISS) != std::string::npos) 
-	{
-		m_pCimissRadarData = new CCIMISSRadarDataCls(m_strInFileName, m_uniformOffset, m_uniformFactor);//SA SB
-		m_pCimissRadarData->GetObsvData(m_paranmNeededFlag, m_genScanDatas);
-		if (m_pCimissRadarData)
-		{
-			delete m_pCimissRadarData;
-			m_pCimissRadarData = 0x0;
-		}
-	}*//*
-	else if (m_strFormatV.find(FM_RD_CC2) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_CC2))
-		;//CC2.0
-	else if (m_strFormatV.find(FM_RD_88D) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_88D))
-		;//88D-SA Shanghai*/
 
 	//完善其它信息
 	map_GeneralScanDatas::iterator itm;
@@ -432,12 +406,6 @@ std::string  CRadarDataInputCls::SaveUniformData(stdUniformScanData &vsData, cha
 
 	//Set file name
 	std::string strFileName="";
-	//char strYear[6] = "", strMonth[4] = "", strDay[4] = "", strHour[4] = "", strMinute[4] = "";
-	//_itoa_s(pCutHeader->year, strYear, 6, 10);
-	//_itoa_s(pCutHeader->month + 100, strMonth, 4, 10);
-	//_itoa_s(pCutHeader->day + 100, strDay, 4, 10);
-	//_itoa_s(pCutHeader->hour + 100, strHour, 4, 10);
-	//_itoa_s(pCutHeader->minute + 100, strMinute, 4, 10);
 	std::string strYear = std::to_string(pCutHeader->year);
 	std::string strMonth = std::to_string(pCutHeader->month + 100);
 	std::string strDay = std::to_string(pCutHeader->day + 100);
@@ -457,19 +425,7 @@ std::string  CRadarDataInputCls::SaveUniformData(stdUniformScanData &vsData, cha
 	strFileName += pExtType;
 	strFileName += ".bin";
 
-	//strcpy_s(strFileName, dstPath);
-	//if(strFileName[strlen(strFileName)-1]!='/' && strFileName[strlen(strFileName) - 1] != '\\')
-	//	strcat_s(strFileName, SZ_SLASH);
-	//strcat_s(strFileName, strYear);
-	//strcat_s(strFileName, strMonth + 1);
-	//strcat_s(strFileName, strDay + 1);
-	//strcat_s(strFileName, strHour + 1);
-	//strcat_s(strFileName, strMinute + 1);
-	//strcat_s(strFileName, ".");
-	//strcat_s(strFileName, pExtType);
-	//strcat_s(strFileName, ".bin");
-
-	FILE *fp = 0;
+	FILE *fp = nullptr;
 	errno_t err = 0;
 	err = fopen_s(&fp, strFileName.c_str(), "wb");
 	if (!fp)
@@ -520,122 +476,7 @@ std::string  CRadarDataInputCls::SaveUniformData(stdUniformScanData &vsData, cha
 	fp = 0;
 
 	strDestFileName.assign(strFileName);
+
 	return strDestFileName;
-	//strcpy_s(dstDataFile, strlen(strFileName) + 1, strFileName);
 }
-
-/*
-void CRadarDataInputCls::GetMomentCuts(const char* szMomentType, stdCommonScanData &outScanData)
-{
-	
-	uint16_t momid = 0;
-	string strMoment;
-	strMoment.assign(szMomentType);
-
-	if (m_pCimissRadarData)
-	{
-		GetCimisMoment(szMomentType, outScanData);
-	}	//CIMISS DATA end
-	else if (m_pMet98DRadarData)
-	{
-		GetMet98DMoment(szMomentType, outScanData);
-	}
-	
-}*/
-/*//#pragma warning(disable:4996)
-void CRadarDataInputCls::GetCimisMoment(const char* szMomentType, stdCommScan &outScanData)
-{
-	if (m_pCimissRadarData == 0x0)
-		return;
-	uint16_t momId = m_pCimissRadarData->GetMomentTypeId(szMomentType);
-	uint16_t nCut = m_pCimissRadarData->GetCutNum(momId);
-
-	stdScanTaskConfig* pScanConfig = m_pCimissRadarData->GetScanConfig();
-
-	float flon, flat, fht;
-	char sname[SITE_NAME_LEN]="", sid[SITE_NAME_LEN]="", stype[SITE_TYPE_LEN]="";
-	m_pCimissRadarData->GetRadarSite(sname, sid, stype, flon, flat, fht);
-	//cuts	
-	//outScanData.scanData.resize(nCut);
-	for (uint16_t n = 0; n < nCut; n++)
-	{
-		if (m_pCimissRadarData->GetMomentCut(momId, n)->size()  == 0)
-			continue;//cut n of this moment is empty 
-
-		stdCommonCutData aNewCut;
-		strcpy(aNewCut.header.radar_name, sname);
-		strcpy(aNewCut.header.radar_type, stype);
-		strcpy(aNewCut.header.data_name, szMomentType);
-		aNewCut.header.radlon = uint32_t(flon * 1000);
-		aNewCut.header.radlat = uint32_t(flat * 1000);
-		aNewCut.header.radhgt = uint16_t(fht);
-		//
-		stdCutConfig* pCutConfig = m_pCimissRadarData->GetCutConfig(n);
-		aNewCut.header.nyq_vel = uint32_t(pCutConfig->NyquistSpeed*10);
-		if(pScanConfig->ScanType==2 || pScanConfig->ScanType == 5)//RHI RHIS
-			aNewCut.header.elev_angle = uint32_t(pCutConfig->Azimuth*10);
-		else
-			aNewCut.header.elev_angle = uint32_t(pCutConfig->Elevation*10);
-		m_pCimissRadarData->GetCutStartDateTime(n, aNewCut.header.year, aNewCut.header.month, aNewCut.header.day, aNewCut.header.hour, aNewCut.header.minute, aNewCut.header.second);
-		aNewCut.header.fstgatdis = pCutConfig->StartRange * 10;
-		aNewCut.header.num_neededFlag.beam = m_pCimissRadarData->GetNumberOfRadials(momId, n);
-
-		//short maxbin, stepbin;
-		//stepbin = 1;
-		//maxbin = m_pCimissRadarData->GetNumberOfBins(momId, n);
-		///if (maxbin > ngate){
-		//	stepbin = 2;maxbin = maxbin / stepbin;}
-		aNewCut.header.num_gate  = m_pCimissRadarData->GetNumberOfBins(momId, n);
-		aNewCut.header.gateWidth = m_pCimissRadarData->GetBinWidth(momId, n);// *stepbin;
-		
-		aNewCut.azim.resize(aNewCut.header.num_neededFlag.beam);
-		aNewCut.elev.resize(aNewCut.header.num_neededFlag.beam);
-		aNewCut.field.resize(aNewCut.header.num_neededFlag.beam);
-		
-		//cut data		
-		vct_momentCut::iterator itrc = m_pCimissRadarData->GetMomentCut(momId, n)->begin();
-		vct_momentCut::iterator itrc1 = m_pCimissRadarData->GetMomentCut(momId, n)->end();
-		short na = 0, nr = 0;	
-		short bytes_abin = 0, num_neededFlag.bins = 0;
-		for (; itrc != itrc1; itrc++) //radials
-		{//az			
-			//
-			aNewCut.elev[na] = uint32_t(itrc->genHeader.Elevation*10);
-			aNewCut.azim[na] = uint32_t(itrc->genHeader.Azimuth*10);
-			//
-			aNewCut.field[na].resize(aNewCut.header.num_gate);
-
-			bytes_abin = itrc->Radial.header.OneBinLength;
-			num_neededFlag.bins = short(itrc->Radial.Data.size()/ bytes_abin);
-			if (bytes_abin == 1)
-			{
-				uint8_t* pRadial = &(itrc->Radial.Data[0]);
-				for (nr = 0; nr < num_neededFlag.bins; nr++)
-				{
-					float value = m_pCimissRadarData->GetBinValue(pRadial[nr], itrc->Radial.header.Offset, itrc->Radial.header.Scale, VALUE_INVALID / 10);
-					aNewCut.field[na][nr] = int16_t(value * 10);  //*10
-				}
-				for (; nr < aNewCut.header.num_gate; nr++) {//bin
-					aNewCut.field[na][nr] = VALUE_INVALID;
-				}
-			}
-			else
-			{
-				uint16_t* pRadial = (uint16_t*)&(itrc->Radial.Data[0]);
-				for (nr = 0; nr < num_neededFlag.bins; nr++)
-				{
-					float value = m_pCimissRadarData->GetBinValue(pRadial[nr], itrc->Radial.header.Offset, itrc->Radial.header.Scale, VALUE_INVALID / 10);
-					aNewCut.field[na][nr] = int16_t(value * 10);  //*10
-				}
-				for (; nr < aNewCut.header.num_gate; nr++) {//bin
-					aNewCut.field[na][nr] = VALUE_INVALID;
-				}
-			}
-			na++;
-		}//radials
-
-		outScanData.DataCuts.push_back(aNewCut);
-	}
-}
-*/
 
