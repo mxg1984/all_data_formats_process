@@ -4,7 +4,7 @@
 
 //
 #include "CommVar.h"
-#pragma pack(1)
+//#pragma pack(1)
 
 //三维雷达拼图数据头
 struct MOSAICDATAHEADER			// 112 Bytes (108字节 ?)

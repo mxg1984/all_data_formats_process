@@ -47,9 +47,9 @@
 #endif
 
 
-#include "CheckMemoryLeak.h"
+//#include "CheckMemoryLeak.h"
 
 #define HAVE_STRUCT_TIMESPEC
 
-#pragma pack(push,1)
+//#pragma pack(push,1)
 using namespace std;

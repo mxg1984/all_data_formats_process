@@ -3,7 +3,7 @@
 
 #include "RadarBaseDataFormat98D.h"
 #pragma once
-#pragma pack(1)
+//#pragma pack(1)
 //SC CD
 #define SURV_BINS_SC2 1000
 #define DOPL_BINS_SC2 1000

@@ -1,11 +1,13 @@
 #include "stdafx.h"
+//#pragma pack(push)
+//#pragma pack(1)
 
 #include <experimental/filesystem>
 
 #include <stdio.h>
 #include < iostream>
 #include < windows.h>
-#include <Shlwapi.h>
+//#include <Shlwapi.h>
 #include <direct.h>
 #include <io.h>
 #include "GlobalParams.h"
@@ -14,7 +16,6 @@
 #include <direct.h>
 #include "CommVar.h"
 
-// #pragma pack(1)
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -47,6 +48,7 @@ int32_t MainFunc(void)//int32_t argc, const char *argv[])
 //在程序启动的时候或者修改配置参数后，采用这个函数，从配置文件中读出设置参数，来初始化
 BOOL InitializeConf(BOOL isReset)
 {
+
 	//初始化组网网格参数
 	uint32_t i,iNumSites;
 	float fMinLon, fMaxLon, fMinLat, fMaxLat;
@@ -234,123 +236,233 @@ BOOL ConfigureFileIO(BOOL bRead)
 	if(bRead)
 	{//读操作		
 		//Open the file,return FALSE if fiales to open it.
-		err=fopen_s(&fp,strFullName.c_str(),"rb");
-		if (err != 0) {
-			return FALSE;
-		}
+		//err=fopen_s(&fp,strFullName.c_str(),"rb");
+		//if (err != 0) {
+		//	return FALSE;
+		//}
 
 		//区域名
-		if(!ReadOneItem(g_strZoneName, sizeof(g_strZoneName), 1, fp)) {
-			fclose(fp); 
-			ClearConfig(); 
-			return false;
-		}
+		strcpy(g_strZoneName, "HB");
+		//if(!ReadOneItem(g_strZoneName, sizeof(g_strZoneName), 1, fp)) {
+		//	fclose(fp); 
+		//	ClearConfig(); 
+		//	return false;
+		//}
 		//雷达站数
-		if(!ReadOneItem(&g_iSitesInZone, sizeof(g_iSitesInZone), 1, fp)) {
-			fclose(fp); 
-			ClearConfig(); 
-			return false;
-		}
-		for(i=0; i<g_iSitesInZone; i++)
-		{
-			if(i<TOTAL_SITES)
-			{//读取区域可容最多雷达数内的雷达站信息
-			//每个雷达站参数
-			if(!ReadOneItem(&g_cRadarSiteInfo[i], sizeof(g_cRadarSiteInfo[i]), 1, fp)) {fclose(fp); ClearConfig(); return false;}
-			//每个雷达站基数据位置
-			if(!ReadOneItem(g_strRadarDataPath[i], sizeof(char), PATH_LEN, fp)) {
-				fclose(fp); 
-				ClearConfig(); 
-				return false;
-			}
-			}
-			else
-			{//舍弃超出区域可容最多雷达数的雷达站信息
-				struct RADARSITEINFO tmpsiteinfo;
-				char tmpPath[PATH_LEN];
-				//每个雷达站参数
-				if(!ReadOneItem(&tmpsiteinfo, sizeof(g_cRadarSiteInfo[i]), 1, fp)) {fclose(fp); ClearConfig(); return false;}
-				//每个雷达站基数据位置
-				if(!ReadOneItem(tmpPath, sizeof(char), PATH_LEN, fp)) {
-					fclose(fp); 
-					ClearConfig(); 
-					return false;
-				}
-			}
-		}
+		g_iSitesInZone = 4;
+		//if(!ReadOneItem(&g_iSitesInZone, sizeof(g_iSitesInZone), 1, fp)) {
+		//	fclose(fp); 
+		//	ClearConfig(); 
+		//	return false;
+		//}
+		uint32_t i = 0;
+		g_cRadarSiteInfo[i].SiteID = 10;
+		strcpy(g_cRadarSiteInfo[i].SiteName, "北京");
+		strcpy(g_cRadarSiteInfo[i].SiteType, "SA");
+		g_cRadarSiteInfo[i].SiteLon = 116470;
+		g_cRadarSiteInfo[i].SiteLat = 39810;
+		g_cRadarSiteInfo[i].SiteHgt = 92;
+		g_cRadarSiteInfo[i].ObsRange = 300;
+
+		++i;
+		g_cRadarSiteInfo[i].SiteID = 220;
+		strcpy(g_cRadarSiteInfo[i].SiteName, "塘沽");
+		strcpy(g_cRadarSiteInfo[i].SiteType, "SA");
+		g_cRadarSiteInfo[i].SiteLon = 117720;
+		g_cRadarSiteInfo[i].SiteLat = 39040;
+		g_cRadarSiteInfo[i].SiteHgt = 69;
+		g_cRadarSiteInfo[i].ObsRange = 300;
+
+		++i;
+		g_cRadarSiteInfo[i].SiteID = 335;
+		strcpy(g_cRadarSiteInfo[i].SiteName, "秦皇岛");
+		strcpy(g_cRadarSiteInfo[i].SiteType, "SA");
+		g_cRadarSiteInfo[i].SiteLon = 118880;
+		g_cRadarSiteInfo[i].SiteLat = 39880;
+		g_cRadarSiteInfo[i].SiteHgt = 114;
+		g_cRadarSiteInfo[i].ObsRange = 300;
+
+		++i;
+		g_cRadarSiteInfo[i].SiteID = 311;
+		strcpy(g_cRadarSiteInfo[i].SiteName, "石家庄");
+		strcpy(g_cRadarSiteInfo[i].SiteType, "SA");
+		g_cRadarSiteInfo[i].SiteLon = 114710;
+		g_cRadarSiteInfo[i].SiteLat = 38350;
+		g_cRadarSiteInfo[i].SiteHgt = 134;
+		g_cRadarSiteInfo[i].ObsRange = 300;
+
+		i = 0;
+		strcpy(g_strRadarDataPath[i++], "D:/data/20200706-huabei/Z9010/");
+		strcpy(g_strRadarDataPath[i++], "D:/data/20200706-huabei/Z9220/");
+		strcpy(g_strRadarDataPath[i++], "D:/data/20200706-huabei/Z9335/");
+		strcpy(g_strRadarDataPath[i++], "D:/data/20200706-huabei/Z9311/");
+	
+		//for(i=0; i<g_iSitesInZone; i++)
+		//{
+		//	if(i<TOTAL_SITES)
+		//	{//读取区域可容最多雷达数内的雷达站信息
+		//	//每个雷达站参数
+		//	if(!ReadOneItem(&g_cRadarSiteInfo[i], sizeof(g_cRadarSiteInfo[i]), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		//	//每个雷达站基数据位置
+		//	if(!ReadOneItem(g_strRadarDataPath[i], sizeof(char), PATH_LEN, fp)) {
+		//		fclose(fp); 
+		//		ClearConfig(); 
+		//		return false;
+		//	}
+		//	}
+		//	else
+		//	{//舍弃超出区域可容最多雷达数的雷达站信息
+		//		struct RADARSITEINFO tmpsiteinfo;
+		//		char tmpPath[PATH_LEN];
+		//		//每个雷达站参数
+		//		if(!ReadOneItem(&tmpsiteinfo, sizeof(g_cRadarSiteInfo[i]), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		//		//每个雷达站基数据位置
+		//		if(!ReadOneItem(tmpPath, sizeof(char), PATH_LEN, fp)) {
+		//			fclose(fp); 
+		//			ClearConfig(); 
+		//			return false;
+		//		}
+		//	}
+		//}
 		//数据路径
-		if(!ReadOneItem(&g_DataDir, sizeof(g_DataDir), 1, fp)) {
-			fclose(fp); 
-			ClearConfig(); 
-			return false;
-		}
+		strcpy(g_DataDir.strTemDataDir, "D:\\data\\20200706-huabei\\prod\\");
+		strcpy(g_DataDir.strRainGageDir, "");
+		strcpy(g_DataDir.strProdDataDir, "D:\\data\\20200706-huabei\\prod\\");
+		strcpy(g_DataDir.strRadarDataDir, "D:\\data\\20200706-huabei\\");
+		g_DataDir.iRadarSubflderType = 1;
+		//if(!ReadOneItem(&g_DataDir, sizeof(g_DataDir), 1, fp)) {
+		//	fclose(fp); 
+		//	ClearConfig(); 
+		//	return false;
+		//}
 		//分辨率
-		if(!ReadOneItem(&g_HorizRes, sizeof(g_HorizRes), 1, fp)) {
-			fclose(fp); 
-			ClearConfig(); 
-			return false;
-		}
+		g_HorizRes.fLatRes = 0.01;
+		g_HorizRes.fLonRes = 0.01;
+		//if(!ReadOneItem(&g_HorizRes, sizeof(g_HorizRes), 1, fp)) {
+		//	fclose(fp); 
+		//	ClearConfig(); 
+		//	return false;
+		//}
 		//是否用户自定义高度
 		//size_t t = sizeof(g_bUserDefineLevels);
-		if(!ReadOneItem(&g_bUserDefineLevels, sizeof(g_bUserDefineLevels), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_bUserDefineLevels = 0;
+		//if(!ReadOneItem(&g_bUserDefineLevels, sizeof(g_bUserDefineLevels), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//高度层数
-		if(!ReadOneItem(&g_iNumHeight, sizeof(g_iNumHeight), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iNumHeight = 16;
+		//if(!ReadOneItem(&g_iNumHeight, sizeof(g_iNumHeight), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//高度
-		for(j=0; j<g_iNumHeight; j++)
-		{
-			if(!ReadOneItem(&g_iHeights[j], sizeof(g_iHeights[j]), 1, fp)) {fclose(fp); ClearConfig(); return false;}
-		}
+		j = 0;
+		g_iHeights[j++] = 1000;
+		g_iHeights[j++] = 1500;
+		g_iHeights[j++] = 2000;
+		g_iHeights[j++] = 2500;
+		g_iHeights[j++] = 3000;
+		g_iHeights[j++] = 3500;
+		g_iHeights[j++] = 4000;
+		g_iHeights[j++] = 4500;
+		g_iHeights[j++] = 5000;
+		g_iHeights[j++] = 5500;
+		g_iHeights[j++] = 6000;
+		g_iHeights[j++] = 6500;
+		g_iHeights[j++] = 7000;
+		g_iHeights[j++] = 8000;
+		g_iHeights[j++] = 9000;
+		g_iHeights[j++] = 10000;
+
+		//for(j=0; j<g_iNumHeight; j++)
+		//{
+		//	if(!ReadOneItem(&g_iHeights[j], sizeof(g_iHeights[j]), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		//}
 		//间隔时间
-		if(!ReadOneItem(&g_iIntervalTime, sizeof(g_iIntervalTime), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iIntervalTime = 6;
+		//if(!ReadOneItem(&g_iIntervalTime, sizeof(g_iIntervalTime), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//匹配时间
-		if(!ReadOneItem(&g_iMatchingTime, sizeof(g_iMatchingTime), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iMatchingTime = 3;
+		//if(!ReadOneItem(&g_iMatchingTime, sizeof(g_iMatchingTime), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//网络延迟时间
-		if(!ReadOneItem(&g_iDelayTime, sizeof(g_iDelayTime), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iDelayTime = 8;
+		//if(!ReadOneItem(&g_iDelayTime, sizeof(g_iDelayTime), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		
 		//是否进行基数据质量控制
-		if(!ReadOneItem(&g_iQualityControl, sizeof(g_iQualityControl), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iQualityControl = 1;
+		//if(!ReadOneItem(&g_iQualityControl, sizeof(g_iQualityControl), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//是否保存单站笛卡儿坐标数据
-		if(!ReadOneItem(&g_iSaveSingleCAPPI, sizeof(g_iSaveSingleCAPPI), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iSaveSingleCAPPI = 0;
+		//if(!ReadOneItem(&g_iSaveSingleCAPPI, sizeof(g_iSaveSingleCAPPI), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//产品生成选择参数
-		if(!ReadOneItem(&g_DerivedProdSelect, sizeof(g_DerivedProdSelect), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_DerivedProdSelect.GenForeRefProd = false;
+		g_DerivedProdSelect.GenEchoMovProd = false;
+		g_DerivedProdSelect.GenCrProd = false;
+		g_DerivedProdSelect.GenEtProd = false;
+		g_DerivedProdSelect.GenVilProd = false;
+
+		//if(!ReadOneItem(&g_DerivedProdSelect, sizeof(g_DerivedProdSelect), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//The following parameters is added after 2007.6.28
 		//是否保存NETCDF格式的产品
-		if(!ReadOneItem(&g_iSaveNetCDFData, sizeof(g_iSaveNetCDFData), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iSaveNetCDFData = false;
+		//if(!ReadOneItem(&g_iSaveNetCDFData, sizeof(g_iSaveNetCDFData), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//产品保存天数
-		if(!ReadOneItem(&g_iProductRemainDays, sizeof(g_iProductRemainDays), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iProductRemainDays = 5;
+		//if(!ReadOneItem(&g_iProductRemainDays, sizeof(g_iProductRemainDays), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//是否保存质量控制的基数据
-		if(!ReadOneItem(&g_iSaveQcData, sizeof(g_iSaveQcData), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iSaveQcData = 0;
+		//if(!ReadOneItem(&g_iSaveQcData, sizeof(g_iSaveQcData), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//质量控制基数据保存位置
-		for(i=0; i<g_iSitesInZone; i++)
-		{
-			if(i<TOTAL_SITES)
-			{//读取区域可容最多雷达数内的雷达QC数据保存路径
-				if(!ReadOneItem(g_strQcDataPath[i], sizeof(char), PATH_LEN, fp)) {fclose(fp); ClearConfig(); return false;}
-			}
-			else
-			{//舍弃超出区域可容最多雷达数的信息
-				char tempPath[PATH_LEN];
-				if(!ReadOneItem(tempPath, sizeof(char), PATH_LEN, fp)) {fclose(fp); ClearConfig(); return false;}
-			}
-		}
+		i = 0;
+		strcpy(g_strQcDataPath[i++], "");
+		strcpy(g_strQcDataPath[i++], "");
+		strcpy(g_strQcDataPath[i++], "");
+		strcpy(g_strQcDataPath[i++], "");
+		//for(i=0; i<g_iSitesInZone; i++)
+		//{
+		//	if(i<TOTAL_SITES)
+		//	{//读取区域可容最多雷达数内的雷达QC数据保存路径
+		//		if(!ReadOneItem(g_strQcDataPath[i], sizeof(char), PATH_LEN, fp)) {fclose(fp); ClearConfig(); return false;}
+		//	}
+		//	else
+		//	{//舍弃超出区域可容最多雷达数的信息
+		//		char tempPath[PATH_LEN];
+		//		if(!ReadOneItem(tempPath, sizeof(char), PATH_LEN, fp)) {fclose(fp); ClearConfig(); return false;}
+		//	}
+		//}
 		//是否删除实时模式下处理过的基数据
-		if(!ReadOneItem(&g_iDeleteOldBaseData, sizeof(g_iDeleteOldBaseData), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		g_iDeleteOldBaseData = 0;
+		//if(!ReadOneItem(&g_iDeleteOldBaseData, sizeof(g_iDeleteOldBaseData), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 		//单站格点数据处理选项
-		if(!ReadOneItem(&g_iOptionsGridData, sizeof(g_iOptionsGridData), 1, fp)) {fclose(fp); ClearConfig(); return false;}	
+		g_iOptionsGridData = 1;
+		//if(!ReadOneItem(&g_iOptionsGridData, sizeof(g_iOptionsGridData), 1, fp)) {fclose(fp); ClearConfig(); return false;}	
 	    //新增的产品生成选择参数
-		if(!ReadOneItem(&g_AddDerivedProdSelect, sizeof(g_AddDerivedProdSelect), 1, fp)) {
-			fclose(fp); 
-			ClearConfig(); 
-			return false;
-		}
+		g_AddDerivedProdSelect.GenQPEPRod = 0;
+		g_AddDerivedProdSelect.GenCtProd = 0;
+		g_AddDerivedProdSelect.Spare2 = 0;
+		g_AddDerivedProdSelect.Spare3 = 0;
+		g_AddDerivedProdSelect.Spare4 = 0;
+		g_AddDerivedProdSelect.Spare5 = 0;
+		g_AddDerivedProdSelect.Spare6 = 0;
+		g_AddDerivedProdSelect.Spare7 = 0;
+		g_AddDerivedProdSelect.Spare8 = 0;
+		g_AddDerivedProdSelect.Spare9 = 0;
+		g_AddDerivedProdSelect.Spare10 = 0;
+		g_AddDerivedProdSelect.Spare11 = 0;
+		g_AddDerivedProdSelect.Spare12 = 0;
+		g_AddDerivedProdSelect.Spare13 = 1;
+		g_AddDerivedProdSelect.Spare14 = 0;
+		//if(!ReadOneItem(&g_AddDerivedProdSelect, sizeof(g_AddDerivedProdSelect), 1, fp)) {
+		//	fclose(fp); 
+		//	ClearConfig(); 
+		//	return false;
+		//}
 		//新增日志显示参数
-		if(!ReadOneItem(&g_LogShowParam, sizeof(g_LogShowParam), 1, fp)) {
-			fclose(fp); 
-			ClearConfig(); 
-			return false;
-		}
+		g_LogShowParam.bShowLog = true;
+		g_LogShowParam.iMaxStatusItem = 30;
+		g_LogShowParam.iMaxErrorItem = 5;
+		//if(!ReadOneItem(&g_LogShowParam, sizeof(g_LogShowParam), 1, fp)) {
+		//	fclose(fp); 
+		//	ClearConfig(); 
+		//	return false;
+		//}
 		
-		fclose(fp);
+		//fclose(fp);
 		g_iSitesInZone = min(g_iSitesInZone,TOTAL_SITES);
 
 	}
@@ -446,7 +558,6 @@ BOOL ConfigureFileIO(BOOL bRead)
 		CharToTchar(strConfig2Copy.c_str(), wsBbackFile);		
 		CopyFile(wszSrcFile, wsBbackFile, FALSE);
 	}
-
 	return (true);
 }
 
@@ -744,5 +855,5 @@ BOOL ClearDirectory(char chrDirName[])
         FindClose(Handle);
 
     return result;
-
 }
+//#pragma pack(pop)

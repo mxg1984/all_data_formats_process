@@ -1,7 +1,7 @@
 #ifndef FORMAT_CB_H
 #define FORMAT_CB_H
 #pragma once
-#pragma pack(1)
+//#pragma pack(1)
 
 #include <vector>
 //#include <list>

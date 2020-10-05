@@ -66,13 +66,13 @@ int32_t CBaseDataIOandQCCls::Run()
 	else//采用没有质量控制的模块
 		;//	PREPROCBASEDATANOQC(m_siteInfo, m_pRefPPI, m_pVelPPI, m_pSpwPPI, &nCuts, unQcFileName, PATH_LEN);	
 	//*/
-	RADARSITEINFO * sT = new RADARSITEINFO;
-	delete sT;
+	//RADARSITEINFO * sT = new RADARSITEINFO;
+	//delete sT;
 	std::unique_ptr<CRadarDataInputCls> pBaseData(new CRadarDataInputCls(m_siteCode, unQcFileName));// , szRadarType);
 	if (pBaseData == nullptr) {
 		return -1;
 	}
-	return 1;
+
 	pBaseData->LoadScanData();
 
 	//删除临时体扫文件

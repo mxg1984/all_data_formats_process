@@ -5,7 +5,7 @@
 #include "RadarBaseDataMomentTypeDef.h"
 #include "RadarBaseDataFormatTypeDef.h"
 #pragma once
-#pragma pack(1)
+//#pragma pack(1)
 
 #include <string> 
 #include <vector>
