@@ -1,7 +1,3 @@
-// GridMosaicCls.cpp: implementation of the CGridMosaicCls class.
-//
-//////////////////////////////////////////////////////////////////////
-
 #include "stdafx.h"
 
 #include <experimental/filesystem>
@@ -15,7 +11,7 @@
 #include <io.h>
 #include <omp.h>
 
-CGridMosaicCls::CGridMosaicCls(int16_t numFile, vector<string>  &dataFileName, stdDateTime *pMosaicDateTime)
+CGridMosaicCls::CGridMosaicCls(int16_t numFile, std::vector<std::string>  &dataFileName, stdDateTime *pMosaicDateTime)
 {
 	m_mosaicDateTime = *pMosaicDateTime;
 
@@ -51,13 +47,13 @@ CGridMosaicCls::~CGridMosaicCls()
 	ClearTempDatas();//
 
 	m_siteGirdFiles.clear();
-	vector<BaseDataInfo>().swap(m_siteGirdFiles);
+	std::vector<BaseDataInfo>().swap(m_siteGirdFiles);
 	m_siteGridHeader.clear();
-	vector<MOSAICDATAHEADER>().swap(m_siteGridHeader);
+	std::vector<MOSAICDATAHEADER>().swap(m_siteGridHeader);
 	m_siteInfo.clear();
-	vector<RADARSITEINFO>().swap(m_siteInfo);
+	std::vector<RADARSITEINFO>().swap(m_siteInfo);
 	m_siteGridPosInMosaic.clear();
-	vector<SITEPOSINMOSAIC>().swap(m_siteGridPosInMosaic);
+	std::vector<SITEPOSINMOSAIC>().swap(m_siteGridPosInMosaic);
 
 	if (m_mosGridData != 0x0)
 	{
@@ -241,7 +237,7 @@ void CGridMosaicCls::InitGridPosInSites()
 }
 
 //
-int16_t CGridMosaicCls::LoadSiteGridFileAndHeader(int16_t numFile, vector<string>  &pFilesNameList)
+int16_t CGridMosaicCls::LoadSiteGridFileAndHeader(int16_t numFile, std::vector<std::string>  &pFilesNameList)
 {
 	m_numValidSite = 0;
 	m_siteGirdFiles.resize(0);
@@ -305,9 +301,9 @@ int CGridMosaicCls::DoMultiRadarsMosaic()
 	stdPosInSiteGrid apos;
 	uint8_t Vp;
 	//
-	typedef vector<uint8_t> vct_byteCodeLine;
-	typedef vector<vct_byteCodeLine> vct_byteCodeGrid;
-	typedef vector<vct_byteCodeGrid> vct_byteSitesGrid; //所有站的单层数据
+	typedef std::vector<uint8_t> vct_byteCodeLine;
+	typedef std::vector<vct_byteCodeLine> vct_byteCodeGrid;
+	typedef std::vector<vct_byteCodeGrid> vct_byteSitesGrid; //所有站的单层数据
 	vct_byteSitesGrid iLevelOfSites;
 
 	//--------------------------------------------------------------------------------------

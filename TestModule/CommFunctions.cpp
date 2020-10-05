@@ -17,14 +17,6 @@
 #include <psapi.h>
 
 #pragma comment(lib,"psapi.lib")
-using namespace std;
-void showMemoryInfo2(char *module)
-{
-}
-
-void showMemoryInfo(char *module)
-{
-}
 
 ///beginning of message
 
@@ -109,8 +101,8 @@ void ReportLog_Error(char *str)
 //dst:暂时不用
 void UnZip(char *src, char *dst)  //解压缩函数
 {
-	string str;
-	string s1,s2;
+	std::string str;
+	std::string s1,s2;
 
 	STARTUPINFO   si;   
 	ZeroMemory(&si,   sizeof(si));   
@@ -705,16 +697,16 @@ void CharToTchar(const char * _char, TCHAR * tchar)
 }
 
 //reference: https://blog.csdn.net/CaptainHailong/java/article/details/88917732
-void TcharToString(TCHAR* input, string& output)
+void TcharToString(TCHAR* input, std::string& output)
 {
 	int32_t length = WideCharToMultiByte(CP_ACP, 0, input, -1, NULL, 0, NULL, NULL);
 	char ch[] = "";
 	WideCharToMultiByte(CP_ACP, 0, input, -1, ch, length, NULL, NULL);
-	output = string(ch);
+	output = std::string(ch);
 }
 
 //reference :https://blog.csdn.net/itas109/java/article/details/52193513
-void StringToTchar(string  input, TCHAR* output)
+void StringToTchar(std::string  input, TCHAR* output)
 {
 #ifdef UNICODE
 	CharToTchar(input.c_str(),output);
@@ -725,7 +717,7 @@ void StringToTchar(string  input, TCHAR* output)
 }
 
 //清除头尾空格
-void EraseSpace(string &s)
+void EraseSpace(std::string &s)
 {
 	if (s.empty())
 		return;
@@ -895,11 +887,4 @@ goto1:
 	delete pButton;
 
 	return 0;
-}
-
-//检查内存泄露，假如存在就会弹出提示对话框.
-void memoryExit()
-{
-	//int i = _CrtDumpMemoryLeaks();
-	//assert(i == 0);
 }

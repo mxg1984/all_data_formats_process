@@ -214,8 +214,8 @@ BOOL ConfigureFileIO(BOOL bRead)
 {
 	FILE *fp=0;
 	errno_t err = 0;
-	string strFullName="";//[PATH_LEN] = " ";
-	string strFullNameOld="";//[PATH_LEN] = " ";
+	std::string strFullName="";//[PATH_LEN] = " ";
+	std::string strFullNameOld="";//[PATH_LEN] = " ";
 	uint32_t i, j;
 
 	/////////////////////////////////////////////////////////////
@@ -463,7 +463,7 @@ BOOL ConfigureFileIO(BOOL bRead)
 	{//Ð´²Ù×÷
 
 		//Open the file,return FALSE if fiales to open it.
-		string strNameBack="";//[PATH_LEN];
+		std::string strNameBack="";//[PATH_LEN];
 		strNameBack.assign(appPath);
 		strNameBack += std::experimental::filesystem::path::preferred_separator;
 		strNameBack.append(SETTINGFILE_BCK);

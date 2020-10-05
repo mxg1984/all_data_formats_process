@@ -1,13 +1,8 @@
-#ifndef FORMAT_CDSC_H
-#define FORMAT_CDSC_H
-
 #pragma once
-//#pragma pack(1)
 
 #include <string> 
 #include <vector>
 #include <map>
-using namespace std;
 
 #define  cMaxMoment_SC  3 //要素总数量//
 const uint32_t MOMENT_TYPE_ID_CDSC[cMaxMoment_SC]{ M_Z_ID, M_V_ID, M_W_ID };
@@ -183,6 +178,3 @@ struct stdNewRadarHeader
 	struct stdRADAROBSERVATIONPARAM  ObservationInfo;	//718 bytes  ?
 	char Reserved[163];								//163 bytes  ?
 };
-
-
-#endif

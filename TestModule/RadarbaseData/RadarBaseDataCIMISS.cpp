@@ -19,7 +19,7 @@ stdCimissMomentCuts::stdCimissMomentCuts()
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-CCIMISSRadarDataCls::CCIMISSRadarDataCls(string strInFileName, int16_t dstOffset, int16_t dstScale)//:CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale)
+CCIMISSRadarDataCls::CCIMISSRadarDataCls(std::string strInFileName, int16_t dstOffset, int16_t dstScale)//:CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale)
 {
 	m_strDataFileName.assign(strInFileName);
 	m_outputOffset = dstOffset;
@@ -81,8 +81,8 @@ bool CCIMISSRadarDataCls::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 	int32_t srcOff, srcScale,srcType;
 	uint16_t midlocal = 0, miduniform = 0;
 
-	vector<uint8_t> srcRadialData1;
-	vector<int16_t> srcRadialData2;
+	std::vector<uint8_t> srcRadialData1;
+	std::vector<int16_t> srcRadialData2;
 	//--------------------------------------------------------------------//
 
 	if (m_pDataFile == 0) 
@@ -125,7 +125,7 @@ bool CCIMISSRadarDataCls::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 			stdUniformCutData newCut;			
 			GetRadialDateTime(genRadialHeader, newCut.header.year, newCut.header.day, newCut.header.month, newCut.header.hour, newCut.header.minute, newCut.header.second);
 
-			map<uint16_t, bool>::iterator itm;
+			std::map<uint16_t, bool>::iterator itm;
 			for (itm = m_bMomentNeeded.begin(); itm != m_bMomentNeeded.end(); itm++)
 			{
 				if(itm->second && m_bMomentObsved[itm->first])
@@ -247,9 +247,9 @@ void CCIMISSRadarDataCls::SetRadarParamInUniformData(map_GeneralScanDatas &genSc
 		if (nCuts < 0)
 			continue;
 		
-		string strTemp = "";
+		std::string strTemp = "";
 		int mid = 0;
-		string strDataNme = "";
+		std::string strDataNme = "";
 
 		if (itm->first == M_Z_ID)	strDataNme = M_Z;
 		else if (itm->first == M_Zc_ID)	strDataNme = M_Zc;
@@ -427,7 +427,7 @@ uint16_t CCIMISSRadarDataCls:: GetNumberOfBins(stdCimissMomentRadialHeader radia
 	return radialMomentHeader.AllBinLength / radialMomentHeader.OneBinLength;
 }
 
-void CCIMISSRadarDataCls::GetRadarSite(string &sname, string &scode, string &stype, float &lon, float &lat, float &ht)
+void CCIMISSRadarDataCls::GetRadarSite(std::string &sname, std::string &scode, std::string &stype, float &lon, float &lat, float &ht)
 {
 	//radar type
 	switch (m_CommonBlock.SiteConfig.RadarType)
@@ -522,53 +522,53 @@ int16_t CCIMISSRadarDataCls::MomentIdByType(uint16_t srcMomentType)
 uint16_t CCIMISSRadarDataCls::GetMomentTypeId(const char* szMomentName)
 { 
 	uint16_t id = 0;
-	string strMoment = "";
+	std::string strMoment = "";
 	strMoment.assign(szMomentName);
-	if (strMoment.find(M_Zc) != string::npos && strMoment.length() == strlen(M_Zc))
+	if (strMoment.find(M_Zc) != std::string::npos && strMoment.length() == strlen(M_Zc))
 	{
 		id = CIMISS_M_ID_Zc;//
 	}
-	else if (strMoment.find(M_Vc) != string::npos && strMoment.length() == strlen(M_Vc))
+	else if (strMoment.find(M_Vc) != std::string::npos && strMoment.length() == strlen(M_Vc))
 	{
 		id=CIMISS_M_ID_Vc;
 	}
-	else if (strMoment.find(M_Wc) != string::npos && strMoment.length() == strlen(M_Wc))
+	else if (strMoment.find(M_Wc) != std::string::npos && strMoment.length() == strlen(M_Wc))
 	{
 		id=CIMISS_M_ID_Wc;
 	}
-	else if (strMoment.find(M_ZDRc) != string::npos && strMoment.length() == strlen(M_ZDRc))
+	else if (strMoment.find(M_ZDRc) != std::string::npos && strMoment.length() == strlen(M_ZDRc))
 	{
 		id=CIMISS_M_ID_ZDRc;
 	}
-	else if (strMoment.find(M_Z) != string::npos && strMoment.length() == strlen(M_Z))
+	else if (strMoment.find(M_Z) != std::string::npos && strMoment.length() == strlen(M_Z))
 	{
 		id = CIMISS_M_ID_Z;//
 	}
-	else if (strMoment.find(M_V) != string::npos && strMoment.length() == strlen(M_V))
+	else if (strMoment.find(M_V) != std::string::npos && strMoment.length() == strlen(M_V))
 	{
 		id = CIMISS_M_ID_V;
 	}
-	else if (strMoment.find(M_W) != string::npos && strMoment.length() == strlen(M_W))
+	else if (strMoment.find(M_W) != std::string::npos && strMoment.length() == strlen(M_W))
 	{
 		id = CIMISS_M_ID_W;
 	}
-	else if (strMoment.find(M_ZDR) != string::npos && strMoment.length() == strlen(M_ZDR))
+	else if (strMoment.find(M_ZDR) != std::string::npos && strMoment.length() == strlen(M_ZDR))
 	{
 		id = CIMISS_M_ID_ZDR;
 	}
-	else if (strMoment.find(M_PDP) != string::npos && strMoment.length() == strlen(M_PDP))
+	else if (strMoment.find(M_PDP) != std::string::npos && strMoment.length() == strlen(M_PDP))
 	{
 		id = CIMISS_M_ID_PDP;
 	}
-	else if (strMoment.find(M_KDP) != string::npos && strMoment.length() == strlen(M_KDP))
+	else if (strMoment.find(M_KDP) != std::string::npos && strMoment.length() == strlen(M_KDP))
 	{
 		id = CIMISS_M_ID_KDP;
 	}
-	else if (strMoment.find(M_RHV) != string::npos && strMoment.length() == strlen(M_RHV))
+	else if (strMoment.find(M_RHV) != std::string::npos && strMoment.length() == strlen(M_RHV))
 	{
 		id = CIMISS_M_ID_CC;
 	}
-	else if (strMoment.find(M_LDR) != string::npos && strMoment.length() == strlen(M_LDR))
+	else if (strMoment.find(M_LDR) != std::string::npos && strMoment.length() == strlen(M_LDR))
 	{
 		id = CIMISS_M_ID_LDR;
 	}
@@ -801,7 +801,7 @@ void CCIMISSRadarDataCls::ConfirmMomentsNeeded(stdMomentFlag NeedStat) //Ñö½Ç/·½
 		};
 	}
 }
-int CCIMISSRadarDataCls::GetScanModeName(string &modeName)
+int CCIMISSRadarDataCls::GetScanModeName(std::string &modeName)
 {
 	int16_t nCut=0;
 	modeName.assign(m_CommonBlock.ScanTaskConfig.Name);

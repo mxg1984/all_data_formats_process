@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include "../CommVar.h"
 #include "julian_date.h"
 #include "RadarBaseDataMomentTypeDef.h"
@@ -8,7 +9,6 @@
 #include "RadarBaseDataWsr98D.h"
 #include "RadarBaseDataFormatSC2.h"
 
-using namespace std;
 CRadarBaseDataWsr98D::CRadarBaseDataWsr98D()
 {}
 CRadarBaseDataWsr98D::CRadarBaseDataWsr98D(std::string strInFileName,int16_t dstOffset,int16_t dstScale)
@@ -138,7 +138,7 @@ bool CRadarBaseDataWsr98D::IsScanEnd(uint16_t RadialStat)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-CRadarBaseDataWsr98DS::CRadarBaseDataWsr98DS(string strInFileName, int16_t dstOffset, int16_t dstScale)//:CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale)
+CRadarBaseDataWsr98DS::CRadarBaseDataWsr98DS(std::string strInFileName, int16_t dstOffset, int16_t dstScale)//:CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale)
 {
 	//CRadarBaseDataWsr98D::CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale);
 	m_strDataFileName.assign(strInFileName);
@@ -462,7 +462,7 @@ bool CRadarBaseDataWsr98DS::SpwBinParamsInRadial(stdRadialHeader98D *pRadialHead
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-CRadarBaseDataWsr98DC::CRadarBaseDataWsr98DC(string strInFileName, int16_t dstOffset, int16_t dstScale)
+CRadarBaseDataWsr98DC::CRadarBaseDataWsr98DC(std::string strInFileName, int16_t dstOffset, int16_t dstScale)
 {	
 	//CRadarBaseDataWsr98D::CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale);
 	m_strDataFileName.assign(strInFileName);
@@ -786,7 +786,7 @@ bool CRadarBaseDataWsr98DC::SpwBinParamsInRadial(stdRadialHeader98D *pRadialHead
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
-CRadarBaseDataCDSC2::CRadarBaseDataCDSC2(string strInFileName, int16_t dstOffset, int16_t dstScale)
+CRadarBaseDataCDSC2::CRadarBaseDataCDSC2(std::string strInFileName, int16_t dstOffset, int16_t dstScale)
 {
 	//CRadarBaseDataWsr98D::CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale);
 	m_strDataFileName.assign(strInFileName);

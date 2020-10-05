@@ -1,16 +1,10 @@
-
-#ifndef FORMAT_CC1_H
-#define FORMAT_CC1_H
-
 #include "RadarBaseDataMomentTypeDef.h"
 #include "RadarBaseDataFormatTypeDef.h"
 #pragma once
-//#pragma pack(1)
 
 #include <string> 
 #include <vector>
 #include <map>
-using namespace std;
 
 #define MAXAZIMUTH 1000
 #define MAXBINNUMBER 1000
@@ -145,7 +139,3 @@ struct stdCC1RadarDataHeader
 const uint32_t SIZE_CC1_DATA_HEADER = sizeof(stdCC1RadarDataHeader);
 ////////////////////////////////////////////////////////////////////////////////
 //tagVPPISCANPARAMETER仰角层的结构（源结构的子结构）
-
-
-
-#endif

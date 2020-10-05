@@ -389,9 +389,9 @@ void CPolarToGridOfRefCls::VolumnScanTo3DGrid(stdUniformScanData &vsData, int16_
 	unsigned char const ucMinRefOnTop = unsigned char(2 * 2.) + 66; //5DBZ
 	float fMaxElvDiff = m_paramBeamWidth / 2;  //格点的仰角与其临近仰角之间的最大差值
 
-	vector<float> fAvgEl;// = NULL;			//一个PPI的平均仰角
-	typedef vector<int16_t> vct_azPolar;
-	vector<vct_azPolar> azIndex;// = NULL;
+	std::vector<float> fAvgEl;// = NULL;			//一个PPI的平均仰角
+	typedef std::vector<int16_t> vct_azPolar;
+	std::vector<vct_azPolar> azIndex;// = NULL;
 	int16_t curAzIdx = -1;//不同PPI上，每个方位角(0,1,...359度)对应的索引
 
 	//double fAzPI = 0.,fAz = 0.;	
@@ -718,9 +718,9 @@ void CPolarToGridOfRefCls::VolumnScanTo3DGrid(stdUniformScanData &vsData, int16_
 		vct_azPolar().swap(azIndex[i]);
 	}
 	azIndex.clear();
-	vector<vct_azPolar>().swap(azIndex);
+	std::vector<vct_azPolar>().swap(azIndex);
 	fAvgEl.clear();
-	vector<float>().swap(fAvgEl);
+	std::vector<float>().swap(fAvgEl);
 }
 
 bool CPolarToGridOfRefCls::SaveGridData()
@@ -1074,10 +1074,10 @@ void CPolarToGridOfDopplerCls::VolumnScanTo3DGrid(stdUniformScanData &vsData, in
 	unsigned char const ucMinRefOnTop = unsigned char(2 * 2.) + 66; //5DBZ
 	float fMaxElvDiff = m_paramBeamWidth / 2;  //格点的仰角与其临近仰角之间的最大差值
 
-	typedef vector<int16_t> vct_azPolar;
-	vector<vct_azPolar> azIndex;// = NULL;
-	vector<float> fAvgEl;// = NULL;			//一个PPI的平均仰角
-	vector<double> cos_el;// [20];
+	typedef std::vector<int16_t> vct_azPolar;
+	std::vector<vct_azPolar> azIndex;// = NULL;
+	std::vector<float> fAvgEl;// = NULL;			//一个PPI的平均仰角
+	std::vector<double> cos_el;// [20];
 	int16_t curAzIdx = -1;//不同PPI上，每个方位角(0,1,...359度)对应的索引
 
 	float minEl = 99, maxEl = -99;//体扫的最大和最小仰角
@@ -1396,7 +1396,7 @@ void CPolarToGridOfDopplerCls::VolumnScanTo3DGrid(stdUniformScanData &vsData, in
 		vct_azPolar().swap(azIndex[i]);
 	}
 	azIndex.clear();
-	vector<vct_azPolar>().swap(azIndex);
+	std::vector<vct_azPolar>().swap(azIndex);
 	fAvgEl.clear();
-	vector<float>().swap(fAvgEl);
+	std::vector<float>().swap(fAvgEl);
 }

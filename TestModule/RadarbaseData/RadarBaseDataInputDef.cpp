@@ -38,31 +38,31 @@ void stdMomentFlag::Reset()
 
 uint16_t CommonMomentTypeToID(char *szType)
 {
-	string strType = "";
+	std::string strType = "";
 	strType.assign(szType);
-	if (strType.find(M_Z) != string::npos)
+	if (strType.find(M_Z) != std::string::npos)
 		return M_Z_ID;
-	else if (strType.find(M_V) != string::npos)
+	else if (strType.find(M_V) != std::string::npos)
 		return M_V_ID;
-	else if (strType.find(M_W) != string::npos)
+	else if (strType.find(M_W) != std::string::npos)
 		return M_W_ID;
-	else if (strType.find(M_ZDR) != string::npos)
+	else if (strType.find(M_ZDR) != std::string::npos)
 		return M_ZDR_ID;
-	else if (strType.find(M_PDP) != string::npos)
+	else if (strType.find(M_PDP) != std::string::npos)
 		return M_PDP_ID;
-	else if (strType.find(M_KDP) != string::npos)
+	else if (strType.find(M_KDP) != std::string::npos)
 		return M_KDP_ID;
-	else if (strType.find(M_LDR) != string::npos)
+	else if (strType.find(M_LDR) != std::string::npos)
 		return M_LDR_ID;
-	else if (strType.find(M_RHV) != string::npos)
+	else if (strType.find(M_RHV) != std::string::npos)
 		return M_RHV_ID;
-	else if (strType.find(M_Zc) != string::npos)
+	else if (strType.find(M_Zc) != std::string::npos)
 		return M_Zc_ID;
-	else if (strType.find(M_Vc) != string::npos)
+	else if (strType.find(M_Vc) != std::string::npos)
 		return M_Vc_ID;
-	else if (strType.find(M_Wc) != string::npos)
+	else if (strType.find(M_Wc) != std::string::npos)
 		return M_Wc_ID;
-	else if (strType.find(M_ZDRc) != string::npos)
+	else if (strType.find(M_ZDRc) != std::string::npos)
 		return M_ZDRc_ID;
 
 	return 0;

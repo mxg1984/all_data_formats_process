@@ -2,17 +2,12 @@
 #include "UserTask.h"
 #include <cstdlib>
 #include <thread>
-//#include <pthread.h> 
 
 #include "CommFunctions.h"
 #include "GlobalParams.h"
 #include "BaseDaraQCCls.h"
 #include "PolarToGridCls.h"
 #include "GridMosaicCls.h"
-
-using namespace std;
-//#pragma comment(lib, "pthreadVC2.lib") //Must add this line
-
 
 bool StartTask()
 {
@@ -33,7 +28,7 @@ void actionTask()
 	playbackCtrl.bExit = false;
 	SendMessageToPlayBack(&playbackCtrl);
 	*/
-	string  strSrcFile[10] = { 
+	std::string  strSrcFile[10] = { 
 		"C:/Users/mengxiangang/Desktop/z9010/Z9010/Z_RADR_I_Z9010_20200702114800_O_DOR_SA_CAP.bin.bz2",
 "C:/Users/mengxiangang/Desktop/z9010/Z9010/Z_RADR_I_Z9010_20200702115400_O_DOR_SA_CAP.bin.bz2",
 "C:/Users/mengxiangang/Desktop/z9010/Z9010/Z_RADR_I_Z9010_20200702120000_O_DOR_SA_CAP.bin.bz2",
@@ -62,7 +57,7 @@ void actionTask()
 	::MessageBox(nullptr, L"PrOcEsS FiNiShEd", L"ReSuLt", IDOK);
 }
 
-void Process(string srcFile)
+void Process(std::string srcFile)
 {
 	int32_t scode = 10;
 	
@@ -70,8 +65,8 @@ void Process(string srcFile)
 	//string  srcFile = "D:/data/20200706-huabei/Z9010/Z_RADR_I_Z9010_20200706000000_O_DOR_SA_CAP.bin.bz2";
 	//读原始观测数据 转存为临时统一格式的体扫数据
 	char strMsg[LEN_MSG] = "";
-	string m_strUniformRefFileName = "";
-	string m_strUniformVelFileName = "";
+	std::string m_strUniformRefFileName = "";
+	std::string m_strUniformVelFileName = "";
 
 	if (FilePathExists(srcFile.c_str()))
 	{
@@ -87,8 +82,8 @@ void Process(string srcFile)
 	//Sleep(50);
 
 	//polar to grid------------------------------------		
-	string m_strRefGridFileName = "";
-	string m_strVelGridFileName = "";
+	std::string m_strRefGridFileName = "";
+	std::string m_strVelGridFileName = "";
 	if (g_iOptionsGridData == GRIDDATA_OPTION_ALL || g_iOptionsGridData == GRIDDATA_OPTION_REF)
 	{
 		if (FilePathExists(m_strUniformRefFileName.c_str()))
@@ -119,8 +114,8 @@ void Process(string srcFile)
 	//Mosaic ---------------//开始组网 !!!!!-------------------------------
 	stdDateTime dateTime;	
 	int16_t inputFiles = 1;
-	string m_strMosaicRefFile = "";
-	vector<string> m_strGridRefFileList;
+	std::string m_strMosaicRefFile = "";
+	std::vector<std::string> m_strGridRefFileList;
 	m_strGridRefFileList.push_back(m_strRefGridFileName);
 	dateTime.year = 2020;
 	dateTime.mon = 7;//0706000000

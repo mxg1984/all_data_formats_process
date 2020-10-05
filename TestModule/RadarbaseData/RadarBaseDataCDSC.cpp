@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include "../CommVar.h"
 #include "julian_date.h"
 #include "RadarBaseDataMomentTypeDef.h"
@@ -9,7 +10,6 @@
 #include "RadarBaseDataCDSC.h"
 #include "../CommFunctions.h"
 
-using namespace std;
 CRadarBaseDataCDSC::CRadarBaseDataCDSC()
 {
 }
@@ -38,7 +38,7 @@ bool CRadarBaseDataCDSC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanData
 {
 	FILE* fp = 0;
 	int nCuts = 0;
-	string scanModeName = "";
+	std::string scanModeName = "";
 	uint16_t n = 0, m = 0, nb = 0, numaz = 0;
 	uint16_t mid = 0;
 	
@@ -46,7 +46,7 @@ bool CRadarBaseDataCDSC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanData
 	stdSCDataHeader fileHeader;	
 	
 	float radlon, radlat,radht;
-	string radCode, radName, radType;
+	std::string radCode, radName, radType;
 	int ncode;
 	//-------------------------------------------------------------//
 
@@ -361,7 +361,7 @@ void CRadarBaseDataCDSC::CalScanTimeOfCut(uint16_t cutIdx, uint16_t &year, uint1
 	second = cSecond - hour*SEC_IN_HOR - minute*SEC_IN_MIN;
 }
 
-int CRadarBaseDataCDSC::GetScanModeName(string &modeName)
+int CRadarBaseDataCDSC::GetScanModeName(std::string &modeName)
 {
 	int nCut = 0;
 	modeName.assign("");
@@ -397,7 +397,7 @@ void CRadarBaseDataCDSC::CheckObsvMoments()
 }
 
 //Function:获取雷达ID
-void CRadarBaseDataCDSC::GetRadarID(int &ID, string &RadarCode)
+void CRadarBaseDataCDSC::GetRadarID(int &ID, std::string &RadarCode)
 {
 	int nSiteID;
 	nSiteID = atoi(m_pRadarSite->stationnumber);
@@ -405,12 +405,12 @@ void CRadarBaseDataCDSC::GetRadarID(int &ID, string &RadarCode)
 }
 
 //Function:获取雷达站名
-void CRadarBaseDataCDSC::GetRadarName(string &RadarName)
+void CRadarBaseDataCDSC::GetRadarName(std::string &RadarName)
 {
 	RadarName.assign(m_pRadarSite->station);
 }
 
-void CRadarBaseDataCDSC::GetRadarType(string &type)
+void CRadarBaseDataCDSC::GetRadarType(std::string &type)
 {
 	type.assign(m_pRadarSite->radartype);
 }

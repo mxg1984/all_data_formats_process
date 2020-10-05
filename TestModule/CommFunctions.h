@@ -1,11 +1,6 @@
-
-#ifndef _COMMFUNCTIONS_H
-
-#define _COMMFUNCTIONS_H
+#pragma once
 
 #include <string>
-using namespace std;
-
 
 void Zip2Prod(char *src);
 void UnZip(char *src, char *dst);
@@ -55,17 +50,12 @@ void GetSystemTimeString(char *strTime);
 //TCHAR  Óë char »¥×ª
 void TcharToChar(const TCHAR * tchar, char * _char);
 void CharToTchar(const char * _char, TCHAR * tchar);
-void TcharToString(TCHAR* input, string& output);
-void StringToTchar(string  input, TCHAR* output);
+void TcharToString(TCHAR* input, std::string& output);
+void StringToTchar(std::string  input, TCHAR* output);
 //string TcharToString(TCHAR* str);
 
-void EraseSpace(string &s); //Çå³ýÍ·Î²¿Õ×Ö·û
+void EraseSpace(std::string &s); //Çå³ýÍ·Î²¿Õ×Ö·û
 
-
-void showMemoryInfo(char *module = 0x0);
 #include <assert.h>
-void memoryExit();
 // 
 #include "WriteLogFile.h"
-
-#endif

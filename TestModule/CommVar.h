@@ -1,9 +1,5 @@
-//CommVar.h
-#ifndef _COMMVAR
-#define _COMMVAR
-//
-//#include "MyUserMessage.h"
-//#include "VersionControlParam.h"
+#pragma once
+
 #include <vector>
 #include <tchar.h>
 
@@ -231,11 +227,11 @@ struct SITERUNNINGINFO
 	int8_t bStart;    //
 	int8_t bFinish;
 	int32_t siteCode;
-	string strBaseDataFile;
-	string strUniformPolarRefFile;
-	string strUniformPolarVelFile;
-	string strGridRefDataFile;
-	string strGridVelDataFile;
+	std::string strBaseDataFile;
+	std::string strUniformPolarRefFile;
+	std::string strUniformPolarVelFile;
+	std::string strGridRefDataFile;
+	std::string strGridVelDataFile;
 	//char szBaseDataFile[PATH_LEN];
 	//char szUniformPolarRefFile[PATH_LEN];
 	//char szUniformPolarVelFile[PATH_LEN];
@@ -251,10 +247,10 @@ struct MOSAICPTHREADCOMM
 	int32_t iNumData;			//表示本时次一共有几个站可用
 	int8_t bMosaicTimeReached;//组网时间已经到达，并经过了验证
 	COMMONTIME commTime;	//本时次的时间
-	vector<SITERUNNINGINFO> sitesRunningInfo; //一个周期中站点书记处理情况
+	std::vector<SITERUNNINGINFO> sitesRunningInfo; //一个周期中站点书记处理情况
 	//char **strFileNames;	//保存本时次全部基数据文件
-	vector<string> strFileNames;
-	string strMosGridDataFile;
+	std::vector<std::string> strFileNames;
+	std::string strMosGridDataFile;
 	//char szMosGridDataFile[PATH_LEN];
 };
 
@@ -322,6 +318,3 @@ struct LOGMSGPARAM
 	uint16_t iMaxStatusItem; //最多显示状态的条数,更多的会记录在LOG文件
 	uint16_t iMaxErrorItem;  //最多显示错误的条数,更多的会记录在LOG文件
 };
-
-
-#endif

@@ -25,24 +25,24 @@ public:
 
 	stdUniformScanData* GetMomentScanData(const char* szMomentType);// , stdCommonScanData *pOutScanData);
 	stdUniformScanData* GetMomentScanData(uint16_t nMomentTypeId);// , stdCommonScanData *pOutScanData);
-	string  GetMomentScanFile(const char* szMomentType);// , stdCommonScanData *pOutScanData);
-	string  GetMomentScanFile(uint16_t nMomentTypeId);//
+	std::string  GetMomentScanFile(const char* szMomentType);// , stdCommonScanData *pOutScanData);
+	std::string  GetMomentScanFile(uint16_t nMomentTypeId);//
 private:
-	string m_strFormatV;
-	string m_strInFileName;
+	std::string m_strFormatV;
+	std::string m_strInFileName;
 	uint32_t m_siteCode;
 
 	int16_t m_uniformOffset;
 	int16_t m_uniformFactor;
 
-	string m_paramOutputPath;
+	std::string m_paramOutputPath;
 	struct RADARSITEINFO m_ParamSiteInfo; //≈‰÷√≤Œ ˝
 	stdMomentFlag m_paranmNeededFlag;
 
 	//Flag moments needed or not	
 	map_GeneralScanDatas m_genScanDatas;
-	string m_strUniformFieNameV;
-	string m_strUniformFieNameZ;
+	std::string m_strUniformFieNameV;
+	std::string m_strUniformFieNameZ;
 	/*
 	CCIMISSRadarDataCls* m_pCimissRadarData;
 	CRadarBaseDataWsr98DS* m_pMet98DSRadarData;
@@ -54,6 +54,6 @@ private:
 	void LoadParameter();
 	void DetermineRadarType(const char* szDataFileName, RADARSITEINFO siteInfo, char *szType);//
 	void AddSiteInfoInData(stdUniformScanData *pvsScan, RADARSITEINFO siteInfo);
-	string SaveUniformData(stdUniformScanData &vsData, char *pExtType, const char *dstPath, string &strDestFileName);
+	std::string SaveUniformData(stdUniformScanData &vsData, char *pExtType, const char *dstPath, std::string &strDestFileName);
 };
 

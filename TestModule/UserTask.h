@@ -3,4 +3,4 @@
 
 void actionTask();
 bool  StartTask();
-void  Process(string srcFile);
+void  Process(std::string srcFile);

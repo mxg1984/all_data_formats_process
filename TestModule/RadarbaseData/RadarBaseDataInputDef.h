@@ -1,11 +1,7 @@
-#ifndef DATA_INPUT_H
-#define DATA_INPUT_H
-
 #pragma once
 
+#include <string>
 #include <map>
-
-using namespace std;
 
 //以下供读出数据用
 struct stdGeneralInputScanData : public stdUniformScanData
@@ -14,7 +10,7 @@ struct stdGeneralInputScanData : public stdUniformScanData
 	bool Available;			//可获得	
 	stdGeneralInputScanData();
 };
-typedef map<uint16_t, stdGeneralInputScanData> map_GeneralScanDatas; //
+typedef std::map<uint16_t, stdGeneralInputScanData> map_GeneralScanDatas; //
 //以上用于存储读出的观测数据
 
 //标记要素 需要或者可获取
@@ -57,15 +53,13 @@ char* CommonMomentIdToType(uint16_t id, char *szType);//类型Index对应的类型名
 
 struct stdBaseDataRadarInfo
 {
-	string strRadarName;
-	string strRadarCode;
-	string strRadarType;
-	string strScanType;
+	std::string strRadarName;
+	std::string strRadarCode;
+	std::string strRadarType;
+	std::string strScanType;
 	float fRadarLon;
 	float fRadarLat;
 	float fRadarHt;
 	stdBaseDataRadarInfo();
 	void Reset();
 };
-
-#endif

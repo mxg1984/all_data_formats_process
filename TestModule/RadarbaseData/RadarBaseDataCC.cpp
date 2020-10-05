@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include "../CommVar.h"
 #include "julian_date.h"
 #include "RadarBaseDataMomentTypeDef.h"
@@ -10,7 +11,6 @@
 #include "../CommFunctions.h"
 #include <math.h>
 
-using namespace std;
 CRadarBaseDataCC1::CRadarBaseDataCC1()
 {}
 CRadarBaseDataCC1::CRadarBaseDataCC1(std::string strInFileName,int16_t dstOffset,int16_t dstScale)
@@ -37,7 +37,7 @@ CRadarBaseDataCC1::~CRadarBaseDataCC1()
 bool CRadarBaseDataCC1::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas &genScanData)
 {
 	int nCuts = 0;
-	string scanModeName = "";
+	std::string scanModeName = "";
 	uint16_t n = 0, m = 0, nb = 0, numaz = 0;
 	uint16_t mid = 0;
 	FILE* fp = 0;
@@ -45,7 +45,7 @@ bool CRadarBaseDataCC1::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas
 	stdCC1RadarDataHeader fileHeader;	
 
 	float radlon, radlat, radht;
-	string radCode, radName, radType;
+	std::string radCode, radName, radType;
 	int ncode;
 
 	errno_t err = fopen_s(&fp, m_strDataFileName.c_str(), "rb");
@@ -190,7 +190,7 @@ bool CRadarBaseDataCC1::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas
 		
 		int16_t iel = int16_t(GetElevation(nc) * 10);
 
-		vector<int16_t> rawRadialData;		
+		std::vector<int16_t> rawRadialData;
 		//Add radials in this cut for needed moments
 		for (int na = 0; na < newCut.header.num_beam; na++)
 		{//each radial
@@ -401,7 +401,7 @@ void CRadarBaseDataCC1::ConfirmMomentsObserved(uint16_t dataTypeCode, bool &bZ, 
 		bZ = bV = bW = true;
 }
 
-int CRadarBaseDataCC1::GetScanModeName(string &modeName)
+int CRadarBaseDataCC1::GetScanModeName(std::string &modeName)
 {
 	int nCut = 0;
 	modeName.assign("");
@@ -438,7 +438,7 @@ void CRadarBaseDataCC1::CheckObsvMoments()
 }
 
 //Function:获取雷达ID
-void CRadarBaseDataCC1::GetRadarID(int &ID, string &RadarCode)
+void CRadarBaseDataCC1::GetRadarID(int &ID, std::string &RadarCode)
 {
 	int nSiteID;
 	nSiteID = atoi(m_pRadarSite->cStationNumber);
@@ -446,12 +446,12 @@ void CRadarBaseDataCC1::GetRadarID(int &ID, string &RadarCode)
 }
 
 //Function:获取雷达站名
-void CRadarBaseDataCC1::GetRadarName(string &RadarName)
+void CRadarBaseDataCC1::GetRadarName(std::string &RadarName)
 {
 	RadarName.assign(m_pRadarSite->cStation);
 }
 
-void CRadarBaseDataCC1::GetRadarType(string &type)
+void CRadarBaseDataCC1::GetRadarType(std::string &type)
 {
 	type.assign(m_pRadarSite->cRadarType);
 }

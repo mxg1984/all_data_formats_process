@@ -1,6 +1,4 @@
-
-#ifndef FORMAT_CD_SC_H
-#define FORMAT_CD_SC_H
+#pragma once
 
 #include "RadarBaseDataMomentTypeDef.h"
 #include "RadarBaseDataFormatTypeDef.h"
@@ -9,8 +7,6 @@
 
 #include <string> 
 #include <vector>
-#include <map>
-using namespace std;
 
 //SC CD
 // Base Data File Structure:
@@ -194,6 +190,3 @@ struct stdSCDataHeader
 
 };
 const uint32_t SIZE_SC_DATA_HEADER = sizeof(stdSCDataHeader);
-
-
-#endif

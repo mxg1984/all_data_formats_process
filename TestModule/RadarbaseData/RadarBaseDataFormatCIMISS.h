@@ -1,11 +1,8 @@
 #pragma once
-//#pragma pack(1)
 
 #include <vector>
 #include <list>
-using namespace std;
-//////////////////////////////////////////////////////////////////////////////////
-//
+
 int const GDT_BASEDATA = 1;
 int const GDT_PRODUCT = 2;
 int const GDT_TASK_CONFIG = 3;
@@ -297,7 +294,7 @@ typedef struct __tagMomentRadialHeader
 }stdCimissMomentRadialHeader;
 const uint16_t SIZE_MOM_RADIAL_HEADER = sizeof(stdCimissMomentRadialHeader);
 
-typedef vector<uint8_t> vcRadialData;
+typedef std::vector<uint8_t> vcRadialData;
 typedef struct __tagOneMomentRadial	//包含单个要素的单个径向数据
 {// bytes
 	stdCimissMomentRadialHeader header;	//要素头
@@ -312,7 +309,7 @@ typedef struct __tagOneRadial		//包含所有要素的单个径向数据，以及径向头
 */
 
 //---- 观测数据文件由2大块组成: 1)公共数据块 + 2)径向数据块
-typedef vector<stdCimissCutConfig> cvCimissCutConfig;
+typedef std::vector<stdCimissCutConfig> cvCimissCutConfig;
 typedef struct __tagCommoBolck  
 {//1）公共数据块
 	stdCimissGenericHeader	GenricHeader;

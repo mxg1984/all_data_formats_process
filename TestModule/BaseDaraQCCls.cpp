@@ -5,6 +5,7 @@
 #include "stdafx.h"
 
 #include <memory>
+#include<string>
 
 #include "CommFunctions.h"
 #include "GlobalParams.h"
@@ -167,14 +168,14 @@ const char* CBaseDataIOandQCCls::GetVelFileName()
 
 bool CBaseDataIOandQCCls::FileIsZipped(const char *srcFileName, char *dstFileName)
 {
-	string strSrcName = "", strDstName = "";
+	std::string strSrcName = "", strDstName = "";
 	strSrcName.assign(srcFileName);
 
 	int bn = strSrcName.find(".bz2");//findStr((char*)srcFileName, ".bz2");
-	if (bn==string::npos)
+	if (bn==std::string::npos)
 		bn = strSrcName.find(".BZ2");//findStr((char*)srcFileName, ".BZ2");
 	
-	if (bn == string::npos)
+	if (bn == std::string::npos)
 	{
 		sprintf_s(dstFileName, strlen(srcFileName) + 1, "%s", srcFileName);
 		return false;

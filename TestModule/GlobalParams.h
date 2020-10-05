@@ -1,11 +1,8 @@
 #pragma once
 #include "stdAfx.h"
+
 #include <string>
 #include "UniformDataFormatDef.h"
-//#include "ThreadLog.h"
-using namespace std;
-
-//#pragma pack(1)
 
 ////////////////////////////////////////////////////////////////////////////////////////
 

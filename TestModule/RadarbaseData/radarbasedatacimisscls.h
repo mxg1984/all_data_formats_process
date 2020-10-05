@@ -9,8 +9,6 @@
 #include "RadarBaseDataFormatCIMISS.h"
 #include "julian_date.h"
 #include "RadarBaseDataCommonPPI.h"
-
-using namespace std;
 //-------------------------------------------------------//
 //
 struct stdCimissMomentRadial

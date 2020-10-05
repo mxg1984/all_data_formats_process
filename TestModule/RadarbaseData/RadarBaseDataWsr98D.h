@@ -1,6 +1,3 @@
-#ifndef _WSR_98D_BD_H
-#define _WSR_98D_BD_H
-
 #pragma once
 
 #include <string> 
@@ -21,7 +18,7 @@ public:
 
 	int16_t m_outputOffset;
 	int16_t m_outputScale; 
-	string m_strDataFileName;
+	std::string m_strDataFileName;
 
 	bool IsBaseData(uint16_t RadarStat);
 	bool IsCutStart(uint16_t RadialStat);
@@ -42,7 +39,7 @@ public:
 class CRadarBaseDataWsr98DS : public  CRadarBaseDataWsr98D
 {
 public:
-	CRadarBaseDataWsr98DS(string strInFileName, int16_t dstOffset = 0, int16_t dstScale = 10);//: CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale) {};
+	CRadarBaseDataWsr98DS(std::string strInFileName, int16_t dstOffset = 0, int16_t dstScale = 10);//: CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale) {};
 	~CRadarBaseDataWsr98DS();
 
 	bool GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas &genScanData);
@@ -56,7 +53,7 @@ private:
 class CRadarBaseDataWsr98DC : public  CRadarBaseDataWsr98D
 {
 public:
-	CRadarBaseDataWsr98DC(string strInFileName, int16_t dstOffset = 0, int16_t dstScale = 10);// : CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale) {};
+	CRadarBaseDataWsr98DC(std::string strInFileName, int16_t dstOffset = 0, int16_t dstScale = 10);// : CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale) {};
 	~CRadarBaseDataWsr98DC();
 
 	bool GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas &genScanData);
@@ -71,7 +68,7 @@ private:
 class CRadarBaseDataCDSC2 : public  CRadarBaseDataWsr98D
 {
 public:
-	CRadarBaseDataCDSC2(string strInFileName, int16_t dstOffset = 0, int16_t dstScale = 10);// : CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale) {};
+	CRadarBaseDataCDSC2(std::string strInFileName, int16_t dstOffset = 0, int16_t dstScale = 10);// : CRadarBaseDataWsr98D(strInFileName, dstOffset, dstScale) {};
 	~CRadarBaseDataCDSC2();
 	
 	bool GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas &genScanData);
@@ -81,5 +78,3 @@ private:
 	bool VelBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
 	bool SpwBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
 };
-
-#endif

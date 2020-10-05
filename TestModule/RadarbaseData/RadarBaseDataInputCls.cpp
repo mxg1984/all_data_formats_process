@@ -78,7 +78,7 @@ void CRadarDataInputCls::LoadParameter()
 //bQC --是否需要的是QC 后的要素
 void CRadarDataInputCls::AddNeededMoment(const char* szMomentType, bool bQc)
 { 
-	string strMoment = "";
+	std::string strMoment = "";
 	strMoment.assign(szMomentType);
 
 	stdGeneralInputScanData aScan;
@@ -88,7 +88,7 @@ void CRadarDataInputCls::AddNeededMoment(const char* szMomentType, bool bQc)
 	aScan.header.factor = m_uniformFactor;
 	aScan.header.ndata = VALUE_INVALID;
 
-	if (strMoment.find(M_Z) != string::npos && strMoment.length() == strlen(M_Z))
+	if (strMoment.find(M_Z) != std::string::npos && strMoment.length() == strlen(M_Z))
 	{
 		if (bQc)
 		{
@@ -101,7 +101,7 @@ void CRadarDataInputCls::AddNeededMoment(const char* szMomentType, bool bQc)
 			m_genScanDatas[M_Z_ID] = aScan;
 		}
 	}
-	if (strMoment.find(M_V) != string::npos && strMoment.length() == strlen(M_V))
+	if (strMoment.find(M_V) != std::string::npos && strMoment.length() == strlen(M_V))
 	{
 		if (bQc)
 		{
@@ -114,7 +114,7 @@ void CRadarDataInputCls::AddNeededMoment(const char* szMomentType, bool bQc)
 			m_genScanDatas[M_V_ID] = aScan;
 		}
 	}
-	if (strMoment.find(M_W) != string::npos && strMoment.length() == strlen(M_W))
+	if (strMoment.find(M_W) != std::string::npos && strMoment.length() == strlen(M_W))
 	{
 		if (bQc)
 		{
@@ -127,7 +127,7 @@ void CRadarDataInputCls::AddNeededMoment(const char* szMomentType, bool bQc)
 			m_genScanDatas[M_W_ID] = aScan;
 		}
 	}
-	if (strMoment.find(M_ZDR) != string::npos && strMoment.length() == strlen(M_ZDR))
+	if (strMoment.find(M_ZDR) != std::string::npos && strMoment.length() == strlen(M_ZDR))
 	{
 		if (bQc)
 		{
@@ -140,22 +140,22 @@ void CRadarDataInputCls::AddNeededMoment(const char* szMomentType, bool bQc)
 			m_genScanDatas[M_ZDR_ID] = aScan;
 		}
 	}
-	if (strMoment.find(M_PDP) != string::npos && strMoment.length() == strlen(M_PDP))
+	if (strMoment.find(M_PDP) != std::string::npos && strMoment.length() == strlen(M_PDP))
 	{
 		m_paranmNeededFlag.bPDP = true;
 		m_genScanDatas[M_PDP_ID] = aScan;
 	}
-	if (strMoment.find(M_KDP) != string::npos && strMoment.length() == strlen(M_KDP))
+	if (strMoment.find(M_KDP) != std::string::npos && strMoment.length() == strlen(M_KDP))
 	{
 		m_paranmNeededFlag.bKDP = true;
 		m_genScanDatas[M_KDP_ID] = aScan;
 	}
-	if (strMoment.find(M_RHV) != string::npos && strMoment.length() == strlen(M_RHV))
+	if (strMoment.find(M_RHV) != std::string::npos && strMoment.length() == strlen(M_RHV))
 	{
 		m_paranmNeededFlag.bRHV = true;
 		m_genScanDatas[M_RHV_ID] = aScan;
 	}
-	if (strMoment.find(M_LDR) != string::npos && strMoment.length() == strlen(M_LDR))
+	if (strMoment.find(M_LDR) != std::string::npos && strMoment.length() == strlen(M_LDR))
 	{
 		m_paranmNeededFlag.bLDR = true;
 		m_genScanDatas[M_LDR_ID] = aScan;
@@ -170,33 +170,33 @@ void CRadarDataInputCls:: LoadScanData()
 	m_strFormatV.assign(szType);
 
 	//根读对应类型的数据
-	if (m_strFormatV.find(FM_RD_SA) != string::npos || m_strFormatV.find(FM_RD_SB) != string::npos)
+	if (m_strFormatV.find(FM_RD_SA) != std::string::npos || m_strFormatV.find(FM_RD_SB) != std::string::npos)
 	{
 		CRadarBaseDataWsr98DS  Met98DSRadarData(m_strInFileName, m_uniformOffset, m_uniformFactor);//SA SB
 		Met98DSRadarData.GetObsvData(m_paranmNeededFlag, m_genScanDatas);
 	}
-	else if (m_strFormatV.find(FM_RD_CA) != string::npos || m_strFormatV.find(FM_RD_CB) != string::npos)
+	else if (m_strFormatV.find(FM_RD_CA) != std::string::npos || m_strFormatV.find(FM_RD_CB) != std::string::npos)
 	{
 		CRadarBaseDataWsr98DC   Met98DCRadarData(m_strInFileName, m_uniformOffset, m_uniformFactor);//SA SB
 		Met98DCRadarData.GetObsvData(m_paranmNeededFlag, m_genScanDatas);
 	}
-	else if (m_strFormatV.find(FM_RD_SC2) != string::npos && m_strFormatV.length() == strlen(FM_RD_SC2)||
-		m_strFormatV.find(FM_RD_CD2) != string::npos && m_strFormatV.length() == strlen(FM_RD_CD2))
+	else if (m_strFormatV.find(FM_RD_SC2) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_SC2)||
+		m_strFormatV.find(FM_RD_CD2) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_CD2))
 	{
 		CRadarBaseDataCDSC2 MetSCRadarData(m_strInFileName, m_uniformOffset, m_uniformFactor);//SA SB
 		MetSCRadarData.GetObsvData(m_paranmNeededFlag, m_genScanDatas);
 	}
-	else if (m_strFormatV.find(FM_RD_SC) != string::npos && m_strFormatV.length() == strlen(FM_RD_SC) ||
-		m_strFormatV.find(FM_RD_CD) != string::npos  && m_strFormatV.length() == strlen(FM_RD_CD))
+	else if (m_strFormatV.find(FM_RD_SC) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_SC) ||
+		m_strFormatV.find(FM_RD_CD) != std::string::npos  && m_strFormatV.length() == strlen(FM_RD_CD))
 	{
 		CRadarBaseDataCDSC   LocalSCRadarData(m_strInFileName, m_uniformOffset, m_uniformFactor);//SA SB
 		LocalSCRadarData.GetObsvData(m_paranmNeededFlag, m_genScanDatas);
 	}
-	else if (m_strFormatV.find(FM_RD_CC2) != string::npos && m_strFormatV.length() == strlen(FM_RD_CC2))
+	else if (m_strFormatV.find(FM_RD_CC2) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_CC2))
 	{
 		;
 	}/*
-	else if (m_strFormatV.find(FM_RD_CC) != string::npos && m_strFormatV.length() == strlen(FM_RD_CC))
+	else if (m_strFormatV.find(FM_RD_CC) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_CC))
 	{
 		m_pLoacalCC1RadarData = new CRadarBaseDataCC1(m_strInFileName, m_uniformOffset, m_uniformFactor);//SA SB
 		if (m_pLoacalCC1RadarData)
@@ -208,7 +208,7 @@ void CRadarDataInputCls:: LoadScanData()
 			m_pLoacalCC1RadarData = 0x0;  
 		}
 	}
-	else if (m_strFormatV.find(FM_RD_CIMISS) != string::npos) 
+	else if (m_strFormatV.find(FM_RD_CIMISS) != std::string::npos) 
 	{
 		m_pCimissRadarData = new CCIMISSRadarDataCls(m_strInFileName, m_uniformOffset, m_uniformFactor);//SA SB
 		m_pCimissRadarData->GetObsvData(m_paranmNeededFlag, m_genScanDatas);
@@ -218,9 +218,9 @@ void CRadarDataInputCls:: LoadScanData()
 			m_pCimissRadarData = 0x0;
 		}
 	}*//*
-	else if (m_strFormatV.find(FM_RD_CC2) != string::npos && m_strFormatV.length() == strlen(FM_RD_CC2))
+	else if (m_strFormatV.find(FM_RD_CC2) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_CC2))
 		;//CC2.0
-	else if (m_strFormatV.find(FM_RD_88D) != string::npos && m_strFormatV.length() == strlen(FM_RD_88D))
+	else if (m_strFormatV.find(FM_RD_88D) != std::string::npos && m_strFormatV.length() == strlen(FM_RD_88D))
 		;//88D-SA Shanghai*/
 
 	//完善其它信息
@@ -234,7 +234,7 @@ void CRadarDataInputCls:: LoadScanData()
 
 void CRadarDataInputCls::LoadCutData(float el, float az)
 {
-	if (m_strFormatV.find(FM_RD_SA) != string::npos || m_strFormatV.find(FM_RD_SB) != string::npos)
+	if (m_strFormatV.find(FM_RD_SA) != std::string::npos || m_strFormatV.find(FM_RD_SB) != std::string::npos)
 	{
 		;//m_pMet98DSRadarData = new CRadarBaseDataWsr98DS(m_strInFileName);//SA SB
 		//m_pMet98DRadarData->GetObsvData(m_genScanDatas, m_genScanDatas);
@@ -263,7 +263,7 @@ stdUniformScanData* CRadarDataInputCls::GetMomentScanData(uint16_t nMomentTypeId
 	return 0x0;
 }
 
-string CRadarDataInputCls::GetMomentScanFile(const char* szMomentType)//, stdCommonScanData *pOutScanData)
+std::string CRadarDataInputCls::GetMomentScanFile(const char* szMomentType)//, stdCommonScanData *pOutScanData)
 {
 	m_strUniformFieNameZ = "";
 	m_strUniformFieNameV = "";
@@ -283,7 +283,7 @@ string CRadarDataInputCls::GetMomentScanFile(const char* szMomentType)//, stdCom
 	return m_strUniformFieNameZ; //=""
 }
 
-string CRadarDataInputCls::GetMomentScanFile(uint16_t nMomentTypeId)//, stdCommonScanData *pOutScanData)
+std::string CRadarDataInputCls::GetMomentScanFile(uint16_t nMomentTypeId)//, stdCommonScanData *pOutScanData)
 {
 	m_strUniformFieNameZ = "";
 	m_strUniformFieNameV = "";
@@ -312,13 +312,13 @@ void CRadarDataInputCls::DetermineRadarType(const char* szDataFileName, RADARSIT
 	//m_siteInfo
 	strcpy_s(szType, strlen(siteInfo.SiteType)+1,siteInfo.SiteType);
 
-	string strFileName = "";
+	std::string strFileName = "";
 	strFileName.assign(szDataFileName);
 
 	//以下类型又有两类格式，通过文件内容区分
-	string strFormatKey = "";
+	std::string strFormatKey = "";
 	strFormatKey.assign(szType);
-	if (strFormatKey.find(FM_RD_CD) != string::npos) //两类格式
+	if (strFormatKey.find(FM_RD_CD) != std::string::npos) //两类格式
 	{
 		FILE* fp = 0;
 		errno_t err = fopen_s(&fp, strFileName.c_str(), "rb");
@@ -333,7 +333,7 @@ void CRadarDataInputCls::DetermineRadarType(const char* szDataFileName, RADARSIT
 			fclose(fp);
 		}		
 	}
-	else if (strFileName.find(FM_RD_SC) != string::npos)
+	else if (strFileName.find(FM_RD_SC) != std::string::npos)
 	{
 		FILE* fp = 0;
 		errno_t err = fopen_s(&fp, strFileName.c_str(), "rb");
@@ -348,17 +348,17 @@ void CRadarDataInputCls::DetermineRadarType(const char* szDataFileName, RADARSIT
 			fclose(fp);
 		}
 	}
-	else if (strFileName.find(FM_RD_CC) != string::npos)
+	else if (strFileName.find(FM_RD_CC) != std::string::npos)
 	{
 		FILE* fp = 0;
 		errno_t err = fopen_s(&fp, strFileName.c_str(), "rb");
 		if (err == 0)
 		{
 			char cFileType[16]="";
-			string strFileType = "";
+			std::string strFileType = "";
 			fread(&cFileType, sizeof(char)*16, 1, fp);
 			strFileType.assign(cFileType);
-			if (strFileType.find("CINRAD")!=string::npos)  //CD2 SC2
+			if (strFileType.find("CINRAD")!=std::string::npos)  //CD2 SC2
 				sprintf_s(szType, strlen(FM_RD_CC) + 1, "%s", FM_RD_CC);
 			else
 				sprintf_s(szType, strlen(FM_RD_CC2) + 1, "%s", FM_RD_CC2);
@@ -397,7 +397,7 @@ void CRadarDataInputCls::AddSiteInfoInData(stdUniformScanData *pvsScan, RADARSIT
 	}
 }
 
-string  CRadarDataInputCls::SaveUniformData(stdUniformScanData &vsData, char *pExtType, const char *dstPath,string &strDestFileName)
+std::string  CRadarDataInputCls::SaveUniformData(stdUniformScanData &vsData, char *pExtType, const char *dstPath,std::string &strDestFileName)
 {
 	strDestFileName.assign("");
 

@@ -1,6 +1,3 @@
-#ifndef _WSR_CC1_BD_H
-#define _WSR_CC1_BD_H
-
 #pragma once
 
 #include <string> 
@@ -24,7 +21,7 @@ public:
 private:
 	int16_t m_outputOffset;
 	int16_t m_outputScale;
-	string m_strDataFileName; 
+	std::string m_strDataFileName; 
 	stdMomentFlag m_obsvMoments;
 
 	stdCC1RadarSite* m_pRadarSite;
@@ -38,11 +35,11 @@ private:
 	short GetBinValueW(uint8_t src_code, float maxV,int16_t dst_offset, int16_t dst_sale);
 
 	void ConfirmMomentsObserved(uint16_t dataTypeCode, bool &bZ, bool &bV, bool &bW);
-	int GetScanModeName(string &modeName);
+	int GetScanModeName(std::string &modeName);
 	void CheckObsvMoments();
-	void GetRadarID(int &ID, string &RadarCode);//
-	void GetRadarName(string &RadarName);//
-	void GetRadarType(string &type);
+	void GetRadarID(int &ID, std::string &RadarCode);//
+	void GetRadarName(std::string &RadarName);//
+	void GetRadarType(std::string &type);
 	void GetRadarSitePos(float &fLon, float &fLat, float &fHgt);
 	uint16_t GetNumBeam(int CutIdx);	//获取一个仰角上的RADIAL数
 	uint16_t GetDefaultNumBin(int cutidx);//获取径向上的库数-取决于格式的定义
@@ -51,5 +48,3 @@ private:
 	float GetElevation(int CutIdx);
 	float GetMaxVel(int CutIdx);
 };
-
-#endif

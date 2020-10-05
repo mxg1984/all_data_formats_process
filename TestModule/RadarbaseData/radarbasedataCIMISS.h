@@ -9,7 +9,6 @@
 #include "RadarBaseDataFormatCIMISS.h"
 #include "RadarBaseDataCommonPPI.h"
 
-using namespace std;
 //-------------------------------------------------------//
 //
 struct stdCimissMomentRadial
@@ -17,8 +16,8 @@ struct stdCimissMomentRadial
 	stdCimissGenRadialHeader genHeader;
 	stdCimissOneMomentRadial Radial;
 };
-typedef list<stdCimissMomentRadial> vct_momentCut;	//单要素一个CUT的所有radials
-typedef list<vct_momentCut> vct_momentCuts;
+typedef std::list<stdCimissMomentRadial> vct_momentCut;	//单要素一个CUT的所有radials
+typedef std::list<vct_momentCut> vct_momentCuts;
 struct stdCimissMomentCuts
 {
 	bool Needed;	//需提出来
@@ -86,7 +85,7 @@ const uint32_t CIMISS_M_TYPE_ID[cMaxMoment]
 class CCIMISSRadarDataCls
 {
 public:
-	CCIMISSRadarDataCls(string strInFileName, int16_t dstOffset, int16_t dstScale);
+	CCIMISSRadarDataCls(std::string strInFileName, int16_t dstOffset, int16_t dstScale);
 	~CCIMISSRadarDataCls();
 	
 	bool GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas &genScanData);//获取一个仰角的PPI/SPPI 数据，或一个方位RHI数据
@@ -94,14 +93,14 @@ public:
 private:
 	int16_t m_outputOffset;
 	int16_t m_outputScale;
-	string m_strDataFileName;
+	std::string m_strDataFileName;
 	FILE* m_pDataFile;
 
 	stdBaseDataRadarInfo m_bdRadarInfo; //基数据相关的的雷达参数
 
 	stdMomentFlag m_obsvMoments;
-	map<uint16_t, bool> m_bMomentObsved;// [cMaxMoment];
-	map<uint16_t, bool> m_bMomentNeeded;// [cMaxMoment];
+	std::map<uint16_t, bool> m_bMomentObsved;// [cMaxMoment];
+	std::map<uint16_t, bool> m_bMomentNeeded;// [cMaxMoment];
 
 	int32_t  m_MomentCutId[cMaxMoment];		//不同要素的仰角序号 1开始
 
@@ -139,13 +138,13 @@ private:
 
 	stdCimissCutConfig* GetCutConfig(uint16_t cutid);
 	stdCimissScanTaskConfig* GetScanConfig();
-	void GetRadarSite(string &sname, string &scode, string &stype, float &lon, float &lat, float &ht);
+	void GetRadarSite(std::string &sname, std::string &scode, std::string &stype, float &lon, float &lat, float &ht);
 	//void GetRadarSite(char* sname, char* scode, char* stype, float &lon, float &lat, float &ht);
 	//uint16_t GetCutNum(uint16_t momid);
 	//vct_momentCut* GetMomentCut(uint16_t momid, uint16_t cutidx);
 	void GetRadialDateTime(stdCimissGenRadialHeader radialHeader, uint16_t &year, uint16_t &day, uint16_t &month, uint16_t &hour, uint16_t &minute, uint16_t &second);
 	void GetScanStartDateTime(uint16_t &year, uint16_t &day, uint16_t &month, uint16_t &hour, uint16_t &minute, uint16_t &second);
-	int GetScanModeName(string &modeName);
+	int GetScanModeName(std::string &modeName);
 
 	void MomentTypeLocalToUniform(uint16_t localMomentType,uint16_t &uniformMoemntId);
 	void MomentIdLocalToUniform(uint16_t localMomentId, uint16_t &uniformMoemntId);
