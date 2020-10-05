@@ -1,15 +1,9 @@
-// BaseDaraQCCls.cpp: implementation of the CBaseDataIOandQCCls class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#include "stdafx.h"
+#include "BaseDaraQCCls.h"
 
 #include <memory>
-#include<string>
 
 #include "CommFunctions.h"
 #include "GlobalParams.h"
-#include "BaseDaraQCCls.h"
 
 CBaseDataIOandQCCls::CBaseDataIOandQCCls(int32_t sitecode, const std::string& srcfile)
 	:m_srcBaseDataFileName(srcfile)
@@ -274,4 +268,3 @@ int32_t CBaseDataIOandQCCls::findStr(char *str, char *substr)
 //	return n;
 	return l;
 }
-

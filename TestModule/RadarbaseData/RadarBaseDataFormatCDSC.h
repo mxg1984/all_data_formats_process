@@ -1,12 +1,10 @@
 #pragma once
 
-#include "RadarBaseDataMomentTypeDef.h"
-#include "RadarBaseDataFormatTypeDef.h"
-#pragma once
-//#pragma pack(1)
-
 #include <string> 
 #include <vector>
+
+#include "RadarBaseDataMomentTypeDef.h"
+#include "RadarBaseDataFormatTypeDef.h"
 
 //SC CD
 // Base Data File Structure:

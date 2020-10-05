@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include <errno.h>
 #include <direct.h>
 #include <io.h>
@@ -119,7 +120,7 @@ void UnZip(char *src, char *dst)  //解压缩函数
 	TCHAR wszChar[PATH_LEN] = _TEXT("");
 	CharToTchar(str.c_str(),wszChar);
 
-	BOOL   res   =   CreateProcess(NULL,   
+	bool   res   =   CreateProcess(NULL,   
 		wszChar,//str.GetBuffer(0),//"C:\\Program Files\\WinRAR\\Rar.exe ****",     
 		NULL,   
 		NULL,   
@@ -164,7 +165,7 @@ void Zip2Prod(char *src)  //压缩函数
 	sprintf_s(str2,"%s %s",str1,src);
 	TCHAR wszChar[PATH_LEN] = _TEXT("");
 	CharToTchar(str2, wszChar);
-	BOOL   res   =   CreateProcess(NULL,   
+	bool   res   =   CreateProcess(NULL,   
 		wszChar,//str.GetBuffer(0),//"C:\\Program Files\\WinRAR\\Rar.exe ****",     
 		NULL,   
 		NULL,   
@@ -184,33 +185,8 @@ void Zip2Prod(char *src)  //压缩函数
 
 } 
 
-//----------------------------------------------------------------------
-//函数: IfFilePathExist(const char* szFilePathName)
-//Function: 检查文件或路径是否存在
-//参数:
-// szFilePathName -- 文件或路径名
-// 原创作者：xuanyin235 2017-08-27 21:50:38  
-// 网址: https://blog.csdn.net/xuanyin235/article/details/77623503
-BOOL FilePathExists( char* szFilePathName)
-{
-	if( (_access( szFilePathName, 0 )) != -1 )
-	{	
-		return true;
-		//printf( "File test.txt exists\n" );	/* Check for write permission */
-		//if( (_access( "test.txt", 2 )) != -1 )		
-		//	printf( "File test.txt has write permission\n" );	
-		//if( (_access( "test.txt", 4 )) != -1 )		
-		//	printf( "File test.txt has read permission\n" );	
-		//if( (_access( "test.txt", 6 )) != -1 )		
-		//	printf( "File test.txt has read and write permission\n" );
-	}else
-	{	
-		//printf("File test.txt does not exists\n");
-		return false;
-	}
-}
 
-BOOL FilePathExists(const char* szFilePathName)
+bool FilePathExists(const char* szFilePathName)
 {
 	if( (_access( szFilePathName, 0 )) != -1 )
 	{	
@@ -230,7 +206,7 @@ BOOL FilePathExists(const char* szFilePathName)
 }
 //----------------------------------------------------------------------
 //////////////////////////////////////////////////////////////////
-//函数：    CreateDir(char *strPath, BOOL bCreate)
+//函数：    CreateDir(char *strPath, bool bCreate)
 //
 //功能:		检查某一路径是否存在，如果不存在，创建该路径
 //
@@ -239,15 +215,15 @@ BOOL FilePathExists(const char* szFilePathName)
 //			3- 创建需要的目录， 并在出错时给出日志记录
 //
 //参数:		char *strPath -- 文件夹
-//			BOOL bCreate  -- 是否需要创建目录
+//			bool bCreate  -- 是否需要创建目录
 //
-//返回:		BOOL, 当一个应该存在的目录没有找到时, 或者新目录创建失败时, 返回FALSE, 处理正常时, 返回TRUE.
+//返回:		bool, 当一个应该存在的目录没有找到时, 或者新目录创建失败时, 返回FALSE, 处理正常时, 返回TRUE.
 //
 //作者:		Whyan
 //
 //日期:     2007.04
 //
-BOOL CreateDir(const char *strPath, BOOL bCreate)
+bool CreateDir(const char *strPath, bool bCreate)
 {
 	//char strMsg[LEN_LOG_MSG];
 	CWriteLogFile WriteLogFile;
@@ -283,7 +259,7 @@ BOOL CreateDir(const char *strPath, BOOL bCreate)
 	return true;
 }
 
-BOOL CreateDir(TCHAR *strPath, BOOL bCreate)
+bool CreateDir(TCHAR *strPath, bool bCreate)
 {
 	//char strMsg[LEN_LOG_MSG];
 	CWriteLogFile WriteLogFile;
@@ -343,7 +319,7 @@ BOOL CreateDir(TCHAR *strPath, BOOL bCreate)
 #include <iostream>
 #include <cstring>
 //Reference : https://blog.csdn.net/qq_18297675/java/article/details/51313121
-BOOL BrowseDirectory(CString &strPath, HWND hWnd )
+bool BrowseDirectory(CString &strPath, HWND hWnd )
 {//Get a full path (without file name) 
 	TCHAR szBrowsePath[PATH_LEN] = _TEXT("");
 
@@ -368,32 +344,32 @@ BOOL BrowseDirectory(CString &strPath, HWND hWnd )
 }
 
 //向保存基数据文件名的文件中写入基数据文件名
-BOOL FileNameWrite()
+bool FileNameWrite()
 {
 	return TRUE;
 }
 
 //从保存基数据文件名的文件中读出基数据文件名
-BOOL FileNameRead()
+bool FileNameRead()
 {	
 	return TRUE;
 }
 
 //从配置文件中读出参数
-BOOL SettingFileRead()
+bool SettingFileRead()
 {
 	return false;
 }
 
 //向配置文件中写入参数
-BOOL SettingFileWrite()
+bool SettingFileWrite()
 {
 	return TRUE;
 }
 
 /*
 //从配置文件中读出参数
-BOOL SettingFileRead()
+bool SettingFileRead()
 {
 	FILE *fp = NULL;
 
@@ -418,7 +394,7 @@ BOOL SettingFileRead()
 }
 
 //向配置文件中写入参数
-BOOL SettingFileWrite()
+bool SettingFileWrite()
 {
 	FILE *fp = NULL;
 
@@ -502,7 +478,7 @@ void DeleteDirectory(char strDir[], int32_t iRemainDays, uint32_t iRemainHours,u
 		sprintf_s(FileFilter, "%s%s", strDir, "*.*");
 	CharToTchar(FileFilter, wFileFilter);
 
-	BOOL bFound = ff.FindFile(wFileFilter, 0);
+	bool bFound = ff.FindFile(wFileFilter, 0);
 	while(bFound)
 	{
 		bFound = ff.FindNextFile();
@@ -631,7 +607,7 @@ DWORD GetProcessidFromName(TCHAR *name)
 }
 
 //遍历窗口内的所有控件,把它置为有效或者无效//2012.04.28
-void InvalidDlgItems(CWnd* pWnd, BOOL bFlag)
+void InvalidDlgItems(CWnd* pWnd, bool bFlag)
 {
 	//return;
 	CWnd* pThisWnd = pWnd->GetWindow(GW_CHILD);   
@@ -659,7 +635,7 @@ void InvalidDlgItems(CWnd* pWnd, BOOL bFlag)
 }
 
 // 把一个指定控件置为有效或者无效//2012.04.28
-void InvalidDlgItem(CWnd* pWnd, int32_t ID, BOOL bFlag)
+void InvalidDlgItem(CWnd* pWnd, int32_t ID, bool bFlag)
 {
 	EnableWindow(GetDlgItem(pWnd->m_hWnd,ID),bFlag);	
 	pWnd->UpdateData(FALSE);
@@ -767,14 +743,14 @@ void RefreshTaskbarIcon()
 //Reference http://www.cppblog.com/woaidongmao/archive/2011/08/27/154486.html
 void SearchAndClearIdleTrayIcon()
 {
-	BOOL bNullBeDel = FALSE;
+	bool bNullBeDel = FALSE;
 	do
 	{
 		DeleteTrayNullIcon(bNullBeDel);
 	} while (bNullBeDel);
 }
 
-int DeleteTrayNullIcon(BOOL &bNullBeDel)
+int DeleteTrayNullIcon(bool &bNullBeDel)
 {
 	HWND  hNotify1;
 	int iMethod = 0;

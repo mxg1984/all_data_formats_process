@@ -4,6 +4,9 @@
 #include <vector>
 #include <map>
 
+#include "RadarBaseDataFormat98D.h"
+#include "RadarBaseDataInputDef.h"
+
 #define  cMaxMoment_98D  3 //要素总数量//
 const uint32_t MOMENT_TYPE_ID_98D[cMaxMoment_98D]{ M_Z_ID, M_V_ID, M_W_ID };
 
@@ -33,7 +36,7 @@ public:
 	float GetBinValue(uint8_t code, int16_t offset, int16_t scale, float ndata);
 	short GetBinValue(uint8_t src_code, int16_t src_offset, int16_t src_scale, int16_t dst_offset, int16_t dst_sale);
 
-	void ConfirmMomentsObserved(stdRadialHeader98D *pRadialHeader, bool &bZ, bool &bV, bool &bW);
+	void ConfirmMomentsObserved(format_98d::stdRadialHeader98D *pRadialHeader, bool &bZ, bool &bV, bool &bW);
 };
 
 class CRadarBaseDataWsr98DS : public  CRadarBaseDataWsr98D
@@ -45,9 +48,9 @@ public:
 	bool GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas &genScanData);
 
 private:
-	bool RefBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
-	bool VelBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
-	bool SpwBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
+	bool RefBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
+	bool VelBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
+	bool SpwBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
 };
 
 class CRadarBaseDataWsr98DC : public  CRadarBaseDataWsr98D
@@ -59,9 +62,9 @@ public:
 	bool GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas &genScanData);
 
 private:
-	bool RefBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
-	bool VelBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
-	bool SpwBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
+	bool RefBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
+	bool VelBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
+	bool SpwBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
 };
 
 
@@ -74,7 +77,7 @@ public:
 	bool GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDatas &genScanData);
 
 private:
-	bool RefBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
-	bool VelBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
-	bool SpwBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
+	bool RefBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
+	bool VelBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
+	bool SpwBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins);
 };

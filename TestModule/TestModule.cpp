@@ -1,8 +1,8 @@
 
 // TestModule.cpp : 定义应用程序的类行为。
 //
-#include "CheckMemoryLeak.h"
 #include "stdafx.h"
+
 #include "TestModule.h"
 #include "TestModuleDlg.h"
 #include "CommFunctions.h"

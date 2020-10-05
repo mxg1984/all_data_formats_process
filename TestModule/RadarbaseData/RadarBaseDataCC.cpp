@@ -1,18 +1,16 @@
-#include "stdafx.h"
+#include "RadarBaseDataCC.h"
+
+#include <cmath>
+#include <cstring>
+#include <cstdio>
 
 #include "../CommVar.h"
+#include "../CommFunctions.h"
 #include "julian_date.h"
 #include "RadarBaseDataMomentTypeDef.h"
 #include "RadarBaseDataCommonPPI.h"
-#include "RadarBaseDataInputDef.h"
 #include "RadarBaseDataFormat98D.h"
-#include "RadarBaseDataFormatCC.h"
-#include "RadarBaseDataCC.h"
-#include "../CommFunctions.h"
-#include <math.h>
 
-CRadarBaseDataCC1::CRadarBaseDataCC1()
-{}
 CRadarBaseDataCC1::CRadarBaseDataCC1(std::string strInFileName,int16_t dstOffset,int16_t dstScale)
 {
 	m_strDataFileName.assign(strInFileName);
@@ -29,8 +27,6 @@ CRadarBaseDataCC1::~CRadarBaseDataCC1()
 	//m_radialData.clear();
 }
 
-#include <string.h>
-#include <stdio.h>
 //获取一个仰角的PPI/SPPI 数据，或一个方位RHI数据
 //cutIndex: 仰角/方位序号,从0开始计数
 //fpOrigin: 开始读取的位置，SEEK_SET-文件开头，SEEK_CUR-当前位置

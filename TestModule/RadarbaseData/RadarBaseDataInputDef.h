@@ -3,6 +3,8 @@
 #include <string>
 #include <map>
 
+#include "RadarBaseDataCommonPPI.h"
+
 //以下供读出数据用
 struct stdGeneralInputScanData : public stdUniformScanData
 {

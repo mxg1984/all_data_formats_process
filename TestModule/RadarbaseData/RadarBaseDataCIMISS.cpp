@@ -1,16 +1,12 @@
-#include "stdafx.h"
+#include "RadarBaseDataFormatCIMISS.h"
+
 #include "../CommVar.h"
+#include "../CommFunctions.h"
 #include "julian_date.h"
 #include "RadarBaseDataMomentTypeDef.h"
-#include "RadarBaseDataCommonPPI.h"
 #include "RadarBaseDataInputDef.h"
-#include "RadarBaseDataFormatCIMISS.h"
 #include "RadarBaseDataCIMISS.h"
-#include "../CommFunctions.h"
 
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//
 stdCimissMomentCuts::stdCimissMomentCuts()
 {
 	Needed = false;

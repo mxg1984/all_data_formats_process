@@ -1,14 +1,13 @@
-#include "stdafx.h"
+#include "RadarBaseDataFormatCDSC.h"
 
 #include "../CommVar.h"
+#include "../CommFunctions.h"
 #include "julian_date.h"
 #include "RadarBaseDataMomentTypeDef.h"
 #include "RadarBaseDataCommonPPI.h"
 #include "RadarBaseDataInputDef.h"
 #include "RadarBaseDataFormat98D.h"
-#include "RadarBaseDataFormatCDSC.h"
 #include "RadarBaseDataCDSC.h"
-#include "../CommFunctions.h"
 
 CRadarBaseDataCDSC::CRadarBaseDataCDSC()
 {

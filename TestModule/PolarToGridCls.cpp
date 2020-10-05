@@ -1,20 +1,13 @@
-// PolarToGridCls.cpp: implementation of the CPolarToGridCls class.
-//
-//////////////////////////////////////////////////////////////////////
+#include "PolarToGridCls.h"
 
-#include "stdafx.h"
-
-#include<experimental/filesystem>
+#include <cmath>
+#include <experimental/filesystem>
 
 #include "MosaicDataFormatDef.h"
-#include "PolarToGridCls.h"
 #include "CommFunctions.h"
 #include "GlobalParams.h"
 
-#include <math.h>
 #include <omp.h>
-
-//#pragma pack(1)
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -46,7 +39,7 @@ CPolarToGridCls::CPolarToGridCls()
 	m_minute=0;
 }
 
-CPolarToGridCls::CPolarToGridCls(int32_t sitecode, int32_t numcuts, LPBYTE pPolarData)
+CPolarToGridCls::CPolarToGridCls(int32_t sitecode, int32_t numcuts, void* pPolarData)
 {
 	m_GridData=0;
 	m_siteCode=sitecode;

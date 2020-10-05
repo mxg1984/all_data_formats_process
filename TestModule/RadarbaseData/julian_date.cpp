@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "julian_date.h"
 
 class CDate {

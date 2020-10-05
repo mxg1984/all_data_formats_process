@@ -1,10 +1,6 @@
-#ifndef FORMAT_98D_H
-#define FORMAT_98D_H
 #pragma once
-//#pragma pack(1)
 
 #include <vector>
-//#include <list>
 
 #define BEAM_WIDTH 0.95		//波束宽度（度
 #define MAX_RADS 400        //每层最多 RADIAL数
@@ -16,7 +12,7 @@ const  uint16_t RADIAL_LEN_C = 2300;
 //C band
 #define SURV_BINS_C 800
 #define DOPL_BINS_SA 1600
-const  uint16_t RADIAL_LEN_S = 4000;
+static const  uint16_t RADIAL_LEN_S = 4000;
 
 // PPI status
 #define stat_vol_beg 3
@@ -85,5 +81,3 @@ struct stdRadial98DC :public stdRadialHeader98D
 	stdRadial98DC();
 };
 const uint16_t SIZE_RADIAL_98DC = sizeof(stdRadial98DC);
-
-#endif

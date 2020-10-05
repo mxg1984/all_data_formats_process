@@ -40,7 +40,7 @@ private:
 	void AddOneMsg(char *strLogType);
 	void LoadMessage( const char*  msg);	
 	//CString m_str1Msg;	
-	char m_szLogPath[MAX_PATH];
+	char m_szLogPath[FILENAME_MAX];
 	//void SendLogMsgToMainWnd(char* strLogType, const char *msg);	
 };
 

@@ -1,10 +1,10 @@
-#include "stdafx.h"
+#include "RadarBaseDataInputDef.h"
+
 #include "../CommVar.h"
 #include "RadarBaseDataMomentTypeDef.h"
 #include "RadarBaseDataFormatTypeDef.h"
-#include "RadarBaseDataCommonPPI.h"
 #include "RadarBaseDataFormatSA.h"
-#include "RadarBaseDataInputDef.h"
+
 #include "RadarBaseDataWsr98D.h"
 //#include "RadarBaseDataCIMISSCls.h"
 #include "RadarBaseDataInputCls.h"

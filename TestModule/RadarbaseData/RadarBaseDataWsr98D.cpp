@@ -1,12 +1,10 @@
-#include "stdafx.h"
+#include "RadarBaseDataWsr98D.h"
 
 #include "../CommVar.h"
 #include "julian_date.h"
 #include "RadarBaseDataMomentTypeDef.h"
 #include "RadarBaseDataCommonPPI.h"
-#include "RadarBaseDataInputDef.h"
 #include "RadarBaseDataFormat98D.h"
-#include "RadarBaseDataWsr98D.h"
 #include "RadarBaseDataFormatSC2.h"
 
 CRadarBaseDataWsr98D::CRadarBaseDataWsr98D()
@@ -56,7 +54,7 @@ int16_t CRadarBaseDataWsr98D::GetBinValue(uint8_t src_code, int16_t src_offset, 
 }
 
 //确定需要读出且能从数据中获得的要素
-void CRadarBaseDataWsr98D::ConfirmMomentsObserved(stdRadialHeader98D *pRadialHeader, bool &bZ, bool &bV, bool &bW)
+void CRadarBaseDataWsr98D::ConfirmMomentsObserved(format_98d::stdRadialHeader98D *pRadialHeader, bool &bZ, bool &bV, bool &bW)
 {
 	bZ = bV = bW = false;
 
@@ -171,8 +169,8 @@ bool CRadarBaseDataWsr98DS::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 	size_t ncR = 0, ncV = 0, ncW = 0;
 	while (bGoodScan && !feof(m_pFile))
 	{
-		stdRadial98DS metRadial;//统一径向头
-		if (fread(&metRadial, SIZE_RADIAL_98DS, 1, m_pFile) < 1)
+		format_98d::stdRadial98DS metRadial;//统一径向头
+		if (fread(&metRadial, format_98d::SIZE_RADIAL_98DS, 1, m_pFile) < 1)
 		{
 			istat = false;
 			break;
@@ -187,7 +185,7 @@ bool CRadarBaseDataWsr98DS::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 			numaz = 0;
 
 			//moment in this radial
-			ConfirmMomentsObserved((stdRadialHeader98D*)&metRadial, bObsvZ, bObsvV, bObsvW);
+			ConfirmMomentsObserved((format_98d::stdRadialHeader98D*)&metRadial, bObsvZ, bObsvV, bObsvW);
 			bZ = bObsvZ & NeedStat.bZ;
 			bV = bObsvV & NeedStat.bV;
 			bW = bObsvW & NeedStat.bW;
@@ -397,7 +395,7 @@ bool CRadarBaseDataWsr98DS::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 }
 
 //if bin parameter is incorrect, return false
-bool CRadarBaseDataWsr98DS::RefBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
+bool CRadarBaseDataWsr98DS::RefBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
 {
 	int16_t  stpos;  //bin index start from 1 
 
@@ -419,7 +417,7 @@ bool CRadarBaseDataWsr98DS::RefBinParamsInRadial(stdRadialHeader98D *pRadialHead
 		return true;
 }
 
-bool CRadarBaseDataWsr98DS::VelBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
+bool CRadarBaseDataWsr98DS::VelBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
 {
 	int16_t  stpos;  //bin index start from 1 
 
@@ -439,7 +437,7 @@ bool CRadarBaseDataWsr98DS::VelBinParamsInRadial(stdRadialHeader98D *pRadialHead
 	else
 		return true;
 }
-bool CRadarBaseDataWsr98DS::SpwBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
+bool CRadarBaseDataWsr98DS::SpwBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
 {
 	int16_t  stpos;  //bin index start from 1 
 
@@ -496,8 +494,8 @@ bool CRadarBaseDataWsr98DC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 	size_t ncR = 0, ncV = 0, ncW = 0;
 	while (bGoodScan && !feof(m_pFile))
 	{
-		stdRadial98DC metRadial;//统一径向
-		if (fread(&metRadial, SIZE_RADIAL_98DC, 1, m_pFile) < 1)
+		format_98d::stdRadial98DC metRadial;//统一径向
+		if (fread(&metRadial, format_98d::SIZE_RADIAL_98DC, 1, m_pFile) < 1)
 		{
 			istat = false;
 			break;
@@ -512,7 +510,7 @@ bool CRadarBaseDataWsr98DC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 			numaz = 0;
 
 			//moment in this radial
-			ConfirmMomentsObserved((stdRadialHeader98D*)&metRadial, bObsvZ, bObsvV, bObsvW);
+			ConfirmMomentsObserved((format_98d::stdRadialHeader98D*)&metRadial, bObsvZ, bObsvV, bObsvW);
 			bZ = bObsvZ & NeedStat.bZ;
 			bV = bObsvV & NeedStat.bV;
 			bW = bObsvW & NeedStat.bW;
@@ -719,7 +717,7 @@ bool CRadarBaseDataWsr98DC::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanD
 }
 
 //if bin parameter is incorrect, return false
-bool CRadarBaseDataWsr98DC::RefBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
+bool CRadarBaseDataWsr98DC::RefBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
 {
 	int16_t  stpos;  //bin index start from 1 
 
@@ -740,7 +738,7 @@ bool CRadarBaseDataWsr98DC::RefBinParamsInRadial(stdRadialHeader98D *pRadialHead
 	else
 		return true;
 }
-bool CRadarBaseDataWsr98DC::VelBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
+bool CRadarBaseDataWsr98DC::VelBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
 {
 	int16_t  stpos;  //bin index start from 1 
 
@@ -761,7 +759,7 @@ bool CRadarBaseDataWsr98DC::VelBinParamsInRadial(stdRadialHeader98D *pRadialHead
 	else
 		return true;
 }
-bool CRadarBaseDataWsr98DC::SpwBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
+bool CRadarBaseDataWsr98DC::SpwBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
 {
 	int16_t  stpos;  //bin index start from 1 
 
@@ -835,7 +833,7 @@ bool CRadarBaseDataCDSC2::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 			numaz = 0;
 
 			//moment in this radial
-			ConfirmMomentsObserved((stdRadialHeader98D*)&metRadial, bObsvZ, bObsvV, bObsvW);
+			ConfirmMomentsObserved((format_98d::stdRadialHeader98D*)&metRadial, bObsvZ, bObsvV, bObsvW);
 			bZ = bObsvZ & NeedStat.bZ;
 			bV = bObsvV & NeedStat.bV;
 			bW = bObsvW & NeedStat.bW;
@@ -1042,7 +1040,7 @@ bool CRadarBaseDataCDSC2::GetObsvData(stdMomentFlag NeedStat, map_GeneralScanDat
 }
 
 //if bin parameter is incorrect, return false
-bool CRadarBaseDataCDSC2::RefBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
+bool CRadarBaseDataCDSC2::RefBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
 {
 	int16_t  stpos;  //bin index start from 1 
 
@@ -1063,7 +1061,7 @@ bool CRadarBaseDataCDSC2::RefBinParamsInRadial(stdRadialHeader98D *pRadialHeader
 	else
 		return true;
 }
-bool CRadarBaseDataCDSC2::VelBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
+bool CRadarBaseDataCDSC2::VelBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
 {
 	int16_t  stpos;  //bin index start from 1 
 
@@ -1084,7 +1082,7 @@ bool CRadarBaseDataCDSC2::VelBinParamsInRadial(stdRadialHeader98D *pRadialHeader
 	else
 		return true;
 }
-bool CRadarBaseDataCDSC2::SpwBinParamsInRadial(stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
+bool CRadarBaseDataCDSC2::SpwBinParamsInRadial(format_98d::stdRadialHeader98D *pRadialHeader, int16_t &fstBin, int16_t &lstBin, int16_t &defaultBins)
 {
 	int16_t  stpos;  //bin index start from 1 
 

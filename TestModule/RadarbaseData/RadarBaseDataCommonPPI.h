@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+
 #include "../CommVar.h"
 
 /////////////////////////////////////////////////////////////////////////
@@ -138,5 +139,3 @@ struct stdUniformScanData //一个要素的扫描数据
 	stdUniformScanData();
 	void ReleaseBuf();
 };
-
-#pragma warning(disable:4996)

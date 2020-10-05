@@ -1,8 +1,8 @@
-#include "stdafx.h"
+#include "RadarBaseDataCommonPPI.h"
+
+#include <cmath>
 
 #include "../CommVar.h"
-#include "RadarBaseDataCommonPPI.h"
-#include <math.h>
 
 //*
 ///-------------------------------------------------------------------

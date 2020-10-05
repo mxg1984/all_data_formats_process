@@ -1,8 +1,7 @@
-#include "stdafx.h"
+#include "GridMosaicCls.h"
 
 #include <experimental/filesystem>
 
-#include "GridMosaicCls.h"
 #include "CommFunctions.h"
 #include "GlobalParams.h"
 

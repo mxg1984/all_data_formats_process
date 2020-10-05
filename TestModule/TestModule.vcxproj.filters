@@ -90,9 +90,6 @@
     <ClInclude Include="RadarbaseData\RadarBaseDataWSR98DCls.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="RadarbaseData\stdafx.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="CommFunctions.h">
       <Filter>头文件</Filter>
     </ClInclude>

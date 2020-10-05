@@ -1,4 +1,7 @@
 #include "stdafx.h"
+
+#include<experimental/filesystem>
+
 #include "UserTask.h"
 #include <cstdlib>
 #include <thread>
@@ -68,7 +71,7 @@ void Process(std::string srcFile)
 	std::string m_strUniformRefFileName = "";
 	std::string m_strUniformVelFileName = "";
 
-	if (FilePathExists(srcFile.c_str()))
+	if (std::experimental::filesystem::exists(srcFile))
 	{
 		CBaseDataIOandQCCls RadarData(scode, (char*)(srcFile.c_str()));
 		if (RadarData.Run() > 0)
@@ -86,7 +89,7 @@ void Process(std::string srcFile)
 	std::string m_strVelGridFileName = "";
 	if (g_iOptionsGridData == GRIDDATA_OPTION_ALL || g_iOptionsGridData == GRIDDATA_OPTION_REF)
 	{
-		if (FilePathExists(m_strUniformRefFileName.c_str()))
+		if (std::experimental::filesystem::exists(m_strUniformRefFileName))
 		{
 			CPolarToGridOfRefCls polarToGrid(scode, (char*)(m_strUniformRefFileName.c_str()));
 			polarToGrid.Run1();

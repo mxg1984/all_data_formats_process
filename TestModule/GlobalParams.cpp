@@ -1,5 +1,3 @@
-//
-#include "stdafx.h"
 #include "CommVar.h"
 #include "GlobalParams.h"
 #include <windows.h>

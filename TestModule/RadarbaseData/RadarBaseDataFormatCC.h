@@ -1,10 +1,11 @@
-#include "RadarBaseDataMomentTypeDef.h"
-#include "RadarBaseDataFormatTypeDef.h"
 #pragma once
 
 #include <string> 
 #include <vector>
 #include <map>
+
+#include "RadarBaseDataMomentTypeDef.h"
+#include "RadarBaseDataFormatTypeDef.h"
 
 #define MAXAZIMUTH 1000
 #define MAXBINNUMBER 1000

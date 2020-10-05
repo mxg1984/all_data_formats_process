@@ -1,8 +1,7 @@
-#include "stdafx.h"
+#include "RadarBaseDataInputCls.h"
 
 #include <experimental/filesystem>
 
-#include "RadarBaseDataInputCls.h"
 #include "../GlobalParams.h"
 #include "../CommFunctions.h"
 
@@ -324,7 +323,7 @@ void CRadarDataInputCls::DetermineRadarType(const char* szDataFileName, RADARSIT
 		errno_t err = fopen_s(&fp, strFileName.c_str(), "rb");
 		if (err == 0)
 		{
-			stdRadialHeader98D header;
+			format_98d::stdRadialHeader98D header;
 			fread(&header, sizeof(header), 1, fp);
 			if(header.RadarStatus==1)  //CD2 SC2
 				sprintf_s(szType, strlen(FM_RD_CD2) + 1, "%s", FM_RD_CD2);
@@ -339,7 +338,7 @@ void CRadarDataInputCls::DetermineRadarType(const char* szDataFileName, RADARSIT
 		errno_t err = fopen_s(&fp, strFileName.c_str(), "rb");
 		if (err == 0)
 		{
-			stdRadialHeader98D header;
+			format_98d::stdRadialHeader98D header;
 			fread(&header, sizeof(header), 1, fp);
 			if (header.RadarStatus == 1)  //CD2 SC2
 				sprintf_s(szType, strlen(FM_RD_SC2) + 1, "%s", FM_RD_SC2);

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "RadarBaseDataFormatSC2.h"
 
 stdRadialSC2::stdRadialSC2()

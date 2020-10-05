@@ -1,6 +1,4 @@
 #include "stdafx.h"
-//#pragma pack(push)
-//#pragma pack(1)
 
 #include <experimental/filesystem>
 
@@ -29,8 +27,8 @@ int32_t MainFunc(void)//int32_t argc, const char *argv[])
 	}
 	
 	//清理临时数据空间
-	char szTempDataFolder[MAX_PATH] = "";
-	sprintf_s(szTempDataFolder, MAX_PATH, "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
+	char szTempDataFolder[FILENAME_MAX] = "";
+	sprintf_s(szTempDataFolder, FILENAME_MAX, "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
 	ClearDirectory(szTempDataFolder);
 
 	//检查配置的各数据目录是否存在, 不存在的创建
@@ -759,7 +757,7 @@ void CheckDirectory()
 	}
 
 	//清理临时数据空间
-	char szTempDataFolder[MAX_PATH] = "";
+	char szTempDataFolder[FILENAME_MAX] = "";
 	sprintf_s(szTempDataFolder, "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
 	ClearDirectory(szTempDataFolder);
 }
@@ -795,7 +793,7 @@ BOOL ClearDirectory(char chrDirName[])
 			continue;
             if (strDirName[strDirName.GetLength()-1] != '\\')
 			{
-				 char chA[MAX_PATH]="";
+				 char chA[FILENAME_MAX]="";
                 CString strA = strDirName+'\\'+ fData.cFileName;
 
 				TcharToChar(strA.GetBuffer(), chA);
@@ -804,7 +802,7 @@ BOOL ClearDirectory(char chrDirName[])
                 ClearDirectory(chA);
             }
             else{
-				char chB[MAX_PATH]="";
+				char chB[FILENAME_MAX]="";
                 CString strB = strDirName + fData.cFileName;
 				TcharToChar(strB.GetBuffer(), chB);
                // strcpy_s(chB, strB.GetLength() + 1, (char const*)strB.GetBuffer());

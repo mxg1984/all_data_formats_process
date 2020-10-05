@@ -1,5 +1,3 @@
-#ifndef _MOMENT_TYPE_H
-#define _MOMENT_TYPE_H
 #pragma once
 
 const char  M_Z[] = "Z";
@@ -15,7 +13,3 @@ const char  M_Zc[] = "Zc";
 const char  M_Vc[] = "Vc";
 const char  M_Wc[] = "Wc";
 const char  M_ZDRc[] = "ZDRc";
-
-//const uint16_t c_maxMoments = 12;
-
-#endif

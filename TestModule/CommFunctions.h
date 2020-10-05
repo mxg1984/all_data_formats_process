@@ -2,17 +2,18 @@
 
 #include <string>
 
+#include <afx.h>
+
 void Zip2Prod(char *src);
 void UnZip(char *src, char *dst);
-BOOL FilePathExists(char* szFilePathName);
-BOOL FilePathExists(const char* szFilePathName);
-BOOL CreateDir(const char *strPath, BOOL bCreate=true);
-BOOL CreateDir(TCHAR *strPath, BOOL bCreate = true);
-BOOL BrowseDirectory(CString &strPath, HWND hWnd=0);
-BOOL SettingFileRead();
-BOOL SettingFileWrite();
-BOOL FileNameWrite();
-BOOL FileNameRead();
+bool FilePathExists(const char* szFilePathName);
+bool CreateDir(const char *strPath, bool bCreate=true);
+bool CreateDir(TCHAR *strPath, bool bCreate = true);
+bool BrowseDirectory(CString &strPath, HWND hWnd=0);
+bool SettingFileRead();
+bool SettingFileWrite();
+bool FileNameWrite();
+bool FileNameRead();
 
 BOOL ConfigureFileIO(BOOL bRead);
 int32_t MainFunc(void);//int32_t argc, const char *argv[]);
@@ -31,9 +32,9 @@ DWORD GetProcessidFromName(TCHAR *name);
 
 void InvalidDlgItems(CWnd* pWnd, BOOL bFlag);////遍历窗口内的所有控件,把它置为有效或者无效//2012.04.28
 void InvalidDlgItem(CWnd* pWnd, int32_t ID, BOOL bFlag);
-void ResetDlgFont(CWnd* pWnd, CFont* pFont);
+//void ResetDlgFont(CWnd* pWnd, CFont* pFont);
 void RefreshTaskbarIcon();  //刷新任务栏图标
-int DeleteTrayNullIcon(BOOL &bNullBeDel);//清理任务栏图标
+int DeleteTrayNullIcon(bool &bNullBeDel);//清理任务栏图标
 
 //MSG
 void ReportLog_Status(const char str[]);

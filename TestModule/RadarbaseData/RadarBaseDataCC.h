@@ -4,6 +4,9 @@
 #include <vector>
 #include <map>
 
+#include "RadarBaseDataFormatCC.h"
+#include "RadarBaseDataInputDef.h"
+
 #define  cMaxMoment_CC1  3 //要素总数量//
 const uint32_t MOMENT_TYPE_ID_CC1[cMaxMoment_CC1]{ M_Z_ID, M_V_ID, M_W_ID };
 
@@ -12,7 +15,7 @@ const uint32_t MOMENT_TYPE_ID_CC1[cMaxMoment_CC1]{ M_Z_ID, M_V_ID, M_W_ID };
 class CRadarBaseDataCC1
 {
 public:
-	CRadarBaseDataCC1();
+	CRadarBaseDataCC1() = delete;
 	CRadarBaseDataCC1(std::string strInFileName, int16_t dstOffset=0, int16_t dstScale=10);
 	~CRadarBaseDataCC1();
 

@@ -1,13 +1,4 @@
-// PolarToGridCls.h: interface for the CPolarToGridCls class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_POLARTOGRIDCLS_H__52B0FE66_BEFC_4DC7_8FF2_ABF501957150__INCLUDED_)
-#define AFX_POLARTOGRIDCLS_H__52B0FE66_BEFC_4DC7_8FF2_ABF501957150__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 #include "./RadarbaseData/RadarBaseDataMomentTypeDef.h"
 #include "./RadarbaseData/RadarBaseDataFormatTypeDef.h"
@@ -23,8 +14,8 @@ class CPolarToGridCls
 {
 public:
 	CPolarToGridCls();
-	CPolarToGridCls(int32_t sitecode, int32_t numcuts, LPBYTE pPolarData);
-	CPolarToGridCls(int32_t sitecode,char* pUniformBaseDataFile);
+	CPolarToGridCls(int32_t sitecode, int32_t numcuts, void* pPolarData);
+	CPolarToGridCls(int32_t sitecode, char* pUniformBaseDataFile);
 	virtual ~CPolarToGridCls();
 	
 	virtual	int32_t Run(){return -1;};
@@ -81,7 +72,7 @@ class CPolarToGridOfRefCls : public CPolarToGridCls
 {
 public:
 	CPolarToGridOfRefCls();
-	CPolarToGridOfRefCls(int32_t sitecode, int32_t numcuts, LPBYTE pPolarData):CPolarToGridCls(sitecode,numcuts,pPolarData){};
+	CPolarToGridOfRefCls(int32_t sitecode, int32_t numcuts, void* pPolarData):CPolarToGridCls(sitecode,numcuts,pPolarData){};
 	CPolarToGridOfRefCls(int32_t sitecode,char* pUniformBaseDataFile):CPolarToGridCls(sitecode,pUniformBaseDataFile){};
 	~CPolarToGridOfRefCls();
 
@@ -102,7 +93,7 @@ class CPolarToGridOfDopplerCls: public CPolarToGridCls
 {
 public:
 	CPolarToGridOfDopplerCls();
-	CPolarToGridOfDopplerCls(int32_t sitecode, int32_t numcuts, LPBYTE pPolarData):CPolarToGridCls(sitecode,numcuts,pPolarData){};
+	CPolarToGridOfDopplerCls(int32_t sitecode, int32_t numcuts, void* pPolarData):CPolarToGridCls(sitecode,numcuts,pPolarData){};
 	CPolarToGridOfDopplerCls(int32_t sitecode,char* pUniformBaseDataFile):CPolarToGridCls(sitecode,pUniformBaseDataFile){};
 	~CPolarToGridOfDopplerCls();
 
@@ -118,5 +109,3 @@ public:
 		double radLon, double radLat, uint16_t radHgt);
 	virtual bool SaveGridData();
 };
-
-#endif // !defined(AFX_POLARTOGRIDCLS_H__52B0FE66_BEFC_4DC7_8FF2_ABF501957150__INCLUDED_)
