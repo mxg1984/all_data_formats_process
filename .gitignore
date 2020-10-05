@@ -2,4 +2,5 @@ Debug/
 *.swp
 *.swo
 .vs/
+*.TMP
 *.user

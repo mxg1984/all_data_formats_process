@@ -3,27 +3,17 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-//#include "radarmosaic.h"
+
+#include <experimental/filesystem>
+
 #include "GridMosaicCls.h"
 #include "CommFunctions.h"
 #include "GlobalParams.h"
-//#include "ThreadLog.h"
+
 #include "CommVar.h"
 #include <math.h>
 #include <io.h>
 #include <omp.h>
-
-#ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#define new DEBUG_NEW
-#endif
-
-//#pragma warning (disable:  C4786)
-//#pragma pack(1)
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 CGridMosaicCls::CGridMosaicCls(int16_t numFile, vector<string>  &dataFileName, stdDateTime *pMosaicDateTime)
 {
@@ -42,8 +32,8 @@ CGridMosaicCls::CGridMosaicCls(int16_t numFile, vector<string>  &dataFileName, s
 	m_paramGridLenY = 0.;
 	m_paramNumZ = 0;
 	m_pHeights = 0x0; //m	
-	strcpy_s(m_paramProdDir, 2, "");
-	strcpy_s(m_mosGridFileName, 2, "");  //结果文件
+	//strcpy_s(m_paramProdDir, 2, "");
+	//strcpy_s(m_mosGridFileName, 2, "");  //结果文件
 
 	m_paramAlgThrRng = 100;//km
 }
@@ -148,9 +138,10 @@ bool CGridMosaicCls::LoadParameters()
 		m_pHeights[i] = g_MosaicCommParam.iHeights[i];
 
 	//输出数据文件夹
-	strcpy_s(m_paramProdDir, strlen(g_DataDir.strProdDataDir) + 1, g_DataDir.strProdDataDir);
-	CreateDir(m_paramProdDir);
-	strcat_s(m_paramProdDir, MOSAIC_SUBFOLDER);
+	m_paramProdDir.assign(g_DataDir.strProdDataDir);
+	std::experimental::filesystem::create_directories(m_paramProdDir);
+
+	m_paramProdDir +=MOSAIC_SUBFOLDER;
 
 	//g_SiteRangeInMosaic
 	m_siteGridPosInMosaic.resize(m_numValidSite);
@@ -459,7 +450,7 @@ int CGridMosaicCls::DoMultiRadarsMosaic()
 //#include "SaveAsNetCDF.h"
 bool CGridMosaicCls::SaveGridData()
 {
-	CreateDir(m_paramProdDir);
+	std::experimental::filesystem::create_directories(m_paramProdDir);
 
 	//保存笛卡儿坐标数据- 
 	MOSAICDATAHEADER DataHeader;
@@ -507,26 +498,37 @@ bool CGridMosaicCls::SaveGridData()
 	DataHeader.dwObvDataOffset = DataHeader.dwLevHgtOffset + sizeof(uint16_t)*DataHeader.iLevels;
 
 	//Set file name
-	char strYear[6] = "", strMonth[4] = "", strDay[4] = "", strHour[4] = "", strMinute[4] = "";
-	_itoa_s(DataHeader.iStYear, strYear, 10);
-	_itoa_s(DataHeader.iStMonth + 100, strMonth, 10);
-	_itoa_s(DataHeader.iStDay + 100, strDay, 10);
-	_itoa_s(DataHeader.iStHour + 100, strHour, 10);
-	_itoa_s(DataHeader.iStMinute + 100, strMinute, 10);
+	//char strYear[6] = "", strMonth[4] = "", strDay[4] = "", strHour[4] = "", strMinute[4] = "";
+	std::string strYear = std::to_string(DataHeader.iStYear);
+	std::string strMonth = std::to_string(DataHeader.iStMonth + 100);
+	std::string strDay = std::to_string(DataHeader.iStDay + 100);
+	std::string strHour = std::to_string(DataHeader.iStHour + 100);
+	std::string strMinute = std::to_string(DataHeader.iStMinute + 100);
+	//_itoa_s(DataHeader.iStYear, strYear, 10);
+	//_itoa_s(DataHeader.iStMonth + 100, strMonth, 10);
+	//_itoa_s(DataHeader.iStDay + 100, strDay, 10);
+	//_itoa_s(DataHeader.iStHour + 100, strHour, 10);
+	//_itoa_s(DataHeader.iStMinute + 100, strMinute, 10);
 
-	strcpy_s(m_mosGridFileName, m_paramProdDir);
-	strcat_s(m_mosGridFileName, SZ_SLASH);
-	strcat_s(m_mosGridFileName, strYear);
-	strcat_s(m_mosGridFileName, strMonth + 1);
-	strcat_s(m_mosGridFileName, strDay + 1);
-	strcat_s(m_mosGridFileName, strHour + 1);
-	strcat_s(m_mosGridFileName, strMinute + 1);
+	m_mosGridFileName = m_paramProdDir;
+	m_mosGridFileName += std::experimental::filesystem::path::preferred_separator;
+	m_mosGridFileName += strYear;
+	m_mosGridFileName.append(strMonth.data() + 1);
+	m_mosGridFileName.append(strDay.data() + 1);
+	m_mosGridFileName.append(strHour.data() + 1);
+	m_mosGridFileName.append(strMinute.data() + 1);
+
+	//strcat_s(m_mosGridFileName, strMonth + 1);
+	//strcat_s(m_mosGridFileName, strDay + 1);
+	//strcat_s(m_mosGridFileName, strHour + 1);
+	//strcat_s(m_mosGridFileName, strMinute + 1);
 	//strcat(m_mosGridFileName,".");
 	//strcat(m_mosGridFileName,DataHeader.strDataType);	
-	strcat_s(m_mosGridFileName, MOSAIC_EXT_FILE);
+	m_mosGridFileName.append(MOSAIC_EXT_FILE);
+	//strcat_s(m_mosGridFileName, MOSAIC_EXT_FILE);
 
 	FILE *fp = 0;
-	errno_t err = fopen_s(&fp, m_mosGridFileName, "wb");
+	errno_t err = fopen_s(&fp, m_mosGridFileName.c_str(), "wb");
 	if (err != 0)
 		return (false);
 
@@ -566,17 +568,26 @@ bool CGridMosaicCls::SaveGridData()
 	if (g_iSaveNetCDFData != 1)
 		return true;
 
-	char chNetCdfFileName[PATH_LEN] = "";
-	strcpy_s(chNetCdfFileName, m_paramProdDir);
-	strcat_s(chNetCdfFileName, SZ_SLASH);
-	strcat_s(chNetCdfFileName, strYear);
-	strcat_s(chNetCdfFileName, strMonth + 1);
-	strcat_s(chNetCdfFileName, strDay + 1);
-	strcat_s(chNetCdfFileName, strHour + 1);
-	strcat_s(m_mosGridFileName, strMinute + 1);
-	strcat_s(chNetCdfFileName, ".");
-	strcat_s(chNetCdfFileName, DataHeader.strDataType);
-	strcat_s(chNetCdfFileName, NETCDF_EXT_FILE);
+	std::string chNetCdfFileName=  m_paramProdDir;
+	chNetCdfFileName += std::experimental::filesystem::path::preferred_separator;
+
+	chNetCdfFileName += strYear;
+	chNetCdfFileName.append(strMonth.data() + 1);
+	chNetCdfFileName.append(strDay.data() + 1);
+	chNetCdfFileName.append(strHour.data() + 1);
+	chNetCdfFileName.append(strMinute.data() + 1);
+	chNetCdfFileName += ".";
+	chNetCdfFileName.append(DataHeader.strDataType);
+	chNetCdfFileName.append(NETCDF_EXT_FILE);
+
+	//strcat_s(chNetCdfFileName, strYear);
+	//strcat_s(chNetCdfFileName, strMonth + 1);
+	//strcat_s(chNetCdfFileName, strDay + 1);
+	//strcat_s(chNetCdfFileName, strHour + 1);
+	//strcat_s(m_mosGridFileName, strMinute + 1);
+	//strcat_s(chNetCdfFileName, ".");
+	//strcat_s(chNetCdfFileName, DataHeader.strDataType);
+	//strcat_s(chNetCdfFileName, NETCDF_EXT_FILE);
 
 	//MyNetCDF LocalMyNetCdf(m_mosGridFileName, chNetCdfFileName);
 	//LocalMyNetCdf.ConvertToNcfile();
@@ -584,12 +595,13 @@ bool CGridMosaicCls::SaveGridData()
 	return true;
 }
 
-char* CGridMosaicCls::GetProdFileName()
+const char* CGridMosaicCls::GetProdFileName()
 {
-	if (!FilePathExists(m_mosGridFileName))
-		strcpy_s(m_mosGridFileName, "");
+	if (!std::experimental::filesystem::exists(m_mosGridFileName)) {
+		m_mosGridFileName ="";
+	}
 
-	return (m_mosGridFileName);
+	return m_mosGridFileName.c_str();
 }
 
 void CGridMosaicCls::ClearTempDatas()

@@ -75,7 +75,7 @@ void Process(string srcFile)
 
 	if (FilePathExists(srcFile.c_str()))
 	{
-		CBaseDataIOandQCCls RadarData(0, scode, (char*)(srcFile.c_str()));
+		CBaseDataIOandQCCls RadarData(scode, (char*)(srcFile.c_str()));
 		if (RadarData.Run() > 0)
 		{
 			m_strUniformRefFileName.assign(RadarData.GetRefFileName());

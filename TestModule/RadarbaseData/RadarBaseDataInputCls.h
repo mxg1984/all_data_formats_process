@@ -1,4 +1,5 @@
 #pragma once
+
 #include "RadarBaseDataMomentTypeDef.h"
 #include "RadarBaseDataFormatTypeDef.h"
 #include "RadarBaseDataCommonPPI.h"
@@ -16,7 +17,7 @@ class CRadarDataInputCls
 {
 public:
 	CRadarDataInputCls(uint32_t scode, const char* szFileName);// (const char* szFileName, const char* szVersionFlag);
-	~CRadarDataInputCls();
+	~CRadarDataInputCls() = default;
 
 	void AddNeededMoment(const char* szMomentType, bool bQc=false);
 	void LoadScanData();

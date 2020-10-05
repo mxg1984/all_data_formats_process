@@ -614,17 +614,7 @@ void SystemTimeToTimet( SYSTEMTIME st, time_t *pt )
 void DeleteClipFile()
 {
 	return;
-
-	TCHAR wszPath[MAX_PATH-50]=_TEXT("");
-	GetModuleFileName(NULL, wszPath, MAX_PATH-50);
-	CString strPath=_T("");
-	strPath.Format(_T("%s"), wszPath);
-	strPath = strPath.Left(strPath.ReverseFind(WCH_SLASH)) + _T("\\ShareChannel.dat");
-	//删除文件
-	::DeleteFile(strPath) ;
 }
-
-
 
 // 调用进程的命令
 DWORD GetProcessidFromName(char* name)

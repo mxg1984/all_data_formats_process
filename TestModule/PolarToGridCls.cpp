@@ -3,12 +3,14 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-//#include "radarmosaic.h"
+
+#include<experimental/filesystem>
+
 #include "MosaicDataFormatDef.h"
 #include "PolarToGridCls.h"
 #include "CommFunctions.h"
 #include "GlobalParams.h"
-//#include "ThreadLog.h"
+
 #include <math.h>
 #include <omp.h>
 
@@ -29,7 +31,7 @@ CPolarToGridCls::CPolarToGridCls()
 	m_numCuts=0;
 	m_pPPIs=0;
 	m_GridData=0;
-	strcpy_s(m_gridFileName,"");
+
 	//strcpy_s(m_velGridFileName,"");
 
 	memset(&( m_ParamSiteInfo),0x0, sizeof(RADARSITEINFO));
@@ -39,8 +41,7 @@ CPolarToGridCls::CPolarToGridCls()
 	m_paramGridLenY=0.;
 	m_paramNumZ=0;
 	m_pHeights=0x0; //m	
-	strcpy_s(m_paramProdDir,"");
-	strcpy_s(m_gridFileName,"");  //结果文件
+
 
 	m_paramBeamWidth=float(0.95);
 	
@@ -57,9 +58,6 @@ CPolarToGridCls::CPolarToGridCls(int32_t sitecode, int32_t numcuts, LPBYTE pPola
 	m_siteCode=sitecode;
 	m_numCuts=numcuts;
 	m_pPPIs=(PPISTRUCT*)pPolarData;	
-	
-	strcpy_s(m_gridFileName,"");
-	//strcpy_s(m_velGridFileName,"");
 
 	memset(&( m_ParamSiteInfo),0x0, sizeof(RADARSITEINFO));
 	m_paramNumX=0;
@@ -68,8 +66,6 @@ CPolarToGridCls::CPolarToGridCls(int32_t sitecode, int32_t numcuts, LPBYTE pPola
 	m_paramGridLenY=0.;
 	m_paramNumZ=0;
 	m_pHeights=0x0; //m	
-	strcpy_s(m_paramProdDir,"");
-	strcpy_s(m_gridFileName,"");  //结果文件
 
 	m_paramBeamWidth=float(0.95);	
 	m_year=0;
@@ -87,7 +83,6 @@ CPolarToGridCls::CPolarToGridCls(int32_t sitecode,char* pUniformBaseDataFile)
 	//LoadUniformPolarData(pUniformBaseDataFile);
 	LoadUniformPolarData(pUniformBaseDataFile, m_commScanData);
 	
-	strcpy_s(m_gridFileName,"");
 
 	memset(&( m_ParamSiteInfo),0x0, sizeof(RADARSITEINFO));
 	m_paramNumX=0;
@@ -96,8 +91,6 @@ CPolarToGridCls::CPolarToGridCls(int32_t sitecode,char* pUniformBaseDataFile)
 	m_paramGridLenY=0.;
 	m_paramNumZ=0;
 	m_pHeights=0x0; //m	
-	strcpy_s(m_paramProdDir,"");
-	strcpy_s( m_gridFileName,"");  //结果文件
 
 	m_paramBeamWidth=float(0.95);
 	
@@ -275,11 +268,11 @@ bool CPolarToGridCls::InitGridData()
 	return true;
 }
 
-char* CPolarToGridCls::GetProdFileName()
+const char* CPolarToGridCls::GetProdFileName()
 {
-	if(!FilePathExists(m_gridFileName))
-		strcpy_s(m_gridFileName,"");
-	return (m_gridFileName);
+	if(!std::experimental::filesystem::exists(m_gridFileName))
+		m_gridFileName = "";
+	return m_gridFileName.c_str();
 }
 
 void CPolarToGridCls::ObsvDateTime()
@@ -380,17 +373,18 @@ void  CPolarToGridOfRefCls::LoadParameters()
 	
 	//m_paramProdDir
 	//本输出数据文件夹
-	strcpy_s(m_paramProdDir, g_DataDir.strTemDataDir);
-	strcat_s(m_paramProdDir,TEMP_FOLDER);
-	CreateDir(m_paramProdDir);
+	m_paramProdDir = g_DataDir.strTemDataDir;
+	m_paramProdDir += TEMP_FOLDER;
+	std::experimental::filesystem::create_directories(m_paramProdDir);
+	//CreateDir(m_paramProdDir);
 
-	strcat_s(m_paramProdDir, SZ_SLASH);
-	strcat_s(m_paramProdDir,SGL_MSC_FOLDER);  //如果是DBZ
-	//strcat_s(m_paramProdDir,SGL_MSCV_FOLDER);  //如果是速度
-	CreateDir(m_paramProdDir);
+	m_paramProdDir += std::experimental::filesystem::path::preferred_separator;
+	m_paramProdDir += SGL_MSC_FOLDER;
+	std::experimental::filesystem::create_directories(m_paramProdDir);
+	//CreateDir(m_paramProdDir);
 
-	strcat_s(m_paramProdDir, SZ_SLASH);
-	strcat_s(m_paramProdDir, m_ParamSiteInfo.SiteName);	
+	m_paramProdDir += std::experimental::filesystem::path::preferred_separator;
+	m_paramProdDir += m_ParamSiteInfo.SiteName;
 }
 
 void CPolarToGridOfRefCls::VolumnScanTo3DGrid(stdUniformScanData &vsData, int16_t nCuts, uint8_t***  &outData,
@@ -737,7 +731,8 @@ void CPolarToGridOfRefCls::VolumnScanTo3DGrid(stdUniformScanData &vsData, int16_
 
 bool CPolarToGridOfRefCls::SaveGridData()
 {
-	CreateDir(m_paramProdDir);	//Create directory
+	std::experimental::filesystem::create_directories(m_paramProdDir);
+	//CreateDir(m_paramProdDir);	//Create directory
 	//CProcessIO ProcessIO;
 	//保存笛卡儿坐标数据- 
 	MOSAICDATAHEADER DataHeader;
@@ -790,27 +785,45 @@ bool CPolarToGridOfRefCls::SaveGridData()
 		sprintf_s(szCode, "%s", m_ParamSiteInfo.SiteID);
 
 	//Set file name
-	char strYear[6]="",strMonth[4]="",strDay[4]="",strHour[4]="",strMinute[4]="";
-	_itoa_s(m_year, strYear, 10);
-	_itoa_s(m_month+100, strMonth, 10);
-	_itoa_s(m_day+100, strDay, 10);
-	_itoa_s(m_hour+100, strHour, 10);
-	_itoa_s(m_minute+100, strMinute, 10);
-	strcpy_s(m_gridFileName, m_paramProdDir);
-	strcat_s(m_gridFileName,SZ_SLASH);
-	strcat_s(m_gridFileName,strYear);
-	strcat_s(m_gridFileName,strMonth+1);
-	strcat_s(m_gridFileName,strDay+1);
-	strcat_s(m_gridFileName,strHour+1);
-	strcat_s(m_gridFileName,strMinute+1);
-	strcat_s(m_gridFileName,".");
-	strcat_s(m_gridFileName, szCode);
-	strcat_s(m_gridFileName, ".");
-	strcat_s(m_gridFileName,DataHeader.strDataType);
-	strcat_s(m_gridFileName,MOSAIC_EXT_FILE );
+	//char strYear[6]="",strMonth[4]="",strDay[4]="",strHour[4]="",strMinute[4]="";
+	//_itoa_s(m_year, strYear, 10);
+	//_itoa_s(m_month+100, strMonth, 10);
+	//_itoa_s(m_day+100, strDay, 10);
+	//_itoa_s(m_hour+100, strHour, 10);
+	//_itoa_s(m_minute+100, strMinute, 10);
+
+	std::string strYear = std::to_string(m_year);
+	std::string strMonth = std::to_string(m_month + 100);
+	std::string strDay = std::to_string(m_day + 100);
+	std::string strHour = std::to_string(m_hour + 100);
+	std::string strMinute = std::to_string(m_minute + 100);
+
+	m_gridFileName = m_paramProdDir;
+	m_gridFileName += std::experimental::filesystem::path::preferred_separator;
+	m_gridFileName += strYear;
+	m_gridFileName.append(strMonth.data() + 1);
+	m_gridFileName.append(strDay.data() + 1);
+	m_gridFileName.append(strHour.data() + 1);
+	m_gridFileName.append(strMinute.data() + 1);
+	m_gridFileName += ".";
+	m_gridFileName += DataHeader.strDataType;
+	m_gridFileName += MOSAIC_EXT_FILE;
+
+	//strcpy_s(m_gridFileName, m_paramProdDir);
+	//strcat_s(m_gridFileName,SZ_SLASH);
+	//strcat_s(m_gridFileName,strYear);
+	//strcat_s(m_gridFileName,strMonth+1);
+	//strcat_s(m_gridFileName,strDay+1);
+	//strcat_s(m_gridFileName,strHour+1);
+	//strcat_s(m_gridFileName,strMinute+1);
+	//strcat_s(m_gridFileName,".");
+	//strcat_s(m_gridFileName, szCode);
+	//strcat_s(m_gridFileName, ".");
+	//strcat_s(m_gridFileName,DataHeader.strDataType);
+	//strcat_s(m_gridFileName,MOSAIC_EXT_FILE );
 
 	FILE *fp = 0;
-	errno_t err=fopen_s(&fp,m_gridFileName, "wb");
+	errno_t err=fopen_s(&fp,m_gridFileName.c_str(), "wb");
 	if(err!=0)
 		return (false);
 	//Write data header into the file
@@ -913,22 +926,31 @@ void  CPolarToGridOfDopplerCls::LoadParameters()
 	//m_paramProdDir
 	//Write site information into the file	
 	//本站的输出数据文件夹
-	strcpy_s(m_paramProdDir, g_DataDir.strTemDataDir);
-	strcat_s(m_paramProdDir,TEMP_FOLDER);
-	CreateDir(m_paramProdDir);
+	m_paramProdDir = g_DataDir.strTemDataDir;
+	m_paramProdDir += TEMP_FOLDER;
+	std::experimental::filesystem::create_directories(m_paramProdDir);
+	//CreateDir(m_paramProdDir);
 
-	strcat_s(m_paramProdDir,SZ_SLASH);
-	strcat_s(m_paramProdDir,SGL_MSCV_FOLDER);  //如果是速度
-	CreateDir(m_paramProdDir);
+	m_paramProdDir += std::experimental::filesystem::path::preferred_separator;
+	m_paramProdDir += SGL_MSCV_FOLDER;
+	std::experimental::filesystem::create_directories(m_paramProdDir);
+	//strcat_s(m_paramProdDir,SZ_SLASH);
+	// strcat_s(m_paramProdDir,SGL_MSCV_FOLDER);  //如果是速度
+	// CreateDir(m_paramProdDir);
 
-	strcat_s(m_paramProdDir, SZ_SLASH);
-	strcat_s(m_paramProdDir, m_ParamSiteInfo.SiteName);
-	CreateDir(m_paramProdDir);	//Create directory
+	m_paramProdDir += std::experimental::filesystem::path::preferred_separator;
+	m_paramProdDir += m_ParamSiteInfo.SiteName;
+	std::experimental::filesystem::create_directories(m_paramProdDir);
+
+	//strcat_s(m_paramProdDir, SZ_SLASH);
+	//strcat_s(m_paramProdDir, m_ParamSiteInfo.SiteName);
+	//CreateDir(m_paramProdDir);	//Create directory
 }
 
 bool CPolarToGridOfDopplerCls::SaveGridData()
 {
-	CreateDir(m_paramProdDir);	//Create directory
+	std::experimental::filesystem::create_directories(m_paramProdDir);
+	//CreateDir(m_paramProdDir);	//Create directory
 	//保存笛卡儿坐标数据- 
 	MOSAICDATAHEADER DataHeader;
 	ZeroMemory(&DataHeader, sizeof(DataHeader));
@@ -980,7 +1002,7 @@ bool CPolarToGridOfDopplerCls::SaveGridData()
 		sprintf_s(szCode, "%s", m_ParamSiteInfo.SiteID);
 
 	//Set file name
-	char strYear[6] = "", strMonth[4] = "", strDay[4] = "", strHour[4] = "", strMinute[4] = "";
+	/*char strYear[6] = "", strMonth[4] = "", strDay[4] = "", strHour[4] = "", strMinute[4] = "";
 	_itoa_s(m_year, strYear, 10);
 	_itoa_s(m_month + 100, strMonth, 10);
 	_itoa_s(m_day + 100, strDay, 10);
@@ -997,10 +1019,26 @@ bool CPolarToGridOfDopplerCls::SaveGridData()
 	strcat_s(m_gridFileName, szCode);
 	strcat_s(m_gridFileName, ".");
 	strcat_s(m_gridFileName, DataHeader.strDataType);
-	strcat_s(m_gridFileName, MOSAIC_EXT_FILE);
+	strcat_s(m_gridFileName, MOSAIC_EXT_FILE);*/
+	std::string strYear = std::to_string(m_year);
+	std::string strMonth = std::to_string(m_month + 100);
+	std::string strDay = std::to_string(m_day + 100);
+	std::string strHour = std::to_string(m_hour + 100);
+	std::string strMinute = std::to_string(m_minute + 100);
+
+	m_gridFileName = m_paramProdDir;
+	m_gridFileName += std::experimental::filesystem::path::preferred_separator;
+	m_gridFileName += strYear;
+	m_gridFileName.append(strMonth.data() + 1);
+	m_gridFileName.append(strDay.data() + 1);
+	m_gridFileName.append(strHour.data() + 1);
+	m_gridFileName.append(strMinute.data() + 1);
+	m_gridFileName += ".";
+	m_gridFileName += DataHeader.strDataType;
+	m_gridFileName += MOSAIC_EXT_FILE;
 
 	FILE *fp = 0;
-	errno_t err=fopen_s(&fp,m_gridFileName, "wb");
+	errno_t err=fopen_s(&fp,m_gridFileName.c_str(), "wb");
 	if(err!=0)
 		return (false);
 	//Write data header into the file

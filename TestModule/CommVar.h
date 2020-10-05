@@ -6,21 +6,7 @@
 //#include "VersionControlParam.h"
 #include <vector>
 #include <tchar.h>
-using namespace std;
 
-//#pragma pack(1)
-/////////////////////////////////////////////////////////////////////////
-#ifdef _WIN32   //windows OS
-const char SZ_SLASH[] = "\\";
-const TCHAR WSZ_SLASH[] = _TEXT("\\");
-const char CH_SLASH = '\\';
-const TCHAR WCH_SLASH = '\\';
-#else 
-const char SZ_SLASH[] = "/";
-const TCHAR WSZ_SLASH[] = _TEXT("/");
-const char CH_SLASH = '/';
-const TCHAR WCH_SLASH = '/';
-#endif
 //
 //备选雷达与可选中雷达数定义
 //

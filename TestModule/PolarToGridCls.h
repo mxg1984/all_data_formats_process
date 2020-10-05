@@ -37,7 +37,7 @@ public:
 	void ObsvDateTime();
 	void ObsvDateTime(stdUniformCutData firstCut);
 	bool InitGridData();	
-	char* GetProdFileName();
+	const char* GetProdFileName();
 	void LoadUniformPolarData(char* pUniformBaseDataFile);
 	void LoadUniformPolarData(char* pUniformBaseDataFile, stdUniformScanData &ScanData);
 	void ClearTempDatas(char *fileName);
@@ -65,9 +65,9 @@ protected:
 	int32_t m_paramNumY;
 	int32_t m_paramNumZ;
 	uint16_t* m_pHeights; //m	
-	char m_paramProdDir[PATH_LEN];//结果路径
+	std::string m_paramProdDir="";//结果路径
 
-	char m_gridFileName[PATH_LEN];  //结果文件
+	std::string m_gridFileName = ""; //结果文件
 	uint8_t ***m_GridData;
 	int16_t m_year;
 	int16_t m_month;

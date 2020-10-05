@@ -1,4 +1,7 @@
 #include "stdafx.h"
+
+#include <experimental/filesystem>
+
 #include <stdio.h>
 #include < iostream>
 #include < windows.h>
@@ -225,7 +228,7 @@ BOOL ConfigureFileIO(BOOL bRead)
 	//_getcwd(appPath, sizeof(appPath));
 
 	strFullName.assign(appPath);
-	strFullName.append(SZ_SLASH);
+	strFullName += std::experimental::filesystem::path::preferred_separator;
 	strFullName.append(SETTINGFILE);
 	
 	if(bRead)
@@ -243,7 +246,11 @@ BOOL ConfigureFileIO(BOOL bRead)
 			return false;
 		}
 		//雷达站数
-		if(!ReadOneItem(&g_iSitesInZone, sizeof(g_iSitesInZone), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		if(!ReadOneItem(&g_iSitesInZone, sizeof(g_iSitesInZone), 1, fp)) {
+			fclose(fp); 
+			ClearConfig(); 
+			return false;
+		}
 		for(i=0; i<g_iSitesInZone; i++)
 		{
 			if(i<TOTAL_SITES)
@@ -251,7 +258,11 @@ BOOL ConfigureFileIO(BOOL bRead)
 			//每个雷达站参数
 			if(!ReadOneItem(&g_cRadarSiteInfo[i], sizeof(g_cRadarSiteInfo[i]), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 			//每个雷达站基数据位置
-			if(!ReadOneItem(g_strRadarDataPath[i], sizeof(char), PATH_LEN, fp)) {fclose(fp); ClearConfig(); return false;}
+			if(!ReadOneItem(g_strRadarDataPath[i], sizeof(char), PATH_LEN, fp)) {
+				fclose(fp); 
+				ClearConfig(); 
+				return false;
+			}
 			}
 			else
 			{//舍弃超出区域可容最多雷达数的雷达站信息
@@ -260,13 +271,25 @@ BOOL ConfigureFileIO(BOOL bRead)
 				//每个雷达站参数
 				if(!ReadOneItem(&tmpsiteinfo, sizeof(g_cRadarSiteInfo[i]), 1, fp)) {fclose(fp); ClearConfig(); return false;}
 				//每个雷达站基数据位置
-				if(!ReadOneItem(tmpPath, sizeof(char), PATH_LEN, fp)) {fclose(fp); ClearConfig(); return false;}
+				if(!ReadOneItem(tmpPath, sizeof(char), PATH_LEN, fp)) {
+					fclose(fp); 
+					ClearConfig(); 
+					return false;
+				}
 			}
 		}
 		//数据路径
-		if(!ReadOneItem(&g_DataDir, sizeof(g_DataDir), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		if(!ReadOneItem(&g_DataDir, sizeof(g_DataDir), 1, fp)) {
+			fclose(fp); 
+			ClearConfig(); 
+			return false;
+		}
 		//分辨率
-		if(!ReadOneItem(&g_HorizRes, sizeof(g_HorizRes), 1, fp)) {fclose(fp); ClearConfig(); return false;}
+		if(!ReadOneItem(&g_HorizRes, sizeof(g_HorizRes), 1, fp)) {
+			fclose(fp); 
+			ClearConfig(); 
+			return false;
+		}
 		//是否用户自定义高度
 		//size_t t = sizeof(g_bUserDefineLevels);
 		if(!ReadOneItem(&g_bUserDefineLevels, sizeof(g_bUserDefineLevels), 1, fp)) {fclose(fp); ClearConfig(); return false;}
@@ -337,7 +360,7 @@ BOOL ConfigureFileIO(BOOL bRead)
 		//Open the file,return FALSE if fiales to open it.
 		string strNameBack="";//[PATH_LEN];
 		strNameBack.assign(appPath);
-		strNameBack.append(SZ_SLASH);
+		strNameBack += std::experimental::filesystem::path::preferred_separator;
 		strNameBack.append(SETTINGFILE_BCK);
 
 		TCHAR wszSrcFile[PATH_LEN]=_TEXT("");
@@ -412,21 +435,19 @@ BOOL ConfigureFileIO(BOOL bRead)
 
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		//拷贝原始配置文件到临时文件夹下，为格点径向速度数据处理模块提供参数
-		char strConfig2Copy[PATH_LEN]="";              //拷贝保存路径
-		strcpy_s(strConfig2Copy, g_DataDir.strTemDataDir);
-		strcat_s(strConfig2Copy, SZ_SLASH);
-		strcat_s(strConfig2Copy,SGL_MSCV_FOLDER);
-		strcat_s(strConfig2Copy,SZ_SLASH);
-		strcat_s(strConfig2Copy,SETTINGFILE);
+		std::string strConfig2Copy(g_DataDir.strTemDataDir);
+		strConfig2Copy += std::experimental::filesystem::path::preferred_separator;
+		strConfig2Copy += SGL_MSCV_FOLDER;
+		strConfig2Copy += std::experimental::filesystem::path::preferred_separator;
+		strConfig2Copy += SETTINGFILE;
 
 		//backup the configure file
 		//CharToTchar(strFullName.c_str(), wszSrcFile);
-		CharToTchar(strConfig2Copy, wsBbackFile);		
+		CharToTchar(strConfig2Copy.c_str(), wsBbackFile);		
 		CopyFile(wszSrcFile, wsBbackFile, FALSE);
 	}
 
 	return (true);
-
 }
 
 //速度格点化的参数
@@ -599,7 +620,7 @@ void CheckDirectory()
 	if (GetCurrentDirectory(PATH_LEN, wszChar) != 0) //g_strAppTmpFolder)!=0)
 	{
 		//Create folder for log files
-		sprintf_s(strPath, "%s%s%s", g_strAppTmpFolder, SZ_SLASH, LOGS_FOLDER);
+		sprintf_s(strPath, "%s%s%s", g_strAppTmpFolder, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), LOGS_FOLDER);
 		CreateDir(strPath);
 	}
 
@@ -610,23 +631,25 @@ void CheckDirectory()
 	if(g_DataDir.strTemDataDir[strlen(g_DataDir.strTemDataDir)-1]=='\\' || g_DataDir.strTemDataDir[strlen(g_DataDir.strTemDataDir) - 1] == '/')
 		sprintf_s(strBackPath, "%s%s", g_DataDir.strTemDataDir, TEMP_FOLDER);
 	else
-		sprintf_s(strBackPath, "%s%s%s", g_DataDir.strTemDataDir, SZ_SLASH,TEMP_FOLDER);
+		sprintf_s(strBackPath, "%s%s%s", g_DataDir.strTemDataDir, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(),
+			TEMP_FOLDER);
 	CreateDir(strBackPath);
 
 	//创建临时保存单站统一格式基数据的目录
-	sprintf_s(strPath, "%s%s%s", strBackPath, SZ_SLASH, UNIFORM_POLAR_FOLDER);
+	sprintf_s(strPath, "%s%s%s", strBackPath, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), UNIFORM_POLAR_FOLDER);
 	DeleteDirectory(strPath,0);
 	CreateDir(strPath);
 
 	//创建临时保存单站笛卡儿坐标反射率因子数据的目录
-	sprintf_s(strPath, "%s%s%s", strBackPath, SZ_SLASH, SGL_MSC_FOLDER);
+	sprintf_s(strPath, "%s%s%s", strBackPath, 
+		std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), SGL_MSC_FOLDER);
 	if (g_iSaveSingleCAPPI == 0) DeleteDirectory(strPath, 0); //删除旧的单站数据
 	CreateDir(strPath);
 	
 	//创建临时保存单站笛卡儿坐标径向速度数据的目录
 	if(g_iOptionsGridData==GRIDDATA_OPTION_VEL || g_iOptionsGridData==GRIDDATA_OPTION_ALL)//(g_iGridVelocity==1)
 	{
-		sprintf_s(strPath, "%s%s%s", strBackPath, SZ_SLASH, SGL_MSCV_FOLDER);
+		sprintf_s(strPath, "%s%s%s", strBackPath, std::to_string(std::experimental::filesystem::path::preferred_separator).c_str(), SGL_MSCV_FOLDER);
 		DeleteDirectory(strPath,0); //删除旧的单站数据
 		CreateDir(strPath);
 	}
@@ -651,8 +674,8 @@ BOOL ClearDirectory(char chrDirName[])
     DWORD errorcode;
 
 	CString strFilter = _T("");
-	strFilter.Format(_T("%s%s*.*"), wszChar, WSZ_SLASH);
-    Handle = FindFirstFile(strFilter, &fData);
+	strFilter.Format(_T("%s%s*.*"), wszChar, _T("\\"));
+    Handle = ::FindFirstFile(strFilter, &fData);
 
     if (Handle == INVALID_HANDLE_VALUE)
         return FALSE;
@@ -685,7 +708,7 @@ BOOL ClearDirectory(char chrDirName[])
                 ClearDirectory(chB);
             }
 			CString tmpStr = _T("");
-			tmpStr.Format(_T("%s%s"), WSZ_SLASH,fData.cFileName);
+			tmpStr.Format(_T("%s%s"), _T("\\"),fData.cFileName);
 			strTemp = strDirName + tmpStr;// "\\" + fData.cFileName;
 
             SetFileAttributes(strTemp, ~FILE_ATTRIBUTE_READONLY);
@@ -697,7 +720,7 @@ BOOL ClearDirectory(char chrDirName[])
         else
         {
 			CString tmpStr = _T("");
-			tmpStr.Format(_T("%s%s"), WSZ_SLASH,fData.cFileName);
+			tmpStr.Format(_T("%s%s"), _T("\\"), fData.cFileName);
             strTemp = strDirName + tmpStr;// "\\" + fData.cFileName;
             BOOL bl = SetFileAttributes(strTemp, ~FILE_ATTRIBUTE_READONLY);
 

@@ -1,13 +1,10 @@
 #include "stdafx.h"
+
+#include <experimental/filesystem>
+
 #include "RadarBaseDataInputCls.h"
 #include "../GlobalParams.h"
 #include "../CommFunctions.h"
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
 ////////////////////////////////////////////////////////////////////////////
 //Class CRadarDataInputCls
@@ -21,11 +18,6 @@ CRadarDataInputCls::CRadarDataInputCls(uint32_t scode, const char* szFileName)
 
 	//¼ÓÔØÅäÖÃ²ÎÊý
 	LoadParameter();	
-}
-
-CRadarDataInputCls::~CRadarDataInputCls()
-{
-
 }
 
 void CRadarDataInputCls::LoadParameter()
@@ -66,11 +58,17 @@ void CRadarDataInputCls::LoadParameter()
 	{
 		m_paramOutputPath.assign(g_DataDir.strTemDataDir);
 		m_paramOutputPath.append(TEMP_FOLDER);
-		CreateDir(m_paramOutputPath.c_str());////
-		m_paramOutputPath.append(SZ_SLASH);
+		std::experimental::filesystem::create_directories(m_paramOutputPath);
+
+		//CreateDir(m_paramOutputPath.c_str());////
+
+		m_paramOutputPath += std::experimental::filesystem::path::preferred_separator;
 		m_paramOutputPath.append(UNIFORM_POLAR_FOLDER);// "UNIFORMBD");
-		CreateDir(m_paramOutputPath.c_str());////
-		m_paramOutputPath.append(SZ_SLASH);
+		std::experimental::filesystem::create_directories(m_paramOutputPath);
+		//CreateDir(m_paramOutputPath.c_str());////
+
+		m_paramOutputPath += std::experimental::filesystem::path::preferred_separator;
+		//m_paramOutputPath.append(SZ_SLASH);
 		m_paramOutputPath.append(m_ParamSiteInfo.SiteName);		
 	}
 }
@@ -434,28 +432,47 @@ string  CRadarDataInputCls::SaveUniformData(stdUniformScanData &vsData, char *pE
 	}
 
 	//Set file name
-	char strFileName[256] = "";
-	char strYear[6] = "", strMonth[4] = "", strDay[4] = "", strHour[4] = "", strMinute[4] = "";
-	_itoa_s(pCutHeader->year, strYear, 6, 10);
-	_itoa_s(pCutHeader->month + 100, strMonth, 4, 10);
-	_itoa_s(pCutHeader->day + 100, strDay, 4, 10);
-	_itoa_s(pCutHeader->hour + 100, strHour, 4, 10);
-	_itoa_s(pCutHeader->minute + 100, strMinute, 4, 10);
-	strcpy_s(strFileName, dstPath);
-	if(strFileName[strlen(strFileName)-1]!='/' && strFileName[strlen(strFileName) - 1] != '\\')
-		strcat_s(strFileName, SZ_SLASH);
-	strcat_s(strFileName, strYear);
-	strcat_s(strFileName, strMonth + 1);
-	strcat_s(strFileName, strDay + 1);
-	strcat_s(strFileName, strHour + 1);
-	strcat_s(strFileName, strMinute + 1);
-	strcat_s(strFileName, ".");
-	strcat_s(strFileName, pExtType);
-	strcat_s(strFileName, ".bin");
+	std::string strFileName="";
+	//char strYear[6] = "", strMonth[4] = "", strDay[4] = "", strHour[4] = "", strMinute[4] = "";
+	//_itoa_s(pCutHeader->year, strYear, 6, 10);
+	//_itoa_s(pCutHeader->month + 100, strMonth, 4, 10);
+	//_itoa_s(pCutHeader->day + 100, strDay, 4, 10);
+	//_itoa_s(pCutHeader->hour + 100, strHour, 4, 10);
+	//_itoa_s(pCutHeader->minute + 100, strMinute, 4, 10);
+	std::string strYear = std::to_string(pCutHeader->year);
+	std::string strMonth = std::to_string(pCutHeader->month + 100);
+	std::string strDay = std::to_string(pCutHeader->day + 100);
+	std::string strHour = std::to_string(pCutHeader->hour + 100);
+	std::string strMinute = std::to_string(pCutHeader->minute + 100);
+
+	strFileName = dstPath;
+	if (strFileName[strFileName.size() - 1] != '/' && strFileName[strFileName.size() - 1] != '\\') {
+		strFileName += std::experimental::filesystem::path::preferred_separator;
+	}
+	strFileName += strYear;
+	strFileName.append(strMonth.data() + 1);
+	strFileName.append(strDay.data() + 1);
+	strFileName.append(strHour.data() + 1);
+	strFileName.append(strMinute.data() + 1);
+	strFileName += ".";
+	strFileName += pExtType;
+	strFileName += ".bin";
+
+	//strcpy_s(strFileName, dstPath);
+	//if(strFileName[strlen(strFileName)-1]!='/' && strFileName[strlen(strFileName) - 1] != '\\')
+	//	strcat_s(strFileName, SZ_SLASH);
+	//strcat_s(strFileName, strYear);
+	//strcat_s(strFileName, strMonth + 1);
+	//strcat_s(strFileName, strDay + 1);
+	//strcat_s(strFileName, strHour + 1);
+	//strcat_s(strFileName, strMinute + 1);
+	//strcat_s(strFileName, ".");
+	//strcat_s(strFileName, pExtType);
+	//strcat_s(strFileName, ".bin");
 
 	FILE *fp = 0;
 	errno_t err = 0;
-	err = fopen_s(&fp, strFileName, "wb");
+	err = fopen_s(&fp, strFileName.c_str(), "wb");
 	if (!fp)
 		return strDestFileName;//(false);
 			   //Write data header into the file

@@ -34,7 +34,7 @@ public:
 	virtual ~CGridMosaicCls();
 
 	int32_t Run();
-	char* GetProdFileName();
+	const char* GetProdFileName();
 
 private:
 	int16_t m_numValidSite;
@@ -57,9 +57,9 @@ private:
 	double m_paramGridLenY;
 	int32_t m_paramNumZ;
 	uint16_t* m_pHeights; //m	
-	char m_paramProdDir[PATH_LEN];//结果路径
+	std::string m_paramProdDir="";//结果路径
 
-	char m_mosGridFileName[PATH_LEN];  //结果文件
+	std::string m_mosGridFileName="";  //结果文件
 	uint8_t ***m_mosGridData;
 
 	int16_t LoadSiteGridFileAndHeader(int16_t numFile, vector<string>  &pFilesNameList);

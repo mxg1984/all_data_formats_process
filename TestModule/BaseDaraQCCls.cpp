@@ -3,46 +3,17 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-//#include "radarmosaic.h"
+
+#include <memory>
+
 #include "CommFunctions.h"
 #include "GlobalParams.h"
 #include "BaseDaraQCCls.h"
-//#include "ThreadLog.h"
 
-#include <Shlwapi.h>
-#pragma comment(lib,"shlwapi.lib") //WINAPI 库
-
-#ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
-#define new DEBUG_NEW
-#endif
-/*
-//#pragma pack(1)
-extern "C" {void __stdcall PREPROCBASEDATAQC(RADARSITEINFO &SiteInfo , 
-												LPVOID STRCT_REF, LPVOID STRCT_VEL, LPVOID STRCT_SPW,
-												int32_t *nCuts, char *PathName, uint32_t strLen, char *BackPathName, uint32_t strLen1);}
-extern "C" {void __stdcall PREPROCBASEDATANOQC(RADARSITEINFO &SiteInfo , 
-												LPVOID STRCT_REF, LPVOID STRCT_VEL, LPVOID STRCT_SPW,
-												int32_t *nCuts, char *PathName, uint32_t strLen);}
-*/
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-CBaseDataIOandQCCls::CBaseDataIOandQCCls(int32_t runnum, int32_t sitecode, char* srcfile)
+CBaseDataIOandQCCls::CBaseDataIOandQCCls(int32_t sitecode, const std::string& srcfile)
+	:m_srcBaseDataFileName(srcfile)
 {	
-	m_runNum=runnum;	
 	m_siteCode=sitecode;
-	strcpy_s(m_srcBaseDataFileName,srcfile);
-
-	m_maxNumCuts=11;
-	m_numCuts=0;
-
-	m_siteIndex=0;
-
-	m_strRefDataName="";
-	m_strRefDataName="";
 }
 
 CBaseDataIOandQCCls::~CBaseDataIOandQCCls()
@@ -73,7 +44,7 @@ int32_t CBaseDataIOandQCCls::Run()
 	//进行原始体扫数据读取和质量控制选择
 	nCuts = 0;
 	//为QC准备待处理的数据文件
-	if (!PrepareObsvDataFileForReading(m_srcBaseDataFileName, unQcFileName))
+	if (!PrepareObsvDataFileForReading(m_srcBaseDataFileName.c_str(), unQcFileName))
 		return -1;
 
 	//读数据 QC
@@ -95,11 +66,13 @@ int32_t CBaseDataIOandQCCls::Run()
 	else//采用没有质量控制的模块
 		;//	PREPROCBASEDATANOQC(m_siteInfo, m_pRefPPI, m_pVelPPI, m_pSpwPPI, &nCuts, unQcFileName, PATH_LEN);	
 	//*/
-
-	CRadarDataInputCls* pBaseData = new CRadarDataInputCls(m_siteCode, unQcFileName);// , szRadarType);
-	if (pBaseData == 0)
+	RADARSITEINFO * sT = new RADARSITEINFO;
+	delete sT;
+	std::unique_ptr<CRadarDataInputCls> pBaseData(new CRadarDataInputCls(m_siteCode, unQcFileName));// , szRadarType);
+	if (pBaseData == nullptr) {
 		return -1;
-
+	}
+	return 1;
 	pBaseData->LoadScanData();
 
 	//删除临时体扫文件
@@ -118,8 +91,8 @@ int32_t CBaseDataIOandQCCls::Run()
 
 			m_numCuts = 0;
 
-			delete pBaseData;
-			pBaseData = 0;
+			//delete pBaseData;
+			//pBaseData = 0;
 
 			return -1;
 		}
@@ -135,15 +108,15 @@ int32_t CBaseDataIOandQCCls::Run()
 
 			m_numCuts = 0;
 
-			delete pBaseData;
-			pBaseData = 0;
+			//delete pBaseData;
+			//pBaseData = 0;
 
 			return -1;
 		}
 	}
 
-	delete pBaseData;
-	pBaseData = 0;
+	//delete pBaseData;
+	//pBaseData = 0;
 
 	return 1;
 }
@@ -216,7 +189,7 @@ bool CBaseDataIOandQCCls::FileIsZipped(const char *srcFileName, char *dstFileNam
 	return false;
 }
 
-bool CBaseDataIOandQCCls::PrepareObsvDataFileForReading(char* szSrcFileName, char* szDstFileName)
+bool CBaseDataIOandQCCls::PrepareObsvDataFileForReading(const char* szSrcFileName, char* szDstFileName)
 {
 	int32_t bn=-1,bn1=-1;
 	char szCopyFileName[PATH_LEN]=""; //拷贝到本地的临时压缩文件
